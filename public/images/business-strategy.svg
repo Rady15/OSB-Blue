@@ -1,0 +1,22 @@
+<svg width="960" height="720" viewBox="0 0 960 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="960" height="720" rx="56" fill="#071527"/>
+  <path d="M0 0H960V720H0V0Z" fill="url(#grid)" opacity=".28"/>
+  <path d="M110 510C230 325 356 256 493 302C585 333 668 302 760 170" stroke="#fff" stroke-opacity=".82" stroke-width="10" stroke-linecap="round"/>
+  <path d="M116 510C236 325 362 256 499 302C591 333 674 302 766 170" stroke="#CBD5E1" stroke-opacity=".25" stroke-width="28" stroke-linecap="round"/>
+  <circle cx="110" cy="510" r="24" fill="#fff"/>
+  <circle cx="493" cy="302" r="24" fill="#fff"/>
+  <circle cx="760" cy="170" r="24" fill="#fff"/>
+  <rect x="118" y="150" width="240" height="150" rx="24" fill="#13315C" stroke="white" stroke-opacity=".16"/>
+  <rect x="160" y="191" width="150" height="14" rx="7" fill="white" fill-opacity=".82"/>
+  <rect x="160" y="226" width="110" height="10" rx="5" fill="#CBD5E1" fill-opacity=".6"/>
+  <rect x="612" y="420" width="230" height="130" rx="24" fill="#13315C" stroke="white" stroke-opacity=".16"/>
+  <rect x="654" y="459" width="130" height="14" rx="7" fill="white" fill-opacity=".82"/>
+  <rect x="654" y="493" width="88" height="10" rx="5" fill="#CBD5E1" fill-opacity=".6"/>
+  <circle cx="490" cy="498" r="92" fill="white" fill-opacity=".06"/>
+  <circle cx="490" cy="498" r="56" stroke="white" stroke-opacity=".16" stroke-width="3"/>
+  <defs>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" stroke="white" stroke-opacity=".24"/>
+    </pattern>
+  </defs>
+</svg>
