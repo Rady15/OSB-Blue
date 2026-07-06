@@ -9,8 +9,8 @@ const lineVariants: Variants = {
     y: 0,
     opacity: 1,
     transition: {
-      duration: 0.75,
-      delay: index * 0.08,
+      duration: 1.4,
+      delay: index * 0.15,
       ease: [0.22, 1, 0.36, 1] as const,
     },
   }),

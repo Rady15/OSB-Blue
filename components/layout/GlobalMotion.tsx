@@ -15,7 +15,7 @@ export function GlobalMotion() {
       gsap.to(element, {
         clipPath: "inset(0 0 0% 0 round 28px)",
         opacity: 1,
-        duration: 1,
+        duration: 1.8,
         ease: "power4.out",
         scrollTrigger: {
           trigger: element,

@@ -92,7 +92,7 @@ export function ServicesHoverGrid() {
         rotation: t.rotation,
         scale: t.scale,
         opacity: 0,
-        duration: 0.5,
+        duration: 0.9,
         ease: "power3.in",
       });
     });
@@ -109,8 +109,8 @@ export function ServicesHoverGrid() {
       rotation: 0,
       scale: 1,
       opacity: 1,
-      duration: 0.7,
-      stagger: { each: 0.03, from: "random" },
+      duration: 1.2,
+      stagger: { each: 0.06, from: "random" },
       ease: "power3.out",
       onComplete: () => setIsAnimating(false),
     });
@@ -153,8 +153,8 @@ export function ServicesHoverGrid() {
           });
         });
         // Then gather
-        setTimeout(() => gatherImage(), 50);
-      }, 500);
+        setTimeout(() => gatherImage(), 80);
+      }, 900);
     },
     [currentImg, isAnimating, scatterImage, gatherImage, displayedServices],
   );

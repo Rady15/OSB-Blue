@@ -18,9 +18,9 @@ export const fadeUpOnScroll = (
   gsap.from(selector, {
     y: 40,
     opacity: 0,
-    duration: 0.9,
+    duration: 1.6,
     ease: "power3.out",
-    stagger: options?.stagger ?? 0.15,
+    stagger: options?.stagger ?? 0.25,
     delay: options?.delay ?? 0,
     scrollTrigger: {
       trigger: options?.trigger ?? selector,
