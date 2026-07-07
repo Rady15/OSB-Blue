@@ -8,6 +8,17 @@ import { LinkButton } from "@/components/ui/Button";
 import { PageHero } from "@/components/ui/PageHero";
 import { ScrollRevealText } from "@/components/ui/ScrollRevealText";
 
+const serviceImages: Record<string, string> = {
+  "company-formation": "https://tanfeth.sa/wp-content/uploads/2026/06/%D8%AA%D8%A3%D8%B3%D9%8A%D8%B3-%D9%85%D8%A4%D8%B3%D8%B3%D8%A9-%D9%81%D8%B1%D8%AF%D9%8A%D8%A9-%D9%81%D9%8A-%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9.png",
+  "legal-consulting": "https://www.alsaqrlaw.com/wp-content/uploads/2025/11/8-980x580-2.png",
+  "accounting-tax": "https://sadanykhalifa.com/uploads/Blog/1745571118.webp",
+  "feasibility-studies": "https://mega-consultations.com/photos/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA%20%D8%AF%D8%B1%D8%A7%D8%B3%D8%A9%20%D8%A7%D9%84%D8%AC%D8%AF%D9%88%D9%89/%D8%AF%D8%B1%D8%A7%D8%B3%D8%A9%20%D8%A7%D9%84%D8%AC%D8%AF%D9%88%D9%89.jpg",
+  "digital-marketing": "https://mbridges-sa.com/ar/wp-content/uploads/2025/02/%D9%83%D9%8A%D9%81-%D8%AA%D8%AE%D8%AA%D8%A7%D8%B1-%D8%B4%D8%B1%D9%83%D8%A9-%D8%AA%D8%B3%D9%88%D9%8A%D9%82-%D8%A5%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A-%D9%86%D8%A7%D8%AC%D8%AD%D8%A9-%D9%81%D9%8A-%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9%D8%9F.webp",
+  "automation": "https://sabbar-prod-uploaded-files.s3.eu-west-1.amazonaws.com/submissions/blog-posts/a40091e3-3403-4cda-b251-54d59945898e.webp",
+  "government-procedures": "/images/operations-dashboard.svg",
+  "office-rental": "/images/operations-dashboard.svg",
+};
+
 type ServicePageProps = {
   params: { slug: string };
 };
@@ -30,15 +41,21 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
   const service = services.find((item) => item.slug === params.slug);
   if (!service) notFound();
   const Icon = icons[service.icon] ?? icons.BriefcaseBusiness;
+  const imgSrc = serviceImages[service.slug] ?? "/images/operations-dashboard.svg";
   const related = services.filter((item) => item.slug !== service.slug).slice(0, 3);
 
   return (
     <div className="min-h-screen overflow-hidden bg-black text-white">
       <PageHero eyebrow={service.title} title={service.heroQuestion} description={service.problemParagraphs[0]}>
-        <div className="grid gap-4">
-          <Icon className="h-12 w-12 text-white" />
-          <p className="text-2xl font-extrabold text-white">{service.title}</p>
-          <p className="leading-8 text-white/55">نبدأ بالتشخيص، ثم نحدد الخطوة العملية الأقرب لوضع مشروعك.</p>
+        <div className="grid gap-6 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-10">
+          <div className="grid gap-4">
+            <Icon className="h-12 w-12 text-white" />
+            <p className="text-2xl font-extrabold text-white">{service.title}</p>
+            <p className="leading-8 text-white/55">نبدأ بالتشخيص، ثم نحدد الخطوة العملية الأقرب لوضع مشروعك.</p>
+          </div>
+          <div className="overflow-hidden rounded-[1.5rem]">
+            <img src={imgSrc} alt={service.title} className="h-full w-full object-cover" />
+          </div>
         </div>
       </PageHero>
 

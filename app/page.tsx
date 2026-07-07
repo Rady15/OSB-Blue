@@ -4,11 +4,12 @@ import { ArrowLeft } from "lucide-react";
 import { ConsultationForm } from "@/components/forms/ConsultationForm";
 import { ScrollRevealText } from "@/components/ui/ScrollRevealText";
 import { ScatterImage } from "@/components/ui/ScatterImage";
+import { AnimatedImage } from "@/components/ui/AnimatedImage";
 import { ServicesHoverGrid } from "@/components/sections/ServicesHoverGrid";
 import { TrustBar } from "@/components/sections/TrustBar";
 import { ChallengesSection } from "@/components/sections/ChallengesSection";
 import { WhyUsSection } from "@/components/sections/WhyUsSection";
-import { partners } from "@/data/partners";
+import { PartnersMarquee } from "@/components/sections/PartnersMarquee";
 
 const stats = [
   ["+5,000", "إجراء مكتمل"],
@@ -29,18 +30,13 @@ export default function Home() {
         </div>
         <div className="container-osb relative z-10 grid min-h-[78vh] items-center gap-16 lg:grid-cols-[0.95fr_1.05fr]">
           <div data-parallax="34" className="order-2 lg:order-1">
-            <div className="glow-panel rounded-[2rem] border border-white/10 bg-white/[0.04] p-4 shadow-2xl backdrop-blur">
-              <div className="rounded-[1.5rem] border border-white/10 bg-black p-5">
-                <p className="mb-4 text-sm font-bold text-white/60">أنا مهتم بـ</p>
-                <div className="mb-5 grid grid-cols-2 gap-2 text-xs font-bold">
-                  {["تأسيس شركة", "استشارة قانونية", "محاسبة وزكاة", "إجراءات حكومية"].map((item) => (
-                    <span key={item} className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 text-center text-white/80">
-                      {item}
-                    </span>
-                  ))}
-                </div>
-                <ConsultationForm compact light />
-              </div>
+            <div className="relative mx-auto max-w-xs">
+              <img
+                src="/images/hero.png"
+                alt="OSB Hero"
+                className="relative z-10 rounded-[2rem] animate-hero-float"
+              />
+              <div className="absolute -bottom-6 left-1/2 h-20 w-3/4 -translate-x-1/2 rounded-full bg-[#2563eb] opacity-30 blur-3xl" />
             </div>
           </div>
           <div className="order-1 text-right lg:order-2">
@@ -71,38 +67,7 @@ export default function Home() {
 
       <section className="bg-black py-10">
         <p className="mb-7 text-center text-sm font-bold text-white/50">نفتخر أيضاً بشركائنا</p>
-        <div className="relative overflow-hidden">
-          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-black to-transparent" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-black to-transparent" />
-          <div className="marquee-track-reverse flex w-max">
-            <div className="flex gap-4">
-              {partners.map((partner, index) => (
-                <div key={partner.name} className="grid h-24 w-44 shrink-0 place-items-center rounded-xl bg-white p-4">
-                  <Image
-                    src={partner.image}
-                    alt={partner.name}
-                    width={140}
-                    height={70}
-                    className="max-h-16 w-auto object-contain"
-                  />
-                </div>
-              ))}
-            </div>
-            <div className="flex gap-4">
-              {partners.map((partner, index) => (
-                <div key={`dup-${partner.name}`} className="grid h-24 w-44 shrink-0 place-items-center rounded-xl bg-white p-4">
-                  <Image
-                    src={partner.image}
-                    alt={partner.name}
-                    width={140}
-                    height={70}
-                    className="max-h-16 w-auto object-contain"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        <PartnersMarquee />
       </section>
 
       <ChallengesSection />
@@ -113,9 +78,6 @@ export default function Home() {
         <div className="absolute right-12 top-10 h-48 w-48 rounded-full bg-[#2563eb] blur-[95px]" />
         <div className="container-osb grid items-center gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <div className="relative">
-            <div className="absolute -right-6 top-8 z-10 grid h-36 w-36 place-items-center rounded-full bg-[#2563eb] p-5 text-center text-sm font-extrabold shadow-[0_0_55px_rgba(37,99,235,0.7)]">
-              نشخّص قبل أن ننفّذ
-            </div>
             <ScatterImage
               src="/images/about-us.png"
               alt="عن OSB"
@@ -152,10 +114,17 @@ export default function Home() {
 
       <ServicesHoverGrid />
 
-      <section className="bg-black py-24">
-        <div className="container-osb grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
-          <div data-image-reveal className="image-reveal">
-            <Image src="/images/business-strategy.svg" alt="دليل الأعمال" width={960} height={720} className="rounded-[2rem]" />
+      <section className="relative overflow-hidden bg-black py-24">
+        <div className="container-osb grid items-center gap-12 lg:grid-cols-[1fr_1.1fr]">
+          {/* Animated image with glow */}
+          <div className="relative">
+            <AnimatedImage
+              src="/images/consult-free.svg"
+              alt="استشارة مجانية"
+              className="rounded-[2rem]"
+            />
+            {/* Glow under image */}
+            <div className="absolute -bottom-6 left-1/2 h-16 w-3/4 -translate-x-1/2 rounded-full bg-[#2563eb] opacity-25 blur-3xl" />
           </div>
           <div>
             <ScrollRevealText

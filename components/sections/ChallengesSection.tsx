@@ -60,9 +60,12 @@ export function ChallengesSection() {
 
   return (
     <section ref={sectionRef} className="relative overflow-hidden bg-black py-32 text-white">
-      {/* Large background number */}
-      <div className="pointer-events-none absolute -left-20 top-1/2 -translate-y-1/2 select-none text-[22rem] font-black leading-none text-white/[0.02]">
-        ؟
+      {/* Large background number with glow */}
+      <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div className="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#2563eb] opacity-20 blur-[100px]" />
+        <div className="relative select-none text-[22rem] font-black leading-none text-white/[0.02]">
+          ؟
+        </div>
       </div>
 
       {/* Top glow */}
