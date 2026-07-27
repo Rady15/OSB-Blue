@@ -14,24 +14,20 @@ export const consultationSchema = z.object({
   businessNature: z.string().optional(),
 });
 
-const compactSchema = consultationSchema.pick({ fullName: true, phone: true });
-
 export type ConsultationFormData = z.infer<typeof consultationSchema>;
 
 type ConsultationFormProps = {
-  compact?: boolean;
   light?: boolean;
 };
 
-export function ConsultationForm({ compact = false, light = true }: ConsultationFormProps) {
+export function ConsultationForm({ light = true }: ConsultationFormProps) {
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
-  const schema = compact ? compactSchema : consultationSchema;
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<ConsultationFormData>({
-    resolver: zodResolver(schema) as unknown as Resolver<ConsultationFormData>,
+    resolver: zodResolver(consultationSchema) as unknown as Resolver<ConsultationFormData>,
     defaultValues: {
       fullName: "",
       phone: "",
@@ -69,15 +65,13 @@ export function ConsultationForm({ compact = false, light = true }: Consultation
         <input className={inputClass} placeholder="رقم الجوال / واتساب" {...register("phone")} />
         {errors.phone ? <p className="mt-2 text-sm text-red-500">{errors.phone.message}</p> : null}
       </div>
-      {!compact ? (
-        <>
-          <div>
-            <input className={inputClass} placeholder="البريد الإلكتروني" {...register("email")} />
-            {errors.email ? <p className="mt-2 text-sm text-red-500">{errors.email.message}</p> : null}
-          </div>
-          <textarea className={`${inputClass} min-h-36 resize-none`} placeholder="طبيعة نشاطك أو فكرتك" {...register("businessNature")} />
-        </>
-      ) : null}
+      <div>
+        <input className={inputClass} placeholder="البريد الإلكتروني" {...register("email")} />
+        {errors.email ? <p className="mt-2 text-sm text-red-500">{errors.email.message}</p> : null}
+      </div>
+      <div>
+        <textarea className={`${inputClass} min-h-36 resize-none`} placeholder="طبيعة نشاطك أو فكرتك" {...register("businessNature")} />
+      </div>
       <Button type="submit" className="w-full" disabled={isSubmitting}>
         {isSubmitting ? "جارٍ الإرسال..." : "احجز الاستشارة"}
       </Button>

@@ -9,14 +9,12 @@ import { PageHero } from "@/components/ui/PageHero";
 import { ScrollRevealText } from "@/components/ui/ScrollRevealText";
 
 const serviceImages: Record<string, string> = {
-  "company-formation": "https://tanfeth.sa/wp-content/uploads/2026/06/%D8%AA%D8%A3%D8%B3%D9%8A%D8%B3-%D9%85%D8%A4%D8%B3%D8%B3%D8%A9-%D9%81%D8%B1%D8%AF%D9%8A%D8%A9-%D9%81%D9%8A-%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9.png",
-  "legal-consulting": "https://www.alsaqrlaw.com/wp-content/uploads/2025/11/8-980x580-2.png",
-  "accounting-tax": "https://sadanykhalifa.com/uploads/Blog/1745571118.webp",
-  "feasibility-studies": "https://mega-consultations.com/photos/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA%20%D8%AF%D8%B1%D8%A7%D8%B3%D8%A9%20%D8%A7%D9%84%D8%AC%D8%AF%D9%88%D9%89/%D8%AF%D8%B1%D8%A7%D8%B3%D8%A9%20%D8%A7%D9%84%D8%AC%D8%AF%D9%88%D9%89.jpg",
-  "digital-marketing": "https://mbridges-sa.com/ar/wp-content/uploads/2025/02/%D9%83%D9%8A%D9%81-%D8%AA%D8%AE%D8%AA%D8%A7%D8%B1-%D8%B4%D8%B1%D9%83%D8%A9-%D8%AA%D8%B3%D9%88%D9%8A%D9%82-%D8%A5%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A-%D9%86%D8%A7%D8%AC%D8%AD%D8%A9-%D9%81%D9%8A-%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9%D8%9F.webp",
-  "automation": "https://sabbar-prod-uploaded-files.s3.eu-west-1.amazonaws.com/submissions/blog-posts/a40091e3-3403-4cda-b251-54d59945898e.webp",
-  "government-procedures": "/images/operations-dashboard.svg",
-  "office-rental": "/images/operations-dashboard.svg",
+  "strategy-planning": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+  "accounting-compliance": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&q=80",
+  "marketing-branding": "https://images.unsplash.com/photo-1557838923-2985c318be48?w=800&q=80",
+  "digital-solutions": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
+  "business-automation": "https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?w=800&q=80",
+  "business-infrastructure": "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
 };
 
 type ServicePageProps = {

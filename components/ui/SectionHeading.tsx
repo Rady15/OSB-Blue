@@ -44,7 +44,7 @@ export function SectionHeading({ eyebrow, title, description, light = true, alig
         as="h2"
         text={title}
         wordsPerLine={5}
-        className={`text-3xl font-extrabold leading-tight md:text-5xl ${light ? "text-white" : "text-white"}`}
+        className={`text-3xl font-extrabold leading-[1.5] md:text-5xl ${light ? "text-white" : "text-white"}`}
         startIndex={1}
       />
       {description ? (

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import { MessageSquare, Search, Rocket, TrendingUp, Sparkles, ChevronDown } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -11,40 +10,51 @@ gsap.registerPlugin(ScrollTrigger);
 const steps = [
   {
     num: "01",
-    title: "الاستشارة الأولية",
+    title: "نفهم أعمالك",
     icon: MessageSquare,
     color: "#2563eb",
-    description: "نبدأ بفهم فكرتك أو وضع مشروعك الحالي، مع التعرف على أهدافك والتحديات التي تواجهها بشكل دقيق.",
-    details: ["جلسة تعريفية مع فريق OSB", "فهم طبيعة نشاطك وأهدافك", "تحديد التحديات الرئيسية"],
+    description: "نبدأ بالتعرّف على نشاطك، أهدافك، والتحديات التي تواجهها، حتى نفهم احتياجاتك قبل اقتراح أي حل.",
+    details: [
+      "نعقد جلسة استماع معمّقة لفهم نشاطك",
+      "نحدد أهدافك قصيرة وطويلة المدى",
+      "نحلل التحديات الحالية التي تواجهها",
+    ],
   },
   {
     num: "02",
-    title: "التشخيص والتحليل",
+    title: "نحلّل ونخطط",
     icon: Search,
     color: "#3b82f6",
-    description: "بعد دراسة وضعك، نضع لك تصوراً واضحاً يشمل:",
+    description: "ندرس وضعك الحالي، ونحدد الأولويات، ونضع تصوراً واضحاً للحلول المناسبة، وخطة التنفيذ، والمدة الزمنية المتوقعة.",
     details: [
-      "الكيان القانوني الأنسب لنشاطك",
-      "الخدمات التي تحتاجها فعلياً في كل مرحلة",
-      "ترتيب الخطوات الصحيح",
-      "التكلفة التقديرية والمدة الزمنية المتوقعة",
+      "نقيّم وضعك الحالي ونحلل الفجوات",
+      "نحدد الأولويات وفقاً للتأثير والجدول الزمني",
+      "نضع خطة تنفيذ واضحة بمؤشرات قياس",
     ],
   },
   {
     num: "03",
-    title: "التنفيذ والمتابعة",
+    title: "ننفذ",
     icon: Rocket,
     color: "#60a5fa",
-    description: "نبدأ بتنفيذ الإجراءات المطلوبة والتنسيق مع الجهات المختصة والشركاء، مع متابعة مستمرة لضمان جودة التنفيذ حتى اكتمال الخدمة.",
-    details: ["تنفيذ الإجراءات مع الشركاء", "متابعة مستمرة لكل خطوة", "ضمان جودة التنفيذ"],
+    description: "نتولى تنفيذ الحلول المتفق عليها، سواء كانت أنظمة، أو أتمتة، أو تحسيناً للعمليات، أو خدمات أعمال أخرى، مع متابعة في كل مرحلة.",
+    details: [
+      "ننفذ الحلول وفق الخطة الزمنية المتفق عليها",
+      "نتابع الجودة ونضمن التكامل مع بيئة عملك",
+      "نوفر تقارير مرحلية عن سير التنفيذ",
+    ],
   },
   {
     num: "04",
-    title: "التشغيل والنمو",
+    title: "نتابع ونطوّر",
     icon: TrendingUp,
     color: "#93c5fd",
-    description: "نستمر معك بعد التأسيس بدعم تشغيلي واستشاري يساعدك على تطوير مشروعك وتحقيق النمو والتوسع بشكل مستقر.",
-    details: ["دعم تشغيلي مستمر", "استشارات لتطوير الأعمال", "مساعدة في التوسع والنمو"],
+    description: "لا تنتهي علاقتنا بانتهاء التنفيذ. نستمر في دعم أعمالك، وتحسين الأداء، ومواكبة احتياجاتك مع نمو أعمالك.",
+    details: [
+      "نوفر دعماً مستمراً بعد التنفيذ",
+      "نقيّم الأداء ونقترح تحسينات دورية",
+      "نواكب نمو أعمالك ونطور الحلول باستمرار",
+    ],
   },
 ];
 
@@ -52,15 +62,12 @@ export default function HowWeWorkPage() {
   const [activeStep, setActiveStep] = useState(0);
   const pageRef = useRef<HTMLDivElement>(null);
   const heroGlowRef = useRef<HTMLDivElement>(null);
-  const stepsRef = useRef<(HTMLDivElement | null)[]>([]);
-  const progressRef = useRef<HTMLDivElement>(null);
-  const pathRef = useRef<SVGPathElement>(null);
+  const journeyRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-      // Mouse parallax
       const onMove = (e: MouseEvent) => {
         const x = (e.clientX / window.innerWidth - 0.5) * 30;
         const y = (e.clientY / window.innerHeight - 0.5) * 30;
@@ -70,60 +77,16 @@ export default function HowWeWorkPage() {
       };
       window.addEventListener("mousemove", onMove);
 
-      // Steps entrance
-      stepsRef.current.filter(Boolean).forEach((step, i) => {
-        if (!step) return;
-        gsap.fromTo(
-          step,
-          { y: 80, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.9,
-            delay: i * 0.15,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: step,
-              start: "top 80%",
-            },
+      if (journeyRef.current) {
+        ScrollTrigger.create({
+          trigger: journeyRef.current,
+          start: "top 30%",
+          end: "bottom bottom",
+          onUpdate: (self) => {
+            const index = Math.min(Math.floor(self.progress * steps.length), steps.length - 1);
+            setActiveStep(index);
           },
-        );
-      });
-
-      // Progress bar animation
-      if (progressRef.current) {
-        gsap.fromTo(
-          progressRef.current,
-          { scaleX: 0 },
-          {
-            scaleX: 1,
-            transformOrigin: "right center",
-            duration: 2,
-            ease: "power2.inOut",
-            scrollTrigger: {
-              trigger: progressRef.current,
-              start: "top 70%",
-            },
-          },
-        );
-      }
-
-      // Path draw animation
-      if (pathRef.current) {
-        const length = pathRef.current.getTotalLength();
-        gsap.fromTo(
-          pathRef.current,
-          { strokeDashoffset: length },
-          {
-            strokeDashoffset: 0,
-            duration: 3,
-            ease: "power2.inOut",
-            scrollTrigger: {
-              trigger: pathRef.current,
-              start: "top 80%",
-            },
-          },
-        );
+        });
       }
 
       return () => window.removeEventListener("mousemove", onMove);
@@ -153,7 +116,7 @@ export default function HowWeWorkPage() {
             كيف نعمل
           </div>
 
-          <h1 className="text-5xl font-black leading-tight tracking-tight md:text-7xl lg:text-8xl">
+          <h1 className="text-5xl font-black leading-[1.5] tracking-tight md:text-7xl lg:text-8xl">
             رحلتك <span className="bg-gradient-to-l from-[#2563eb] to-[#60a5fa] bg-clip-text text-transparent">معنا</span>
           </h1>
 
@@ -169,11 +132,11 @@ export default function HowWeWorkPage() {
       </section>
 
       {/* ===== INTERACTIVE JOURNEY ===== */}
-      <section className="relative bg-black py-20">
+      <section ref={journeyRef} className="relative bg-black pb-48 pt-20">
         {/* Progress bar */}
         <div className="sticky top-0 z-50 bg-black/80 backdrop-blur-md">
           <div className="container-osb py-4">
-            <div ref={progressRef} className="relative h-1 overflow-hidden rounded-full bg-white/5">
+            <div className="relative h-1 overflow-hidden rounded-full bg-white/5">
               <div
                 className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-l from-[#2563eb] to-[#60a5fa] transition-all duration-500"
                 style={{ width: `${((activeStep + 1) / steps.length) * 100}%` }}
@@ -204,9 +167,8 @@ export default function HowWeWorkPage() {
         <div className="container-osb relative z-10 py-16">
           <div className="grid gap-16 lg:grid-cols-[1fr_1.2fr]">
             {/* Left: Active step display */}
-            <div className="lg:sticky lg:top-40 lg:self-start">
+            <div className="lg:sticky lg:top-24">
               <div className="relative overflow-hidden rounded-3xl border border-white/[0.06] bg-gradient-to-br from-white/[0.04] to-transparent p-10">
-                {/* Background glow */}
                 <div
                   className="absolute -right-20 -top-20 h-64 w-64 rounded-full blur-3xl transition-opacity duration-700"
                   style={{
@@ -215,7 +177,6 @@ export default function HowWeWorkPage() {
                   }}
                 />
 
-                {/* Step number */}
                 <div className="relative mb-8 flex items-center gap-4">
                   <span className="text-7xl font-black text-white/[0.06]">{steps[activeStep].num}</span>
                   <div
@@ -226,7 +187,6 @@ export default function HowWeWorkPage() {
                   </div>
                 </div>
 
-                {/* Title */}
                 <h2 className="relative text-3xl font-black text-white md:text-4xl">
                   {steps[activeStep].title}
                 </h2>
@@ -235,12 +195,10 @@ export default function HowWeWorkPage() {
                   style={{ backgroundColor: steps[activeStep].color, width: "4rem" }}
                 />
 
-                {/* Description */}
                 <p className="relative mt-6 text-xl leading-10 text-white/60">
                   {steps[activeStep].description}
                 </p>
 
-                {/* Details list */}
                 {steps[activeStep].details && (
                   <ul className="relative mt-6 space-y-3">
                     {steps[activeStep].details.map((detail, i) => (
@@ -263,10 +221,8 @@ export default function HowWeWorkPage() {
 
             {/* Right: Journey steps with connecting path */}
             <div className="relative">
-              {/* SVG connecting path */}
               <svg className="absolute right-8 top-0 h-full w-16 md:right-12" viewBox="0 0 60 800" fill="none" preserveAspectRatio="none">
                 <path
-                  ref={pathRef}
                   d="M30,0 L30,800"
                   stroke="rgba(37,99,235,0.2)"
                   strokeWidth="2"
@@ -274,21 +230,18 @@ export default function HowWeWorkPage() {
                 />
               </svg>
 
-              {/* Steps */}
               <div className="space-y-12">
                 {steps.map((step, index) => {
                   const Icon = step.icon;
                   return (
                     <div
                       key={step.num}
-                      ref={(el) => { stepsRef.current[index] = el; }}
                       className={`group relative grid grid-cols-[auto_1fr] gap-6 md:gap-8 cursor-pointer transition-all duration-500 ${
                         index === activeStep ? "opacity-100" : "opacity-50 hover:opacity-80"
                       }`}
                       onClick={() => setActiveStep(index)}
                       onMouseEnter={() => setActiveStep(index)}
                     >
-                      {/* Timeline node */}
                       <div className="relative z-10 flex flex-col items-center">
                         <div
                           className={`flex h-16 w-16 items-center justify-center rounded-full border-2 transition-all duration-500 ${
@@ -309,7 +262,6 @@ export default function HowWeWorkPage() {
                         </div>
                       </div>
 
-                      {/* Content */}
                       <div className="pb-8">
                         <div className="flex items-center gap-3">
                           <span className="text-sm font-bold text-white/30">{step.num}</span>
@@ -341,7 +293,7 @@ export default function HowWeWorkPage() {
           <p className="mt-4 text-xl text-white/50">تواصل معنا اليوم وسنساعدك في تحويل فكرتك إلى واقع.</p>
           <a
             href="/free-consultation"
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#2563eb] px-8 py-4 text-lg font-bold text-white transition-all duration-300 hover:bg-[#1d4ed8] hover:shadow-[0_0_40px_rgba(37,99,235,0.4)]"
+            className="mt-8 inline-flex items-center gap-2 rounded-none bg-[#2563eb] px-8 py-4 text-lg font-bold text-white shadow-[0_0_34px_rgba(37,99,235,0.42)] transition-all duration-300 hover:bg-white hover:text-black"
           >
             احجز استشارة مجانية
             <Rocket className="h-5 w-5" />

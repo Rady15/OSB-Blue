@@ -49,12 +49,12 @@ export function HeroSection() {
             as="h1"
             text="كل ما يحتاجه مشروعك في مكان واحد"
             wordsPerLine={4}
-            className="max-w-4xl text-4xl font-extrabold leading-tight md:text-7xl"
+            className="max-w-4xl text-4xl font-extrabold leading-[1.5] md:text-7xl"
           />
           <ScrollRevealText
             as="p"
-            text={"نشخّص فكرتك. نحدد احتياجك. ثم ننفّذ معك.\n\nالبداية الصحيحة تصنع فرقاً كبيراً.\nنساعدك على اتخاذ القرارات الصحيحة قبل أن تستثمر وقتك وميزانيتك, من اختيار الكيان القانوني المناسب إلى التخطيط التشغيل والنمو."}
-            wordsPerLine={8}
+            text="نساعدك على اتخاذ القرارات الصحيحة قبل أن تستثمر وقتك وميزانيتك."
+            wordsPerLine={99}
             startIndex={2}
             className="mt-7 max-w-3xl text-lg leading-9 text-white/60 md:text-2xl md:leading-10"
           />
@@ -64,7 +64,7 @@ export function HeroSection() {
             transition={{ duration: 0.6, delay: 0.55, ease: "easeOut" }}
             className="mt-9 flex flex-wrap items-center gap-4"
           >
-            <LinkButton href="/free-consultation" className="animate-soft-pulse">
+            <LinkButton href="/free-consultation">
               احجز استشارتك المجانية <ArrowLeft className="h-5 w-5" />
             </LinkButton>
             <div className="flex gap-3 text-white/80">
@@ -97,7 +97,7 @@ export function HeroSection() {
                 </span>
               ))}
             </div>
-            <ConsultationForm compact light />
+            <ConsultationForm light />
           </div>
           <div className="absolute -bottom-8 -right-6 hidden animate-float-y rounded-3xl border border-white/15 bg-white p-5 text-black shadow-2xl md:block">
             <p className="text-4xl font-extrabold">+120</p>

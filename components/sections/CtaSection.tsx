@@ -12,7 +12,7 @@ export function CtaSection() {
           <ScrollRevealText
             as="h2"
             text="ابدأ بخطوة صحيحة قبل أي قرار مكلف"
-            className="text-3xl font-extrabold leading-tight md:text-5xl"
+            className="text-3xl font-extrabold leading-[1.5] md:text-5xl"
           />
           <p className="mt-5 text-lg leading-9 text-white/60">
             نجلس معك، نفهم وضعك، ونخبرك بصدق ما الذي تحتاجه — وما لا تحتاجه. بدون التزام. بدون ضغط. بدون تكلفة.
@@ -20,7 +20,7 @@ export function CtaSection() {
         </div>
         <div className="glow-panel rounded-[2rem] border border-white/10 bg-white/[0.04] p-4">
           <div className="rounded-[1.5rem] border border-white/10 bg-black p-5">
-            <ConsultationForm compact light />
+            <ConsultationForm light />
             <Link href="/free-consultation" className="mt-4 block text-center text-sm font-bold text-white/55 transition hover:text-white">
               أو تفضّل بزيارة صفحة الاستشارة الكاملة
             </Link>

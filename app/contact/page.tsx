@@ -62,7 +62,7 @@ export default function ContactPage() {
             <iframe
               title="موقع OSB في الخبر"
               src="https://www.google.com/maps?q=%D8%A7%D9%84%D8%AE%D8%A8%D8%B1%20%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9&output=embed"
-              className="h-full min-h-[420px] w-full rounded-[1.5rem] grayscale invert"
+              className="h-full min-h-[420px] w-full rounded-[1.5rem]"
               loading="lazy"
             />
           </div>

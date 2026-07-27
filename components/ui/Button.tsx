@@ -4,13 +4,13 @@ import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "reac
 type ButtonVariant = "primary" | "secondary" | "ghost-light";
 
 const variantClasses: Record<ButtonVariant, string> = {
-  primary: "bg-[#2563eb] text-white shadow-[0_0_34px_rgba(37,99,235,0.42)] hover:scale-105 hover:bg-white hover:text-black",
-  secondary: "border border-white/20 text-white hover:bg-white hover:text-black",
-  "ghost-light": "border border-white/30 text-white hover:bg-white/10",
+  primary: "bg-[#2563eb] text-white hover:bg-white hover:text-black",
+  secondary: "border border-[#2563eb] text-[#2563eb] hover:bg-[#2563eb] hover:text-white",
+  "ghost-light": "text-[#2563eb] hover:bg-[#2563eb]/10",
 };
 
 const baseClasses =
-  "cursor-hover inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-bold transition duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black";
+  "cursor-hover inline-flex min-h-12 items-center justify-center gap-2 rounded-none px-6 py-3 text-sm font-bold transition duration-300 shadow-[0_0_34px_rgba(37,99,235,0.42)] focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black";
 
 type ButtonProps = {
   children: ReactNode;

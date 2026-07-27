@@ -15,7 +15,7 @@ export default function FreeConsultationPage() {
       <div className="container-osb relative z-10 grid items-start gap-10 lg:grid-cols-[0.9fr_1.1fr]">
         <div>
           <p className="mb-5 text-sm font-bold text-white/55">استشارة مجانية</p>
-          <ScrollRevealText as="h1" text="احجز استشارتك المجانية" wordsPerLine={4} className="text-5xl font-extrabold leading-tight md:text-7xl" />
+          <ScrollRevealText as="h1" text="احجز استشارتك المجانية" wordsPerLine={4} className="text-5xl font-extrabold leading-[1.5] md:text-7xl" />
           <p className="mt-6 max-w-3xl text-xl leading-10 text-white/60">
             استشارة تغير مسار مشروعك. نجلس معك، نفهم وضعك، ونخبرك بصدق ما الذي تحتاجه — وما لا تحتاجه. بدون التزام. بدون ضغط. بدون تكلفة.
           </p>

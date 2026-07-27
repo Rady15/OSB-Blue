@@ -28,7 +28,7 @@ export function FeaturedPartnership() {
             as="h2"
             text="نفس إحساس المواقع التفاعلية: حركة، عمق، ووضوح في كل خطوة"
             wordsPerLine={5}
-            className="text-3xl font-extrabold leading-tight md:text-5xl"
+            className="text-3xl font-extrabold leading-[1.5] md:text-5xl"
           />
           <ScrollRevealText
             as="p"

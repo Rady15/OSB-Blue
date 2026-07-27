@@ -20,7 +20,7 @@ export function PageHero({ eyebrow = "OSB — One Stop Business", title, descrip
             as="h1"
             text={title}
             wordsPerLine={4}
-            className="max-w-5xl text-5xl font-extrabold leading-[1.08] md:text-7xl"
+            className="max-w-5xl text-5xl font-extrabold leading-[1.5] md:text-7xl"
           />
           {description ? (
             <ScrollRevealText

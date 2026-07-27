@@ -166,17 +166,13 @@ export default function AboutPage() {
               من نحن
             </div>
 
-            <h1 className="text-5xl font-black leading-[1.1] tracking-tight md:text-7xl lg:text-[5.5rem]">
-              <span className="block text-white">OSB</span>
-              <span className="mt-2 block bg-gradient-to-l from-[#2563eb] to-[#60a5fa] bg-clip-text text-transparent">
-                One Stop Business
-              </span>
-            </h1>
 
-            <div className="h-px w-24 bg-gradient-to-l from-[#2563eb] to-transparent" />
 
-            <p className="text-2xl font-medium text-white/50 md:text-3xl">
-              وُلدت من <span className="text-white/80 font-semibold">ملاحظة واحدة</span>
+            <p className="max-w-2xl text-lg leading-9 text-white/60 md:text-xl md:leading-10">
+              بدأت OSB من ملاحظة بسيطة.<br />
+              رأينا أن كثيراً من الشركات تقضي وقتاً وجهداً كبيرين في التنسيق بين جهات متعددة، بينما كان يمكن إنجاز كل ذلك من خلال شريك واحد يفهم احتياجاتها ويقدّم الحلول المناسبة.<br />
+              ومن هنا جاءت فكرة OSB.<br />
+              جمعنا خدمات الأعمال الأساسية تحت سقف واحد، لنساعد الشركات على العمل بكفاءة أكبر، واتخاذ قرارات أفضل، والتركيز على نمو أعمالها.
             </p>
           </div>
 
@@ -188,11 +184,11 @@ export default function AboutPage() {
 
             <div data-image-reveal className="image-reveal relative overflow-hidden rounded-[1.5rem]">
               <Image
-                src="/images/consulting-session.svg"
+                src="/images/logo.png"
                 alt="OSB"
                 width={960}
                 height={720}
-                className="rounded-[1.5rem]"
+                className="rounded-[1.5rem] object-contain p-16 drop-shadow-[0_0_40px_rgba(37,99,235,0.6)]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
             </div>
@@ -212,7 +208,7 @@ export default function AboutPage() {
                 <div className="h-px w-8 bg-[#2563eb]" />
                 <span className="text-sm font-bold text-[#2563eb]">قصتنا</span>
               </div>
-              <h2 className="text-5xl font-black leading-tight md:text-6xl">
+              <h2 className="text-5xl font-black leading-[1.5] md:text-6xl">
                 لماذا
                 <br />
                 <span className="text-[#2563eb]">OSB؟</span>

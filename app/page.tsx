@@ -45,20 +45,28 @@ export default function Home() {
               as="h1"
               text="كل ما يحتاجه مشروعك في مكان واحد"
               wordsPerLine={3}
-              className="text-5xl font-extrabold leading-[1.08] md:text-7xl"
+              className="text-5xl font-extrabold leading-[1.5] md:text-7xl"
             />
             <ScrollRevealText
               as="p"
-              text="من الفكرة إلى التشغيل، نساعدك على اتخاذ القرارات الصحيحة قبل أن تستثمر وقتك وميزانيتك."
-              wordsPerLine={7}
+              text="نحوّل التحديات التشغيلية إلى حلول عملية تدعم كفاءة أعمالك ونموها"
+              wordsPerLine={99}
               className="mt-7 max-w-2xl text-lg leading-9 text-white/65"
             />
-            <Link
-              href="/free-consultation"
-              className="mt-10 inline-flex items-center gap-3 rounded-full bg-[#2563eb] px-7 py-4 text-sm font-extrabold text-white shadow-[0_0_42px_rgba(37,99,235,0.55)] transition hover:-translate-y-1 hover:bg-white hover:text-black"
-            >
-              تواصل معنا <ArrowLeft className="h-5 w-5" />
-            </Link>
+            <div className="mt-10 flex flex-wrap items-center gap-4">
+              <Link
+                href="/free-consultation"
+                className="inline-flex items-center gap-3 rounded-none bg-[#2563eb] px-7 py-4 text-sm font-extrabold text-white shadow-[0_0_34px_rgba(37,99,235,0.42)] transition hover:-translate-y-1 hover:bg-white hover:text-black"
+              >
+                احجز استشارتك المجانية <ArrowLeft className="h-5 w-5" />
+              </Link>
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-3 rounded-none border border-white/30 px-7 py-4 text-sm font-extrabold text-white shadow-[0_0_34px_rgba(37,99,235,0.42)] transition hover:-translate-y-1 hover:bg-white hover:text-black"
+              >
+                تواصل معنا
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -92,7 +100,7 @@ export default function Home() {
               as="h2"
               text="نحوّل الفكرة إلى مسار عمل واضح"
               wordsPerLine={4}
-              className="text-4xl font-extrabold leading-tight md:text-6xl"
+              className="text-4xl font-extrabold leading-[1.5] md:text-6xl"
             />
             <p className="mt-7 max-w-3xl text-lg leading-9 text-white/60">
               OSB شركة سعودية متخصصة تقدم حلول الأعمال المتكاملة داخل المملكة العربية السعودية، نساعد رواد الأعمال والمستثمرين والشركات الناشئة على بناء أعمالهم بطريقة صحيحة ومدروسة من البداية وحتى التشغيل والتوسع.
@@ -101,16 +109,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="border-y border-white/5 bg-black py-14">
-        <div className="container-osb grid gap-8 text-center md:grid-cols-4">
-          {stats.map(([number, label]) => (
-            <div key={label}>
-              <p className="text-4xl font-extrabold md:text-5xl">{number}</p>
-              <p className="mt-3 text-sm font-bold text-white/45">{label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* stats section hidden */}
 
       <ServicesHoverGrid />
 
@@ -119,7 +118,7 @@ export default function Home() {
           {/* Animated image with glow */}
           <div className="relative">
             <AnimatedImage
-              src="/images/consult-free.svg"
+              src="/images/consult-free.png"
               alt="استشارة مجانية"
               className="rounded-[2rem]"
             />
@@ -130,14 +129,14 @@ export default function Home() {
             <ScrollRevealText
               as="h2"
               text="ابدأ باستشارة مجانية قبل أي قرار"
-              wordsPerLine={5}
-              className="text-4xl font-extrabold leading-tight md:text-5xl"
+              wordsPerLine={99}
+              className="text-4xl font-extrabold leading-[1.5] md:text-5xl"
             />
             <p className="mt-6 text-lg leading-9 text-white/60">
               نجلس معك، نفهم وضعك، ونخبرك بصدق ما الذي تحتاجه وما لا تحتاجه. بدون التزام. بدون ضغط. بدون تكلفة.
             </p>
             <div className="mt-8 max-w-xl rounded-[2rem] border border-white/10 bg-white/[0.04] p-5">
-              <ConsultationForm compact light />
+              <ConsultationForm light />
             </div>
           </div>
         </div>

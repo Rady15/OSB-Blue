@@ -66,7 +66,7 @@ export function ScrollRevealText({
   });
   const lines = useMemo(() => splitIntoLines(text, wordsPerLine), [text, wordsPerLine]);
   const content = lines.map((line, index) => (
-    <span key={`${line}-${index}`} className="block overflow-hidden">
+    <span key={`${line}-${index}`} className="block">
       <motion.span
         aria-hidden="true"
         custom={startIndex + index}

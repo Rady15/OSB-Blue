@@ -9,7 +9,7 @@ import { ScrollRevealText } from "@/components/ui/ScrollRevealText";
 gsap.registerPlugin(ScrollTrigger);
 
 const challenges = [
-  "غير متأكد من نوع الشركة أو الكيان القانوني المناسب لنشاطك؟",
+  "تشعر أن بعض إجراءاتك تستغرق وقتاً وجهداً أكثر مما ينبغي؟",
   "تتعامل مع عدة جهات وخدمات وتشعر أن الصورة غير واضحة؟",
   "أنفقت وقتاً أو ميزانية على إجراءات لم تكن ضرورية؟",
   "تمتلك شركة قائمة وتشعر أن بعض الجوانب التشغيلية أو الإدارية تحتاج إلى تنظيم أفضل؟",
@@ -83,12 +83,10 @@ export function ChallengesSection() {
               as="h2"
               text="هل تواجه إحدى هذه التحديات؟"
               wordsPerLine={4}
-              className="text-4xl font-extrabold leading-tight md:text-6xl lg:text-7xl"
+              className="text-4xl font-extrabold leading-[1.5] md:text-6xl lg:text-7xl"
             />
           </div>
-          <p className="max-w-md text-lg leading-8 text-white/50">
-            كل مشروع يحتاج إلى نقطة بداية واضحة، وكل قرار مبكر قد يصنع فرقاً كبيراً في المسار.
-          </p>
+
         </div>
 
         {/* Challenge rows */}
@@ -144,7 +142,7 @@ export function ChallengesSection() {
         <div className="mt-20 grid gap-8 md:grid-cols-[1fr_1.2fr] md:items-center">
           {/* Left: big statement */}
           <div>
-            <p className="text-3xl font-extrabold leading-tight text-white md:text-4xl">
+            <p className="text-3xl font-extrabold leading-[1.5] text-white md:text-4xl">
               إذا كانت إجابتك{" "}
               <span className="relative inline-block text-[#2563eb]">
                 نعم
@@ -164,8 +162,8 @@ export function ChallengesSection() {
             </p>
 
             <div className="relative mt-8 flex items-center gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#2563eb] text-lg font-black text-white shadow-[0_0_30px_rgba(37,99,235,0.4)]">
-                OSB
+              <div className="flex h-16 w-16 items-center justify-center rounded-xl shadow-[0_0_30px_rgba(37,99,235,0.4)]">
+                <img src="/images/logo.png" alt="OSB" className="h-14 w-14 object-contain brightness-0 invert" />
               </div>
               <div>
                 <p className="text-lg font-extrabold text-white">وهنا يأتي دورنا</p>

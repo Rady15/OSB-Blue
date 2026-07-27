@@ -10,11 +10,11 @@ gsap.registerPlugin(ScrollTrigger);
 const steps = [
   {
     label: "قبل",
-    text: "قبل أي خدمة، قبل أي عقد، قبل أي تكلفة — نجلس معك، نفهم فكرتك، ندرس نشاطك، ونحلل السوق.",
+    text: "أي خدمة، أي عقد، أي تكلفة — نجلس معك، نفهم اعمالك، ندرس نشاطك، ونحلل السوق.",
   },
   {
     label: "ثم",
-    text: "نقول لك بوضوح: هذا هو النوع الصحيح لشركتك. هذا هو الترتيب الصحيح للخطوات. هذا هو ما تحتاجه الآن — وما لا تحتاجه.",
+    text: "نقول لك بوضوح: هذه هي الأولويات/المتطلبات/الخطة. هذا هو الترتيب الصحيح للخطوات. هذا هو ما تحتاجه الآن — وما لا تحتاجه.",
   },
   {
     label: "بعد ذلك فقط",
@@ -110,7 +110,7 @@ export function WhyUsSection() {
             as="h2"
             text="نحن لا نبيع خدمات، نحن نلتزم معك كشريك نجاح"
             wordsPerLine={5}
-            className="text-3xl font-extrabold leading-tight md:text-5xl lg:text-6xl"
+            className="text-3xl font-extrabold leading-[1.5] md:text-5xl lg:text-6xl"
           />
         </div>
 
@@ -147,7 +147,7 @@ export function WhyUsSection() {
 
                 {/* Content */}
                 <div className="pb-4">
-                  <span className="mb-3 inline-block rounded-full bg-[#2563eb]/10 px-3 py-1 text-xs font-bold text-[#2563eb] md:text-sm">
+                  <span className="mb-3 inline-block rounded-full bg-[#2563eb]/10 px-3 py-1 text-xl font-bold text-[#2563eb] md:text-2xl">
                     {step.label}
                   </span>
                   <p
