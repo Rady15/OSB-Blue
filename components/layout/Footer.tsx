@@ -7,6 +7,7 @@ import { siteConfig } from "@/data/siteConfig";
 const quickLinks = [
   { href: "/", label: "الرئيسية" },
   { href: "/about", label: "من نحن" },
+  { href: "/blog", label: "المدونة" },
   { href: "/how-we-work", label: "كيف نعمل" },
   { href: "/free-consultation", label: "استشارة مجانية" },
   { href: "/contact", label: "تواصل معنا" },

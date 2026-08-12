@@ -1,14 +1,10 @@
 import type { Metadata } from "next";
 import { Tajawal } from "next/font/google";
-import { BackToTopButton } from "@/components/ui/BackToTopButton";
-import { CustomCursor } from "@/components/ui/CustomCursor";
-import { ScrollProgressBar } from "@/components/ui/ScrollProgressBar";
-import { FloatingWhatsApp } from "@/components/ui/FloatingWhatsApp";
 import { PageLoader } from "@/components/ui/PageLoader";
-import { Footer } from "@/components/layout/Footer";
+import { ScrollProgressBar } from "@/components/ui/ScrollProgressBar";
 import { GlobalMotion } from "@/components/layout/GlobalMotion";
-import { Header } from "@/components/layout/Header";
 import { SmoothScrollProvider } from "@/components/layout/SmoothScrollProvider";
+import RootLayoutClient from "./root-layout-client";
 import "./globals.css";
 
 const tajawal = Tajawal({
@@ -35,12 +31,9 @@ export default function RootLayout({
           <PageLoader />
           <ScrollProgressBar />
           <GlobalMotion />
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <BackToTopButton />
-          <FloatingWhatsApp />
-          <CustomCursor />
+          <RootLayoutClient>
+            {children}
+          </RootLayoutClient>
         </SmoothScrollProvider>
       </body>
     </html>

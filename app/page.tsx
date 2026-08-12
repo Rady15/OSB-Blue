@@ -21,8 +21,15 @@ const stats = [
 export default function Home() {
   return (
     <div className="adsela-page min-h-screen overflow-hidden bg-black text-white">
-      <section className="relative min-h-screen overflow-hidden bg-black pt-28">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_24%_24%,rgba(37,99,235,0.32),transparent_28%),radial-gradient(circle_at_78%_38%,rgba(255,255,255,0.08),transparent_20%)]" />
+      <section className="relative min-h-screen overflow-hidden bg-[rgb(0,11,48)] pt-28">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: "url('/images/OSB.png')",
+          }}
+        />
+        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_15%,rgba(59,130,246,0.55),transparent_35%),radial-gradient(circle_at_10%_85%,rgba(37,99,235,0.4),transparent_40%),radial-gradient(circle_at_50%_50%,rgba(147,197,253,0.18),transparent_45%)]" />
         <div className="absolute left-10 top-24 hidden flex-col gap-3 md:flex">
           {[0, 1, 2, 3, 4].map((item) => (
             <span key={item} className="h-2 w-2 rounded-full bg-[#2563eb] shadow-[0_0_16px_rgba(37,99,235,0.9)]" />
@@ -40,18 +47,18 @@ export default function Home() {
             </div>
           </div>
           <div className="order-1 text-right lg:order-2">
-            <p className="mb-5 text-sm font-bold text-white/55">OSB — One Stop Business</p>
+            <p className="mb-5 text-sm font-bold text-white/60">OSB — One Stop Business</p>
             <ScrollRevealText
               as="h1"
               text="كل ما يحتاجه مشروعك في مكان واحد"
               wordsPerLine={3}
-              className="text-5xl font-extrabold leading-[1.5] md:text-7xl"
+              className="text-5xl font-extrabold leading-[1.5] text-white md:text-7xl"
             />
             <ScrollRevealText
               as="p"
               text="نحوّل التحديات التشغيلية إلى حلول عملية تدعم كفاءة أعمالك ونموها"
               wordsPerLine={99}
-              className="mt-7 max-w-2xl text-lg leading-9 text-white/65"
+              className="mt-7 max-w-2xl text-lg leading-9 text-white/75"
             />
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <Link

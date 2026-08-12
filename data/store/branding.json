@@ -1,0 +1,13 @@
+{
+  "logo": "/images/logo.png",
+  "logoDark": "/images/logo.png",
+  "favicon": "/uploads/1786195249837-fbalv3x.png",
+  "primaryColor": "#0b1f3a",
+  "secondaryColor": "#2563eb",
+  "accentColor": "#ffffff",
+  "backgroundColor": "#000000",
+  "textColor": "#ffffff",
+  "fontFamily": "Cairo",
+  "siteName": "OSB",
+  "siteTagline": "One Stop Business"
+}

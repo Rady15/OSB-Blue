@@ -39,7 +39,7 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
   const service = services.find((item) => item.slug === params.slug);
   if (!service) notFound();
   const Icon = icons[service.icon] ?? icons.BriefcaseBusiness;
-  const imgSrc = serviceImages[service.slug] ?? "/images/operations-dashboard.svg";
+  const imgSrc = service.image || (serviceImages[service.slug] ?? "/images/operations-dashboard.svg");
   const related = services.filter((item) => item.slug !== service.slug).slice(0, 3);
 
   return (

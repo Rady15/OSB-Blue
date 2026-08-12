@@ -2,6 +2,7 @@
 
 import { useRef, useEffect } from "react";
 import { Sparkles } from "lucide-react";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { services } from "@/data/services";
@@ -126,9 +127,14 @@ export function ServicesHoverGrid() {
                     </span>
 
                     {/* Title */}
-                    <h3 className="relative z-10 text-3xl font-extrabold leading-[1.5] text-white md:text-5xl">
-                      {service.title}
-                    </h3>
+                    <Link
+                      href={`/services/${service.slug}`}
+                      className="group/title relative z-10 inline-block text-3xl font-extrabold leading-[1.5] text-white md:text-5xl"
+                    >
+                      <span className="bg-gradient-to-r from-white via-white to-white bg-[length:0%_3px] bg-bottom bg-no-repeat transition-[background-size] duration-500 group-hover/title:from-[#2563eb] group-hover/title:via-[#2563eb] group-hover/title:to-[#60a5fa] group-hover/title:bg-[length:100%_3px]">
+                        {service.title}
+                      </span>
+                    </Link>
                   </div>
                 </div>
 

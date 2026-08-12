@@ -1,0 +1,519 @@
+[
+  {
+    "id": "home-page",
+    "path": "/",
+    "title": "الرئيسية",
+    "description": "الصفحة الرئيسية - كل ما يحتاجه مشروعك في مكان واحد",
+    "sections": [
+      {
+        "id": "home-hero",
+        "type": "hero",
+        "label": "القسم الرئيسي",
+        "backgroundColor": "#2d040d",
+        "blocks": [
+          {
+            "id": "home-hero-kicker",
+            "type": "text",
+            "content": "OSB — One Stop Business",
+            "styles": {
+              "color": "#60a5fa",
+              "fontSize": "1rem",
+              "fontWeight": "700",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "home-hero-title",
+            "type": "heading",
+            "content": "كل ما يحتاجه مشروعك في مكان واحد",
+            "styles": {
+              "color": "#ffffff",
+              "fontSize": "clamp(2.5rem, 5vw, 4.5rem)",
+              "fontWeight": "800",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "home-hero-desc",
+            "type": "text",
+            "content": "نحوّل التحديات التشغيلية إلى حلول عملية تدعم كفاءة أعمالك ونموها",
+            "styles": {
+              "color": "rgba(255,255,255,0.7)",
+              "fontSize": "clamp(1rem, 2vw, 1.25rem)",
+              "lineHeight": "2.25",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "home-hero-cta",
+            "type": "button",
+            "content": "احجز استشارتك المجانية",
+            "metadata": {
+              "href": "/free-consultation"
+            },
+            "styles": {
+              "color": "#ffffff",
+              "backgroundColor": "#2563eb",
+              "fontWeight": "700",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "home-hero-img",
+            "type": "image",
+            "content": "/images/hero.png",
+            "metadata": {
+              "alt": "OSB Hero"
+            },
+            "styles": {}
+          }
+        ]
+      },
+      {
+        "id": "home-services",
+        "type": "services",
+        "label": "خدماتنا",
+        "backgroundColor": "#000000",
+        "blocks": [
+          {
+            "id": "home-services-title",
+            "type": "heading",
+            "content": "خدمات متكاملة تحت سقف واحد",
+            "styles": {
+              "color": "#ffffff",
+              "fontSize": "2.5rem",
+              "fontWeight": "800",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "home-services-desc",
+            "type": "text",
+            "content": "استراتيجية وتخطيط، محاسبة وامتثال، تسويق وعلامة تجارية، حلول رقمية، أتمتة أعمال، وبنية تحتية.",
+            "styles": {
+              "color": "rgba(255,255,255,0.6)",
+              "fontSize": "1.125rem",
+              "lineHeight": "2.25",
+              "textAlign": "center"
+            }
+          }
+        ]
+      },
+      {
+        "id": "home-cta",
+        "type": "cta",
+        "label": "ابدأ باستشارة مجانية",
+        "backgroundColor": "#000000",
+        "blocks": [
+          {
+            "id": "home-cta-title",
+            "type": "heading",
+            "content": "ابدأ باستشارة مجانية قبل أي قرار",
+            "styles": {
+              "color": "#ffffff",
+              "fontSize": "2.25rem",
+              "fontWeight": "800",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "home-cta-desc",
+            "type": "text",
+            "content": "نجلس معك، نفهم وضعك، ونخبرك بصدق ما الذي تحتاجه وما لا تحتاجه. بدون التزام. بدون ضغط. بدون تكلفة.",
+            "styles": {
+              "color": "rgba(255,255,255,0.6)",
+              "fontSize": "1.125rem",
+              "lineHeight": "2.25",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "home-cta-btn",
+            "type": "button",
+            "content": "احجز استشارتك المجانية",
+            "metadata": {
+              "href": "/free-consultation"
+            },
+            "styles": {
+              "color": "#ffffff",
+              "backgroundColor": "#2563eb",
+              "fontWeight": "700",
+              "textAlign": "center"
+            }
+          }
+        ]
+      }
+    ],
+    "seoTitle": "OSB | One Stop Business — حلول أعمال متكاملة",
+    "seoDescription": "كل ما يحتاجه مشروعك في مكان واحد",
+    "updatedAt": "2026-08-12T19:20:21.408Z",
+    "cmsManaged": true
+  },
+  {
+    "id": "about-page",
+    "path": "/about",
+    "title": "من نحن",
+    "description": "تعرف على OSB",
+    "sections": [
+      {
+        "id": "about-hero",
+        "type": "hero",
+        "label": "القسم الرئيسي",
+        "backgroundColor": "#000000",
+        "blocks": [
+          {
+            "id": "about-hero-badge",
+            "type": "text",
+            "content": "من نحن",
+            "styles": {
+              "color": "#2563eb",
+              "fontSize": "1.125rem",
+              "fontWeight": "700",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "about-hero-title",
+            "type": "heading",
+            "content": "لماذا OSB؟",
+            "styles": {
+              "color": "#ffffff",
+              "fontSize": "clamp(2.25rem, 4vw, 4rem)",
+              "fontWeight": "800",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "about-hero-desc",
+            "type": "text",
+            "content": "OSB شركة سعودية متخصصة تقدم حلول الأعمال المتكاملة داخل المملكة العربية السعودية، نساعد رواد الأعمال والمستثمرين والشركات الناشئة على بناء أعمالهم بطريقة صحيحة ومدروسة من البداية وحتى التشغيل والتوسع.",
+            "styles": {
+              "color": "rgba(255,255,255,0.6)",
+              "fontSize": "1.125rem",
+              "lineHeight": "2.25",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "about-hero-img",
+            "type": "image",
+            "content": "/images/logo.png",
+            "metadata": {
+              "alt": "OSB"
+            },
+            "styles": {}
+          }
+        ]
+      },
+      {
+        "id": "about-story",
+        "type": "story",
+        "label": "قصتنا",
+        "backgroundColor": "#000000",
+        "blocks": [
+          {
+            "id": "about-story-title",
+            "type": "heading",
+            "content": "قصتنا",
+            "styles": {
+              "color": "#ffffff",
+              "fontSize": "2.5rem",
+              "fontWeight": "800",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "about-story-1",
+            "type": "text",
+            "content": "رأينا أن كثيراً من الشركات تقضي وقتاً وجهداً كبيرين في التنسيق بين جهات متعددة، بينما كان يمكن إنجاز كل ذلك من خلال شريك واحد يفهم احتياجاتها ويقدّم الحلول المناسبة.",
+            "styles": {
+              "color": "rgba(255,255,255,0.6)",
+              "fontSize": "1.125rem",
+              "lineHeight": "2.25"
+            }
+          },
+          {
+            "id": "about-story-2",
+            "type": "text",
+            "content": "جمعنا خدمات الأعمال الأساسية تحت سقف واحد، لنساعد الشركات على العمل بكفاءة أكبر، واتخاذ قرارات أفضل، والتركيز على نمو أعمالها.",
+            "styles": {
+              "color": "rgba(255,255,255,0.6)",
+              "fontSize": "1.125rem",
+              "lineHeight": "2.25"
+            }
+          }
+        ]
+      }
+    ],
+    "seoTitle": "من نحن | OSB",
+    "seoDescription": "تعرف على OSB وخدماتنا",
+    "updatedAt": "2026-08-12T10:00:00.000Z"
+  },
+  {
+    "id": "how-we-work-page",
+    "path": "/how-we-work",
+    "title": "كيف نعمل",
+    "description": "طريقة العمل",
+    "sections": [
+      {
+        "id": "how-hero",
+        "type": "hero",
+        "label": "القسم الرئيسي",
+        "backgroundColor": "#000000",
+        "blocks": [
+          {
+            "id": "how-hero-title",
+            "type": "heading",
+            "content": "كيف نعمل",
+            "styles": {
+              "color": "#ffffff",
+              "fontSize": "clamp(2.25rem, 4vw, 4rem)",
+              "fontWeight": "800",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "how-hero-desc",
+            "type": "text",
+            "content": "نبدأ بالتشخيص، ثم نحدد الخطوة العملية الأقرب لوضع مشروعك. نشخّص. نوجّه. ننفّذ.",
+            "styles": {
+              "color": "rgba(255,255,255,0.6)",
+              "fontSize": "1.125rem",
+              "lineHeight": "2.25",
+              "textAlign": "center"
+            }
+          }
+        ]
+      },
+      {
+        "id": "how-steps",
+        "type": "steps",
+        "label": "الخطوات",
+        "backgroundColor": "#000000",
+        "blocks": [
+          {
+            "id": "how-step-1",
+            "type": "text",
+            "content": "01 — نفهم أعمالك",
+            "styles": {
+              "color": "#2563eb",
+              "fontSize": "1.5rem",
+              "fontWeight": "800"
+            }
+          },
+          {
+            "id": "how-step-2",
+            "type": "text",
+            "content": "02 — نشخّص الوضع",
+            "styles": {
+              "color": "#2563eb",
+              "fontSize": "1.5rem",
+              "fontWeight": "800"
+            }
+          },
+          {
+            "id": "how-step-3",
+            "type": "text",
+            "content": "03 — نوجّهك نحو الحل",
+            "styles": {
+              "color": "#2563eb",
+              "fontSize": "1.5rem",
+              "fontWeight": "800"
+            }
+          },
+          {
+            "id": "how-step-4",
+            "type": "text",
+            "content": "04 — ننفّذ معك",
+            "styles": {
+              "color": "#2563eb",
+              "fontSize": "1.5rem",
+              "fontWeight": "800"
+            }
+          }
+        ]
+      }
+    ],
+    "seoTitle": "كيف نعمل | OSB",
+    "seoDescription": "طريقة العمل في OSB",
+    "updatedAt": "2026-08-12T10:00:00.000Z"
+  },
+  {
+    "id": "contact-page",
+    "path": "/contact",
+    "title": "تواصل معنا",
+    "description": "تواصل مع OSB",
+    "sections": [
+      {
+        "id": "contact-hero",
+        "type": "hero",
+        "label": "القسم الرئيسي",
+        "backgroundColor": "#000000",
+        "blocks": [
+          {
+            "id": "contact-hero-title",
+            "type": "heading",
+            "content": "تواصل معنا",
+            "styles": {
+              "color": "#ffffff",
+              "fontSize": "clamp(2.25rem, 4vw, 4rem)",
+              "fontWeight": "800",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "contact-hero-desc",
+            "type": "text",
+            "content": "سواء كنت في مرحلة الفكرة أو التأسيس أو التوسع، فريقنا جاهز للإجابة على استفساراتك.",
+            "styles": {
+              "color": "rgba(255,255,255,0.6)",
+              "fontSize": "1.125rem",
+              "lineHeight": "2.25",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "contact-cta",
+            "type": "button",
+            "content": "احجز استشارتك المجانية",
+            "metadata": {
+              "href": "/free-consultation"
+            },
+            "styles": {
+              "color": "#ffffff",
+              "backgroundColor": "#2563eb",
+              "fontWeight": "700",
+              "textAlign": "center"
+            }
+          }
+        ]
+      }
+    ],
+    "seoTitle": "تواصل معنا | OSB",
+    "seoDescription": "تواصل مع فريق OSB",
+    "updatedAt": "2026-08-12T10:00:00.000Z"
+  },
+  {
+    "id": "faq-page",
+    "path": "/faq",
+    "title": "الأسئلة الشائعة",
+    "description": "إجابات على أسئلتك",
+    "sections": [
+      {
+        "id": "faq-hero",
+        "type": "hero",
+        "label": "القسم الرئيسي",
+        "backgroundColor": "#000000",
+        "blocks": [
+          {
+            "id": "faq-hero-title",
+            "type": "heading",
+            "content": "الأسئلة الشائعة",
+            "styles": {
+              "color": "#ffffff",
+              "fontSize": "clamp(2.25rem, 4vw, 4rem)",
+              "fontWeight": "800",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "faq-hero-desc",
+            "type": "text",
+            "content": "إجابات على الأسئلة الأكثر شيوعاً حول خدمات OSB.",
+            "styles": {
+              "color": "rgba(255,255,255,0.6)",
+              "fontSize": "1.125rem",
+              "lineHeight": "2.25",
+              "textAlign": "center"
+            }
+          }
+        ]
+      }
+    ],
+    "seoTitle": "الأسئلة الشائعة | OSB",
+    "seoDescription": "إجابات على أسئلتك",
+    "updatedAt": "2026-08-12T10:00:00.000Z"
+  },
+  {
+    "id": "partners-page",
+    "path": "/partners",
+    "title": "الشركاء",
+    "description": "شركاء النجاح",
+    "sections": [
+      {
+        "id": "partners-hero",
+        "type": "hero",
+        "label": "القسم الرئيسي",
+        "backgroundColor": "#000000",
+        "blocks": [
+          {
+            "id": "partners-hero-title",
+            "type": "heading",
+            "content": "شركاء النجاح",
+            "styles": {
+              "color": "#ffffff",
+              "fontSize": "clamp(2.25rem, 4vw, 4rem)",
+              "fontWeight": "800",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "partners-hero-desc",
+            "type": "text",
+            "content": "نختار شبكة الشركاء بعناية حتى يحصل صاحب المشروع على خبرة متخصصة وتنفيذ موثوق في كل خطوة.",
+            "styles": {
+              "color": "rgba(255,255,255,0.6)",
+              "fontSize": "1.125rem",
+              "lineHeight": "2.25",
+              "textAlign": "center"
+            }
+          }
+        ]
+      }
+    ],
+    "seoTitle": "الشركاء | OSB",
+    "seoDescription": "شركاء النجاح",
+    "updatedAt": "2026-08-12T10:00:00.000Z"
+  },
+  {
+    "id": "free-consultation-page",
+    "path": "/free-consultation",
+    "title": "استشارة مجانية",
+    "description": "احجز استشارتك المجانية",
+    "sections": [
+      {
+        "id": "consult-hero",
+        "type": "hero",
+        "label": "القسم الرئيسي",
+        "backgroundColor": "#000000",
+        "blocks": [
+          {
+            "id": "consult-hero-title",
+            "type": "heading",
+            "content": "احجز استشارتك المجانية",
+            "styles": {
+              "color": "#ffffff",
+              "fontSize": "clamp(2.25rem, 4vw, 4rem)",
+              "fontWeight": "800",
+              "textAlign": "center"
+            }
+          },
+          {
+            "id": "consult-hero-desc",
+            "type": "text",
+            "content": "استشارة تغير مسار مشروعك. نجلس معك، نفهم وضعك، ونخبرك بصدق ما الذي تحتاجه.",
+            "styles": {
+              "color": "rgba(255,255,255,0.6)",
+              "fontSize": "1.125rem",
+              "lineHeight": "2.25",
+              "textAlign": "center"
+            }
+          }
+        ]
+      }
+    ],
+    "seoTitle": "استشارة مجانية | OSB",
+    "seoDescription": "احجز استشارتك المجانية",
+    "updatedAt": "2026-08-12T10:00:00.000Z"
+  }
+]

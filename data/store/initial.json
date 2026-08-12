@@ -1,0 +1,26 @@
+{
+  "blog": [],
+  "seo": {
+    "globalTitle": "OSB — One Stop Business",
+    "globalDescription": "كل ما يحتاجه مشروعك في مكان واحد",
+    "globalKeywords": "أعمال، استشارات، تأسيس، محاسبة، قانوني",
+    "ogImage": "/images/hero.png",
+    "twitterHandle": "",
+    "googleAnalyticsId": "",
+    "googleSearchConsoleId": "",
+    "pages": []
+  },
+  "settings": {
+    "siteName": "OSB",
+    "siteTagline": "One Stop Business",
+    "phone": "+966500000000",
+    "email": "info@osb.sa",
+    "address": "المملكة العربية السعودية",
+    "workingHours": "الأحد - الخميس: 9:00 ص - 6:00 م",
+    "social": {
+      "linkedin": "",
+      "instagram": ""
+    },
+    "maintenanceMode": false
+  }
+}

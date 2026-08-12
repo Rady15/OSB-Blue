@@ -1,0 +1,13 @@
+{
+  "siteName": "OSB",
+  "siteTagline": "One Stop Business",
+  "phone": "+966500000000",
+  "email": "info@osb.sa",
+  "address": "المملكة العربية السعودية",
+  "workingHours": "الأحد - الخميس: 9:00 ص - 6:00 م",
+  "social": {
+    "linkedin": "",
+    "instagram": ""
+  },
+  "maintenanceMode": true
+}

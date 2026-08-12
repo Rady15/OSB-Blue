@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown, Menu } from "lucide-react";
+import { ChevronDown, Menu, Settings } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -13,6 +13,7 @@ const navLinks = [
   { href: "/", label: "الرئيسية" },
   { href: "/about", label: "من نحن" },
   { href: "/how-we-work", label: "كيف نعمل" },
+  { href: "/blog", label: "المدونة" },
   { href: "/faq", label: "الأسئلة الشائعة" },
   { href: "/contact", label: "تواصل معنا" },
 ];
@@ -80,7 +81,10 @@ export function Header() {
             ))}
           </nav>
 
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center gap-3">
+            <Link href="/admin" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white/70 transition hover:bg-white/10 hover:text-white" aria-label="لوحة التحكم">
+              <Settings className="h-5 w-5" />
+            </Link>
             <LinkButton href="/free-consultation">احجز استشارتك المجانية</LinkButton>
           </div>
           <button aria-label="فتح القائمة" onClick={() => setMenuOpen(true)} className="text-white md:hidden">

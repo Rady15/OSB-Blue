@@ -35,7 +35,7 @@ export function PartnersMarquee() {
       <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-black to-transparent" />
       <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-black to-transparent" />
 
-      <div ref={trackRef} className="flex w-max">
+      <div ref={trackRef} className="flex w-max gap-4">
         {/* Hidden measuring set */}
         <div ref={setRef} className="flex shrink-0 gap-4 opacity-0 absolute pointer-events-none" aria-hidden>
           {partners.map((partner) => (
