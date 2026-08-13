@@ -1,6 +1,7 @@
 export interface Service {
   slug: string;
   title: string;
+  shortDescription: string;
   heroQuestion: string;
   problemParagraphs: string[];
   solutionParagraph: string;
@@ -13,6 +14,7 @@ export const services: Service[] = [
   {
     "slug": "strategy-planning",
     "title": "الاستراتيجية والتخطيط",
+    "shortDescription": "نبدأ بالتشخيص، ثم نحدد الخطوة العملية الأقرب لوضع مشروعك.",
     "heroQuestion": "هل فكرتك جاهزة للتحول إلى مشروع ناجح؟",
     "problemParagraphs": [
       "كل مشروع ناجح يبدأ بخطة واضحة. نساعدك على تقييم الفرص، وفهم السوق، ووضع أسس استراتيجية تساعدك على اتخاذ قرارات مدروسة قبل الانطلاق أو التوسع."
@@ -29,6 +31,7 @@ export const services: Service[] = [
   {
     "slug": "accounting-compliance",
     "title": "المحاسبة والامتثال",
+    "shortDescription": "ننظم حساباتك ونضمن امتثالك للمتطلبات المالية والضريبية.",
     "heroQuestion": "هل لديك صورة واضحة عن الوضع المالي لمشروعك؟",
     "problemParagraphs": [
       "إدارة الأعمال لا تقتصر على تحقيق الأرباح، بل تعتمد أيضاً على الالتزام بالمتطلبات المالية والتنظيمية. نوفر حلولاً تساعدك على إدارة أعمالك بثقة، مع ضمان الامتثال للأنظمة واللوائح."
@@ -45,6 +48,7 @@ export const services: Service[] = [
   {
     "slug": "marketing-branding",
     "title": "التسويق وبناء العلامة التجارية",
+    "shortDescription": "نبني هوية قوية واستراتيجية تسويقية تصل بك إلى عملائك.",
     "heroQuestion": "هل يعرف عملائك لماذا يجب أن يختاروك؟",
     "problemParagraphs": [
       "العلامة التجارية القوية لا تقتصر على التصميم، بل تبدأ باستراتيجية واضحة تساعدك على الوصول إلى العملاء المناسبين وبناء حضور مؤثر في السوق."
@@ -61,6 +65,7 @@ export const services: Service[] = [
   {
     "slug": "digital-solutions",
     "title": "الأنظمة والحلول الرقمية",
+    "shortDescription": "أنظمة رقمية متكاملة تربط عملياتك وتدعم نمو أعمالك.",
     "heroQuestion": "هل أصبحت العمليات اليومية تستهلك وقتاً أكثر مما ينبغي؟",
     "problemParagraphs": [
       "الأنظمة المناسبة تساعدك على إدارة أعمالك بكفاءة، وربط عملياتك في بيئة عمل متكاملة تدعم اتخاذ القرار والنمو."
@@ -77,6 +82,7 @@ export const services: Service[] = [
   {
     "slug": "business-automation",
     "title": "تطوير وأتمتة الأعمال",
+    "shortDescription": "نحوّل إجراءاتك اليومية إلى عمليات أسرع وأدق.",
     "heroQuestion": "هل عملياتك اليومية تستغرق وقتاً وجهداً كبيرين؟",
     "problemParagraphs": [
       "كلما كانت عملياتك أكثر تنظيماً وأتمتة، أصبحت أعمالك أكثر كفاءة وقابلية للنمو. نساعدك على تطوير إجراءات العمل وتحويلها إلى عمليات أكثر سرعة ودقة."
@@ -93,6 +99,7 @@ export const services: Service[] = [
   {
     "slug": "business-infrastructure",
     "title": "البنية التحتية للأعمال",
+    "shortDescription": "مكاتب وعناوين تجارية جاهزة لبدء أعمالك أو التوسع.",
     "heroQuestion": "هل تحتاج إلى مقر رسمي يتناسب مع احتياجات مشروعك؟",
     "problemParagraphs": [
       "نوفر المقومات الأساسية التي تساعد الشركات على بدء أعمالها أو التوسع فيها ضمن بيئة عمل احترافية تلبي احتياجاتها التشغيلية."
@@ -104,7 +111,7 @@ export const services: Service[] = [
       "تبحث عن حلول مرنة تناسب حجم أعمالك."
     ],
     "icon": "Building",
-    "image": ""
+    "image": "https://tanfeth.sa/wp-content/uploads/2026/06/%D8%AA%D8%A3%D8%B3%D9%8A%D8%B3-%D9%85%D8%A4%D8%B3%D8%B3%D8%A9-%D9%81%D8%B1%D8%AF%D9%8A%D8%A9-%D9%81%D9%8A-%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9.png"
   }
 ];
 

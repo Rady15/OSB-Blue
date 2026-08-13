@@ -19,7 +19,7 @@ function generateSiteConfig() {
 
 function generateServices() {
   const services = readJson<any[]>("services.json");
-  const content = `export interface Service {\n  slug: string;\n  title: string;\n  heroQuestion: string;\n  problemParagraphs: string[];\n  solutionParagraph: string;\n  suitableIf: string[];\n  icon: string;\n  image: string;\n}\n\nexport const services: Service[] = ${JSON.stringify(services, null, 2)};\n\nexport const serviceCta = {\n  title: "غير متأكد إذا كانت هذه الخدمة هي ما يحتاجه مشروعك؟",\n  description: "احجز استشارة مجانية، وسنساعدك على فهم وضعك الحالي وتحديد الخطوة الأنسب قبل اتخاذ أي قرار.",\n  button: "احجز استشارتك المجانية",\n};\n`;
+  const content = `export interface Service {\n  slug: string;\n  title: string;\n  shortDescription: string;\n  heroQuestion: string;\n  problemParagraphs: string[];\n  solutionParagraph: string;\n  suitableIf: string[];\n  icon: string;\n  image: string;\n}\n\nexport const services: Service[] = ${JSON.stringify(services, null, 2)};\n\nexport const serviceCta = {\n  title: "غير متأكد إذا كانت هذه الخدمة هي ما يحتاجه مشروعك؟",\n  description: "احجز استشارة مجانية، وسنساعدك على فهم وضعك الحالي وتحديد الخطوة الأنسب قبل اتخاذ أي قرار.",\n  button: "احجز استشارتك المجانية",\n};\n`;
   fs.writeFileSync(path.join(DATA_DIR, "services.ts"), content, "utf-8");
   console.log("Generated services.ts");
 }

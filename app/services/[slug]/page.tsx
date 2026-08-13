@@ -5,7 +5,6 @@ import { CheckCircle2 } from "lucide-react";
 import { serviceCta, services } from "@/data/services";
 import { icons } from "@/lib/icons";
 import { LinkButton } from "@/components/ui/Button";
-import { PageHero } from "@/components/ui/PageHero";
 import { ScrollRevealText } from "@/components/ui/ScrollRevealText";
 
 const serviceImages: Record<string, string> = {
@@ -44,18 +43,31 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
 
   return (
     <div className="min-h-screen overflow-hidden bg-black text-white">
-      <PageHero eyebrow={service.title} title={service.heroQuestion} description={service.problemParagraphs[0]}>
-        <div className="grid gap-6 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-10">
-          <div className="grid gap-4">
-            <Icon className="h-12 w-12 text-white" />
-            <p className="text-2xl font-extrabold text-white">{service.title}</p>
-            <p className="leading-8 text-white/55">نبدأ بالتشخيص، ثم نحدد الخطوة العملية الأقرب لوضع مشروعك.</p>
-          </div>
-          <div className="overflow-hidden rounded-[1.5rem]">
-            <img src={imgSrc} alt={service.title} className="h-full w-full object-cover" />
+      <section className="relative overflow-hidden bg-black pb-20 pt-36 text-white">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_26%,rgba(37,99,235,0.28),transparent_30%),radial-gradient(circle_at_84%_18%,rgba(255,255,255,0.09),transparent_24%)]" />
+        <div className="soft-light-beam right-0 top-28" />
+        <div className="container-osb relative z-10">
+          <p className="mb-5 text-sm font-bold text-white/55">{service.title}</p>
+          <ScrollRevealText
+            as="h1"
+            text={service.heroQuestion}
+            wordsPerLine={4}
+            className="max-w-5xl text-5xl font-extrabold leading-[1.5] md:text-7xl"
+          />
+          <div className="mt-10 rounded-[1.5rem] border border-white/10 bg-black p-5">
+            <div className="grid gap-6 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-10">
+              <div className="grid gap-4">
+                <Icon className="h-12 w-12 text-white" />
+                <p className="text-2xl font-extrabold text-white">{service.title}</p>
+                <p className="leading-8 text-white/55">{service.shortDescription || service.heroQuestion}</p>
+              </div>
+              <div className="overflow-hidden rounded-[1.5rem] aspect-[4/3] lg:aspect-auto lg:h-full">
+                <img src={imgSrc} alt={service.title} className="h-full w-full object-cover" />
+              </div>
+            </div>
           </div>
         </div>
-      </PageHero>
+      </section>
 
       <section className="bg-black py-24">
         <div className="container-osb grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">

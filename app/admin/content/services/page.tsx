@@ -7,6 +7,7 @@ import { ArrowLeft, Save, Plus, Trash2 } from "lucide-react";
 interface Service {
   slug: string;
   title: string;
+  shortDescription: string;
   heroQuestion: string;
   problemParagraphs: string[];
   solutionParagraph: string;
@@ -62,6 +63,7 @@ export default function ServicesEditor() {
     setServices((prev) => [...prev, {
       slug: "",
       title: "",
+      shortDescription: "",
       heroQuestion: "",
       problemParagraphs: [""],
       solutionParagraph: "",
@@ -161,6 +163,37 @@ export default function ServicesEditor() {
               </button>
             </div>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div>
+                <label className="mb-1 block text-xs text-white/40">اسم الخدمة</label>
+                <input
+                  type="text"
+                  value={service.title}
+                  onChange={(e) => updateService(index, "title", e.target.value)}
+                  placeholder="اسم الخدمة"
+                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-white/30 outline-none focus:border-[#2563eb]"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-xs text-white/40">رابط الخدمة (slug)</label>
+                <input
+                  type="text"
+                  value={service.slug}
+                  onChange={(e) => updateService(index, "slug", e.target.value)}
+                  placeholder="service-slug"
+                  dir="ltr"
+                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-white/30 outline-none focus:border-[#2563eb]"
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <label className="mb-1 block text-xs text-white/40">وصف مختصر (يظهر في بطاقة الخدمة بالرئيسية)</label>
+                <textarea
+                  value={service.shortDescription || ""}
+                  onChange={(e) => updateService(index, "shortDescription", e.target.value)}
+                  rows={2}
+                  placeholder="وصف قصير يظهر تحت اسم الخدمة"
+                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-white/30 outline-none focus:border-[#2563eb]"
+                />
+              </div>
               <div>
                 <label className="mb-1 block text-xs text-white/40">الأيقونة (اسم Lucide)</label>
                 <input
