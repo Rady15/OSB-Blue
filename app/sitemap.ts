@@ -2,6 +2,8 @@ import type { MetadataRoute } from "next";
 import { services } from "@/data/services";
 import { store } from "@/lib/store";
 
+export const revalidate = 60;
+
 const baseUrl = "https://osb.com.sa";
 
 export default function sitemap(): MetadataRoute.Sitemap {
