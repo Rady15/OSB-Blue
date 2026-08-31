@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { store } from "@/lib/store";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "المدونة | OSB",

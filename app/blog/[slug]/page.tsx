@@ -5,7 +5,7 @@ import { ArrowLeft, Calendar, User } from "lucide-react";
 import { store } from "@/lib/store";
 import { sanitizeHtml } from "@/lib/sanitize-html";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export async function generateStaticParams() {
   const posts = store.getBlogPosts().filter((p) => p.status === "published");
