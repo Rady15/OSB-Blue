@@ -1,8 +1,9 @@
 const path = require("path");
 const fs = require("fs");
+const http = require("http");
 const { parse } = require("url");
 
-// Resolve node_modules regardless of LiteSpeed/Passenger CWD (symlinked on Namecheap).
+// Resolve node_modules regardless of Passenger/LiteSpeed CWD (symlinked on Namecheap).
 const appDir = __dirname;
 const paths = [
   path.join(appDir, "node_modules"),
@@ -15,17 +16,13 @@ if (existing.length) {
   require("module").Module._initPaths();
 }
 
-// Resolve "next" as robustly as possible. Prefer an absolute path so the
-// LiteSpeed/node wrapper never loses it due to symlink/CWD quirks.
 function resolveNext() {
   try {
     return require("next");
   } catch (e) {
     for (const p of existing) {
       const candidate = path.join(p, "next");
-      if (fs.existsSync(candidate)) {
-        return require(candidate);
-      }
+      if (fs.existsSync(candidate)) return require(candidate);
     }
     throw e;
   }
@@ -34,14 +31,30 @@ function resolveNext() {
 const next = resolveNext();
 const NODE_ENV = process.env.NODE_ENV || "production";
 const app = next({ dev: NODE_ENV !== "production" });
-
 const handle = app.getRequestHandler();
 
-app.prepare();
+// CloudLinux Passenger bootstraps the exported server's listen() itself, and a
+// request may arrive before app.prepare() finishes. Buffer requests until ready.
+let ready = false;
+const pending = [];
 
-// LiteSpeed/Passenger named handler (cPanel "Startup function: handle").
-// Literal API: exports a (req, res) listener; server lifecycle managed by the host.
-module.exports = function handleRequest(req, res) {
-  handle(req, res, parse(req.url, true));
-};
-module.exports.handle = module.exports;
+function respond(req, res) {
+  if (ready) {
+    handle(req, res, parse(req.url, true));
+  } else {
+    pending.push([req, res]);
+  }
+}
+
+const server = http.createServer(respond);
+
+app.prepare().then(() => {
+  ready = true;
+  while (pending.length) {
+    const [req, res] = pending.shift();
+    handle(req, res, parse(req.url, true));
+  }
+  console.log("> OSB app prepared (Passenger-managed listen)");
+});
+
+module.exports = server;
