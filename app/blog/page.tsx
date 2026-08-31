@@ -2,6 +2,8 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { store } from "@/lib/store";
 
+export const revalidate = 60;
+
 export const metadata: Metadata = {
   title: "المدونة | OSB",
   metadataBase: new URL("https://osb.com.sa"),
