@@ -3,6 +3,7 @@ const nextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   compress: true,
+  experimental: process.env.LOW_MEM_BUILD ? { cpus: 1 } : undefined,
   images: {
     unoptimized: true,
     remotePatterns: [

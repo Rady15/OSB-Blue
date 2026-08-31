@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "node node_modules/next/dist/bin/next dev",
     "build": "node node_modules/next/dist/bin/next build",
+    "build:lowmem": "NODE_OPTIONS=--max-old-space-size=1024 LOW_MEM_BUILD=1 node node_modules/next/dist/bin/next build --no-lint",
     "start": "node node_modules/next/dist/bin/next start",
     "lint": "node node_modules/eslint/bin/eslint.js ."
   },
