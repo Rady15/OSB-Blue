@@ -4,7 +4,10 @@ const SESSION_COOKIE = "osb-admin-session";
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  if (pathname.startsWith("/admin") && !pathname.startsWith("/admin/login")) {
+  const isAdminPage = pathname.startsWith("/admin") &&
+    !pathname.startsWith("/admin/login") &&
+    !pathname.startsWith("/admin/api");
+  if (isAdminPage) {
     const token = request.cookies.get(SESSION_COOKIE)?.value;
     if (!token) {
       const url = new URL("/admin/login", request.url);

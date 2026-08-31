@@ -1,22 +1,31 @@
-const { createServer } = require("http");
+const path = require("path");
+const fs = require("fs");
 const { parse } = require("url");
+
+// Resolve node_modules regardless of LiteSpeed/Passenger CWD (symlinked on Namecheap).
+const appDir = __dirname;
+const paths = [
+  path.join(appDir, "node_modules"),
+  "/home/osbccnnx/nodevenv/osb/24/lib/node_modules",
+  "/home/osbccnnx/osb/node_modules",
+];
+const existing = paths.filter((p) => fs.existsSync(p));
+if (existing.length) {
+  process.env.NODE_PATH = existing.join(path.delimiter);
+  require("module").Module._initPaths();
+}
+
 const next = require("next");
+const NODE_ENV = process.env.NODE_ENV || "production";
+const app = next({ dev: NODE_ENV !== "production" });
 
-const hostname = process.env.HOST || "127.0.0.1";
-const port = parseInt(process.env.PORT || "3000", 10);
-const dev = process.env.NODE_ENV !== "production";
-
-const app = next({ dev, hostname, port });
 const handle = app.getRequestHandler();
 
-const server = createServer((req, res) => {
-  const parsedUrl = parse(req.url, true);
-  handle(req, res, parsedUrl);
-});
+app.prepare();
 
-app.prepare().then(() => {
-  server.listen(port, hostname);
-  console.log(`> OSB app ready on ${hostname}:${port}`);
-});
-
-module.exports = server;
+// LiteSpeed/Passenger named handler (cPanel "Startup function: handle").
+// Literal API: exports a (req, res) listener; server lifecycle managed by the host.
+module.exports = function handleRequest(req, res) {
+  handle(req, res, parse(req.url, true));
+};
+module.exports.handle = module.exports;
