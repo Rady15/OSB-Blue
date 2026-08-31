@@ -15,7 +15,23 @@ if (existing.length) {
   require("module").Module._initPaths();
 }
 
-const next = require("next");
+// Resolve "next" as robustly as possible. Prefer an absolute path so the
+// LiteSpeed/node wrapper never loses it due to symlink/CWD quirks.
+function resolveNext() {
+  try {
+    return require("next");
+  } catch (e) {
+    for (const p of existing) {
+      const candidate = path.join(p, "next");
+      if (fs.existsSync(candidate)) {
+        return require(candidate);
+      }
+    }
+    throw e;
+  }
+}
+
+const next = resolveNext();
 const NODE_ENV = process.env.NODE_ENV || "production";
 const app = next({ dev: NODE_ENV !== "production" });
 
