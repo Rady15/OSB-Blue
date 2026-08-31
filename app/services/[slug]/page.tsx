@@ -29,8 +29,18 @@ export function generateMetadata({ params }: ServicePageProps): Metadata {
   if (!service) return {};
 
   return {
+    metadataBase: new URL("https://osb.com.sa"),
     title: `${service.title} | OSB`,
     description: service.problemParagraphs[0],
+    alternates: { canonical: `/services/${service.slug}` },
+    robots: { index: true, follow: true },
+    openGraph: {
+      type: "website",
+      locale: "ar_SA",
+      url: `https://osb.com.sa/services/${service.slug}`,
+      title: `${service.title} | OSB`,
+      description: service.problemParagraphs[0],
+    },
   };
 }
 
@@ -41,8 +51,19 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
   const imgSrc = service.image || (serviceImages[service.slug] ?? "/images/operations-dashboard.svg");
   const related = services.filter((item) => item.slug !== service.slug).slice(0, 3);
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: service.title,
+    description: service.problemParagraphs[0],
+    provider: { "@type": "Organization", name: "OSB — One Stop Business", url: "https://osb.com.sa" },
+    url: `https://osb.com.sa/services/${service.slug}`,
+    areaServed: { "@type": "Country", name: "Saudi Arabia" },
+  };
+
   return (
     <div className="min-h-screen overflow-hidden bg-black text-white">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <section className="relative overflow-hidden bg-black pb-20 pt-36 text-white">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_26%,rgba(37,99,235,0.28),transparent_30%),radial-gradient(circle_at_84%_18%,rgba(255,255,255,0.09),transparent_24%)]" />
         <div className="soft-light-beam right-0 top-28" />

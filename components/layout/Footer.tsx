@@ -23,12 +23,16 @@ export function Footer() {
           <Image src="/images/logo.png" alt="OSB" width={200} height={80} className="h-20 w-auto brightness-0 invert" />
           <p className="mt-4 text-xl font-bold text-white">{siteConfig.tagline}</p>
           <div className="mt-6 flex gap-3">
-            <Link aria-label="LinkedIn" href={siteConfig.social.linkedin} className="cursor-hover text-white/55 transition hover:text-white">
-              <Linkedin className="h-5 w-5" />
-            </Link>
-            <Link aria-label="Instagram" href={`https://instagram.com/${siteConfig.social.instagram}`} className="cursor-hover text-white/55 transition hover:text-white">
-              <Instagram className="h-5 w-5" />
-            </Link>
+            {siteConfig.social.linkedin && (
+              <a aria-label="LinkedIn" href={siteConfig.social.linkedin} target="_blank" rel="noreferrer" className="cursor-hover text-white/55 transition hover:text-white">
+                <Linkedin className="h-5 w-5" />
+              </a>
+            )}
+            {siteConfig.social.instagram && (
+              <a aria-label="Instagram" href={siteConfig.social.instagram} target="_blank" rel="noreferrer" className="cursor-hover text-white/55 transition hover:text-white">
+                <Instagram className="h-5 w-5" />
+              </a>
+            )}
           </div>
         </div>
         <div>
@@ -66,7 +70,7 @@ export function Footer() {
         </div>
       </div>
       <div className="relative z-10 border-t border-white/10 py-5 text-center text-sm text-white/55">
-        © 2025 OSB — One Stop Business | جميع الحقوق محفوظة
+        © 2026 OSB — One Stop Business | جميع الحقوق محفوظة
       </div>
     </footer>
   );

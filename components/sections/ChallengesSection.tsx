@@ -172,7 +172,7 @@ export function ChallengesSection() {
             </div>
 
             <p className="relative mt-6 text-lg leading-9 text-white/60">
-              نشخّص احتياجاتك، ثم نرشدك إلى الخطوات الصحيحة قبل البدء بالتنفيذ.
+              نحدّد احتياجاتك، ثم نرشدك إلى الخطوات الصحيحة قبل البدء بالتنفيذ.
             </p>
           </div>
         </div>

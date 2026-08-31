@@ -4,7 +4,10 @@ import { store } from "@/lib/store";
 
 export const metadata: Metadata = {
   title: "المدونة | OSB",
-  description: "مقالات ونصائح في مجال الأعمال والاستشارات",
+  metadataBase: new URL("https://osb.com.sa"),
+  description: "مقالات ونصائح في مجال الأعمال والاستشارات لمساعدة رواد الأعمال والشركات على النمو في السعودية.",
+  alternates: { canonical: "/blog" },
+  robots: { index: true, follow: true },
 };
 
 export default async function BlogPage() {

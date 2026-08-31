@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+/data/store/leads.json
+
+# build artifacts / local archives
+*.zip
+about-3001.png

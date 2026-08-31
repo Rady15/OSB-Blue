@@ -36,7 +36,7 @@ export function PageHero({ eyebrow = "OSB — One Stop Business", title, descrip
           <div className="rounded-[1.5rem] border border-white/10 bg-black p-5">
             {children ?? (
               <div className="grid gap-3 text-sm font-bold text-white/75">
-                {["نشخّص قبل التنفيذ", "نرتّب الخطوات", "نربطك بالمتخصصين"].map((item) => (
+                {["نحدّد قبل التنفيذ", "نرتّب الخطوات", "نربطك بالمتخصصين"].map((item) => (
                   <span key={item} className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-3">
                     {item}
                   </span>

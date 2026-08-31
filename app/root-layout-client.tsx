@@ -6,6 +6,7 @@ import { Footer } from "@/components/layout/Footer";
 import { BackToTopButton } from "@/components/ui/BackToTopButton";
 import { FloatingWhatsApp } from "@/components/ui/FloatingWhatsApp";
 import { CustomCursor } from "@/components/ui/CustomCursor";
+import { GoogleAnalytics } from "@/components/ui/GoogleAnalytics";
 
 export default function RootLayoutClient({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -13,6 +14,7 @@ export default function RootLayoutClient({ children }: { children: React.ReactNo
 
   return (
     <>
+      <GoogleAnalytics />
       {!isAdmin && <Header />}
       <main className="flex-1">{children}</main>
       {!isAdmin && <Footer />}

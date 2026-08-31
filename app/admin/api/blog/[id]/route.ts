@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { verifySession, SESSION_COOKIE } from "@/lib/auth";
 import { store } from "@/lib/store";
+import { notifyGoogleUrlUpdated } from "@/lib/google-indexing";
 
 function checkAuth() {
   const token = cookies().get(SESSION_COOKIE)?.value;
@@ -41,6 +42,17 @@ async function PUT(request: NextRequest, { params }: { params: { id: string } })
     }
 
     store.saveBlogPost(updated);
+
+    // Notify Google whenever a published URL is created or materially updated.
+    if (updated.status === "published") {
+      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://osb.com.sa";
+      void notifyGoogleUrlUpdated(`${siteUrl.replace(/\/$/, "")}/blog/${updated.slug}`).then((result) => {
+        if (!result.ok && result.error !== "disabled") {
+          console.warn("[Google Indexing] update notification failed:", result.error);
+        }
+      });
+    }
+
     return NextResponse.json(updated);
   } catch {
     return NextResponse.json({ error: "خطأ في التحديث" }, { status: 500 });

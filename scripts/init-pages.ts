@@ -78,7 +78,7 @@ const pages = [
         backgroundColor: "#000000",
         blocks: [
           { id: generateId(), type: "heading", content: "كيف نعمل", styles: { color: "#2563eb", fontSize: "1.25rem", fontWeight: "700" } },
-          { id: generateId(), type: "text", content: "نبدأ بالتشخيص، ثم نحدد الخطوة العملية الأقرب لوضع مشروعك", styles: { color: "rgba(255,255,255,0.6)", fontSize: "1.125rem", lineHeight: "2.25" } },
+          { id: generateId(), type: "text", content: "نبدأ بالتحديد، ثم نحدد الخطوة العملية الأقرب لوضع مشروعك", styles: { color: "rgba(255,255,255,0.6)", fontSize: "1.125rem", lineHeight: "2.25" } },
         ],
       },
     ],

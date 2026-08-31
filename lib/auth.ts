@@ -1,43 +1,35 @@
 import crypto from "crypto";
 
-const SESSION_SECRET = process.env.ADMIN_SESSION_SECRET || "osb-admin-secret-change-in-production";
-const SESSION_COOKIE = "osb-admin-session";
-const SESSION_TTL = 24 * 60 * 60 * 1000; // 24 hours
+const SESSION_SECRET = process.env.ADMIN_SESSION_SECRET;
 
-function encrypt(text: string): string {
-  const iv = crypto.randomBytes(16);
-  const key = crypto.scryptSync(SESSION_SECRET, "salt", 32);
-  const cipher = crypto.createCipheriv("aes-256-cbc", key, iv);
-  let encrypted = cipher.update(text, "utf-8", "hex");
-  encrypted += cipher.final("hex");
-  return `${iv.toString("hex")}:${encrypted}`;
+const SESSION_COOKIE = "osb-admin-session";
+const SESSION_TTL = 8 * 60 * 60 * 1000;
+function getSecret(): string {
+  if (process.env.NODE_ENV === "production" && (!SESSION_SECRET || SESSION_SECRET.length < 32)) {
+    throw new Error("ADMIN_SESSION_SECRET must be set to a random value of at least 32 characters in production.");
+  }
+  return SESSION_SECRET || "local-development-only-secret-change-me";
 }
 
-function decrypt(hash: string): string | null {
-  try {
-    const [ivHex, encrypted] = hash.split(":");
-    const iv = Buffer.from(ivHex, "hex");
-    const key = crypto.scryptSync(SESSION_SECRET, "salt", 32);
-    const decipher = crypto.createDecipheriv("aes-256-cbc", key, iv);
-    let decrypted = decipher.update(encrypted, "hex", "utf-8");
-    decrypted += decipher.final("utf-8");
-    return decrypted;
-  } catch {
-    return null;
-  }
+function sign(payload: string): string {
+  return crypto.createHmac("sha256", getSecret()).update(payload).digest("base64url");
 }
 
 export function createSession(userId: string): string {
-  const payload = JSON.stringify({ userId, exp: Date.now() + SESSION_TTL });
-  return encrypt(payload);
+  const payload = Buffer.from(JSON.stringify({ userId, exp: Date.now() + SESSION_TTL }), "utf8").toString("base64url");
+  return `${payload}.${sign(payload)}`;
 }
 
 export function verifySession(token: string): { userId: string } | null {
-  const payload = decrypt(token);
-  if (!payload) return null;
   try {
-    const data = JSON.parse(payload);
-    if (Date.now() > data.exp) return null;
+    const [payload, signature] = token.split(".");
+    if (!payload || !signature) return null;
+    const expected = sign(payload);
+    const a = Buffer.from(signature);
+    const b = Buffer.from(expected);
+    if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) return null;
+    const data = JSON.parse(Buffer.from(payload, "base64url").toString("utf8")) as { userId?: string; exp?: number };
+    if (!data.userId || !data.exp || Date.now() > data.exp) return null;
     return { userId: data.userId };
   } catch {
     return null;
@@ -45,12 +37,28 @@ export function verifySession(token: string): { userId: string } | null {
 }
 
 export function hashPassword(password: string): string {
-  return crypto.scryptSync(password, "osb-salt", 32).toString("hex");
+  return crypto.scryptSync(password, getSecret(), 32).toString("hex");
 }
 
 export function verifyPassword(password: string, hash: string): boolean {
-  const testHash = crypto.scryptSync(password, "osb-salt", 32).toString("hex");
-  return crypto.timingSafeEqual(Buffer.from(hash), Buffer.from(testHash));
+  try {
+    const testHash = crypto.scryptSync(password, getSecret(), 32).toString("hex");
+    const a = Buffer.from(hash, "hex");
+    const b = Buffer.from(testHash, "hex");
+    return a.length === b.length && crypto.timingSafeEqual(a, b);
+  } catch {
+    return false;
+  }
+}
+
+export function getAdminPasswordHash(): string {
+  const configuredHash = process.env.ADMIN_PASSWORD_HASH;
+  if (configuredHash) return configuredHash;
+  const password = process.env.ADMIN_PASSWORD;
+  if (!password && process.env.NODE_ENV === "production") {
+    throw new Error("ADMIN_PASSWORD_HASH or ADMIN_PASSWORD must be configured in production.");
+  }
+  return hashPassword(password || "local-development-password");
 }
 
 export { SESSION_COOKIE, SESSION_TTL };

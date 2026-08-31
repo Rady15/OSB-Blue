@@ -38,6 +38,7 @@ export function ConsultationForm({ light = true }: ConsultationFormProps) {
 
   const onSubmit = async (data: Partial<ConsultationFormData>) => {
     setStatus("idle");
+    try {
     const response = await fetch("/api/consultation", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -46,9 +47,13 @@ export function ConsultationForm({ light = true }: ConsultationFormProps) {
         phone: data.phone,
         email: data.email ?? "",
         businessNature: data.businessNature ?? "",
+        website: "",
       }),
     });
     setStatus(response.ok ? "success" : "error");
+    } catch {
+      setStatus("error");
+    }
   };
 
   const inputClass = `w-full rounded-2xl border px-5 py-4 outline-none transition focus:border-[#2563eb] ${

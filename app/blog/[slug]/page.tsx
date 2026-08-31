@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Calendar, User } from "lucide-react";
 import { store } from "@/lib/store";
+import { sanitizeHtml } from "@/lib/sanitize-html";
 
 export async function generateStaticParams() {
   const posts = store.getBlogPosts().filter((p) => p.status === "published");
@@ -13,8 +14,11 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const post = store.getBlogPostBySlug(params.slug);
   if (!post) return { title: "المقال غير موجود" };
   return {
+    metadataBase: new URL("https://osb.com.sa"),
     title: post.seoTitle || post.title,
     description: post.seoDescription || post.excerpt,
+    alternates: { canonical: `/blog/${post.slug}` },
+    robots: { index: true, follow: true },
     openGraph: {
       title: post.seoTitle || post.title,
       description: post.seoDescription || post.excerpt,
@@ -30,8 +34,22 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
     notFound();
   }
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.seoDescription || post.excerpt,
+    image: post.coverImage ? [`https://osb.com.sa${post.coverImage.startsWith("/") ? post.coverImage : `/${post.coverImage}`}`] : undefined,
+    datePublished: post.publishedAt,
+    dateModified: post.updatedAt || post.publishedAt,
+    author: { "@type": "Person", name: post.author || "OSB" },
+    publisher: { "@type": "Organization", name: "OSB — One Stop Business", url: "https://osb.com.sa" },
+    mainEntityOfPage: `https://osb.com.sa/blog/${post.slug}`,
+  };
+
   return (
     <div dir="rtl" className="min-h-screen bg-black">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <article className="min-h-screen">
         {/* Cover image */}
         {post.coverImage && (
@@ -102,7 +120,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
                 prose-code:text-[#2563eb] prose-code:bg-white/10 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-lg
                 prose-pre:bg-[#071527] prose-pre:border prose-pre:border-white/10
                 [&_*]:font-tajawal"
-              dangerouslySetInnerHTML={{ __html: post.content }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }}
             />
 
             {/* Tags */}

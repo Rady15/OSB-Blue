@@ -13,7 +13,7 @@ export default function ContactPage() {
     { icon: Phone, label: "الهاتف", value: siteConfig.phone, href: `tel:${siteConfig.phone}` },
     { icon: Mail, label: "البريد", value: siteConfig.email, href: `mailto:${siteConfig.email}` },
     { icon: MapPin, label: "العنوان", value: siteConfig.address, href: null },
-    { icon: Instagram, label: "Instagram", value: siteConfig.social.instagram, href: `https://instagram.com/${siteConfig.social.instagram}` },
+    ...(siteConfig.social.instagram ? [{ icon: Instagram, label: "Instagram", value: "@osb.ksa", href: siteConfig.social.instagram }] : []),
   ];
 
   return (

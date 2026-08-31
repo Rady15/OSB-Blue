@@ -105,7 +105,7 @@ export function HeroSection() {
           </div>
           <div className="absolute -left-7 top-12 hidden animate-float-x rounded-3xl border border-white/15 bg-white/[0.08] p-5 text-white shadow-2xl backdrop-blur md:block">
             <p className="text-sm text-white/70">نظام العمل</p>
-            <p className="mt-1 text-xl font-extrabold">نشخّص. نوجّه. ننفّذ.</p>
+            <p className="mt-1 text-xl font-extrabold">نحدّد. نوجّه. ننفّذ.</p>
           </div>
         </motion.div>
       </div>

@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { verifySession, SESSION_COOKIE } from "@/lib/auth";
 import { store } from "@/lib/store";
 import { BlogPost } from "@/data/store";
+import { notifyGoogleUrlUpdated } from "@/lib/google-indexing";
 
 function checkAuth() {
   const token = cookies().get(SESSION_COOKIE)?.value;
@@ -48,6 +49,19 @@ async function POST(request: NextRequest) {
     };
 
     store.saveBlogPost(post);
+
+    // Fire-and-forget: publishing a post should never fail just because Google's
+    // notification service is unavailable. Sitemap inclusion remains the primary
+    // discovery mechanism for normal editorial content.
+    if (post.status === "published") {
+      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://osb.com.sa";
+      void notifyGoogleUrlUpdated(`${siteUrl.replace(/\/$/, "")}/blog/${post.slug}`).then((result) => {
+        if (!result.ok && result.error !== "disabled") {
+          console.warn("[Google Indexing] publish notification failed:", result.error);
+        }
+      });
+    }
+
     return NextResponse.json(post, { status: 201 });
   } catch {
     return NextResponse.json({ error: "خطأ في الحفظ" }, { status: 500 });
