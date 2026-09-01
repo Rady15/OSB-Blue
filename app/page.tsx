@@ -90,7 +90,7 @@ export default function Home() {
         <div className="container-osb grid items-center gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <div className="relative">
             <ScatterImage
-              src="/images/about-us.png"
+              src={dir === "ltr" ? "/images/about-us.en.png" : "/images/about-us.png"}
               alt={t("page.home.aboutImageAlt")}
               width={960}
               height={720}
@@ -121,7 +121,7 @@ export default function Home() {
           {/* Animated image with glow */}
           <div className="relative">
             <AnimatedImage
-              src="/images/consult-free.png"
+              src={dir === "ltr" ? "/images/consult-free.en.png" : "/images/consult-free.png"}
               alt={t("page.home.consultImageAlt")}
               className="rounded-[2rem]"
             />
