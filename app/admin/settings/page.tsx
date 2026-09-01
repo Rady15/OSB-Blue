@@ -106,7 +106,7 @@ export default function SettingsPage() {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {message && (
-          <div className={`rounded-xl px-4 py-3 text-sm ${message.includes("نجاح") ? "border border-green-500/30 bg-green-500/10 text-green-400" : "border border-red-500/30 bg-red-500/10 text-red-400"}`}>
+          <div className={`rounded-xl px-4 py-3 text-sm ${message === t("admin.alert.saved") ? "border border-green-500/30 bg-green-500/10 text-green-400" : "border border-red-500/30 bg-red-500/10 text-red-400"}`}>
             {message}
           </div>
         )}
@@ -281,7 +281,7 @@ export default function SettingsPage() {
             {saving ? t("admin.alert.saving") : t("admin.settings.saveSettings")}
           </button>
           {message && (
-            <span className={`text-sm ${message.includes("نجاح") ? "text-green-400" : "text-red-400"}`}>
+            <span className={`text-sm ${message === t("admin.alert.saved") ? "text-green-400" : "text-red-400"}`}>
               {message}
             </span>
           )}

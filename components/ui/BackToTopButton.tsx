@@ -2,8 +2,10 @@
 
 import { ArrowUp } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useT } from "@/lib/i18n";
 
 export function BackToTopButton() {
+  const t = useT();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -15,7 +17,7 @@ export function BackToTopButton() {
 
   return (
     <button
-      aria-label="العودة للأعلى"
+      aria-label={t("backToTop.aria")}
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       className={`cursor-hover fixed bottom-8 left-8 z-50 grid h-12 w-12 place-items-center rounded-none bg-[#2563eb] text-white shadow-[0_0_34px_rgba(37,99,235,0.42)] transition duration-300 ${
         visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"

@@ -6,7 +6,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const password = typeof body?.password === "string" ? body.password : "";
     if (!password || password.length > 256 || !verifyPassword(password, getAdminPasswordHash())) {
-      return NextResponse.json({ error: "كلمة المرور غير صحيحة" }, { status: 401 });
+      return NextResponse.json({ error: "invalid-password" }, { status: 401 });
     }
     const token = createSession("admin");
     const response = NextResponse.json({ success: true });
@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
     });
     return response;
   } catch {
-    return NextResponse.json({ error: "خطأ في الخادم" }, { status: 500 });
+    return NextResponse.json({ error: "server-error" }, { status: 500 });
   }
 }
 

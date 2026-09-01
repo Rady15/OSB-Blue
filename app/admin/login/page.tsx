@@ -29,7 +29,13 @@ export default function LoginPage() {
 
       if (!res.ok) {
         const data = await res.json();
-        setError(data.error || t("admin.login.errorGeneric"));
+        setError(
+          data.error === "invalid-password"
+            ? t("admin.login.errorInvalid")
+            : data.error === "server-error"
+              ? t("admin.login.errorServer")
+              : t("admin.login.errorGeneric")
+        );
         setLoading(false);
         return;
       }

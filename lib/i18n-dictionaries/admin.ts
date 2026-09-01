@@ -46,6 +46,8 @@ export const en: Record<string, string> = {
   "admin.login.backToSite": "Back to Site",
   "admin.login.errorGeneric": "Login error",
   "admin.login.errorConnection": "Connection error",
+  "admin.login.errorInvalid": "Incorrect password",
+  "admin.login.errorServer": "Server error",
 
   // Blog list
   "admin.blog.title": "Blog",
@@ -306,6 +308,21 @@ export const en: Record<string, string> = {
   "admin.branding.preview": "Color Preview",
   "admin.branding.background": "Background",
   "admin.branding.errors.upload": "Error uploading image",
+  // ── Admin shell (sidebar / header) ──────────────────────
+  "admin.nav.dashboard": "Dashboard",
+  "admin.nav.blog": "Blog",
+  "admin.nav.pages": "Pages",
+  "admin.nav.seo": "SEO",
+  "admin.nav.settings": "Settings",
+  "admin.nav.branding": "Branding",
+  "admin.nav.siteConfig": "Site Config",
+  "admin.nav.services": "Services",
+  "admin.nav.partners": "Partners",
+  "admin.nav.faq": "FAQ",
+  "admin.nav.journey": "Work Stages",
+  "admin.logout": "Sign out",
+  "admin.backToSite": "Back to site",
+  "admin.header.dashboard": "Dashboard",
 };
 
 export const ar: Record<string, string> = {
@@ -356,6 +373,8 @@ export const ar: Record<string, string> = {
   "admin.login.backToSite": "العودة للموقع",
   "admin.login.errorGeneric": "خطأ في تسجيل الدخول",
   "admin.login.errorConnection": "خطأ في الاتصال",
+  "admin.login.errorInvalid": "كلمة المرور غير صحيحة",
+  "admin.login.errorServer": "خطأ في الخادم",
 
   // Blog list
   "admin.blog.title": "المدونة",
@@ -615,4 +634,19 @@ export const ar: Record<string, string> = {
   "admin.branding.preview": "معاينة الألوان",
   "admin.branding.background": "الخلفية",
   "admin.branding.errors.upload": "خطأ في رفع الصورة",
+  // ── Admin shell (sidebar / header) ──────────────────────
+  "admin.nav.dashboard": "لوحة التحكم",
+  "admin.nav.blog": "المدونة",
+  "admin.nav.pages": "الصفحات",
+  "admin.nav.seo": "SEO",
+  "admin.nav.settings": "الإعدادات",
+  "admin.nav.branding": "الهوية",
+  "admin.nav.siteConfig": "إعدادات الموقع",
+  "admin.nav.services": "الخدمات",
+  "admin.nav.partners": "الشركاء",
+  "admin.nav.faq": "الأسئلة الشائعة",
+  "admin.nav.journey": "مراحل العمل",
+  "admin.logout": "تسجيل الخروج",
+  "admin.backToSite": "العودة للموقع",
+  "admin.header.dashboard": "لوحة التحكم",
 };

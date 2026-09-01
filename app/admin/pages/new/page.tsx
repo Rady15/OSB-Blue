@@ -40,8 +40,7 @@ export default function NewPage() {
       });
 
       if (!res.ok) {
-        const data = await res.json();
-        setError(data.error || t("admin.alert.error"));
+        setError(t("admin.alert.error"));
         setSaving(false);
         return;
       }

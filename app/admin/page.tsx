@@ -5,10 +5,13 @@ import { store } from "@/lib/store";
 import { contentStore } from "@/lib/content-store";
 import { getT } from "@/lib/get-t";
 
-export const metadata: Metadata = {
-  title: "لوحة التحكم | OSB Admin",
-  robots: { index: false, follow: false },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = getT();
+  return {
+    title: `${t("admin.dashboard.title")} | OSB Admin`,
+    robots: { index: false, follow: false },
+  };
+}
 
 export default async function AdminDashboard() {
   const { lang, dir, t } = getT();

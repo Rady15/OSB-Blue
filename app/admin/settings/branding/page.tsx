@@ -118,7 +118,7 @@ export default function BrandingEditor() {
       </div>
 
       {message && (
-        <div className={`mb-6 rounded-xl px-4 py-3 text-sm ${message.includes("نجاح") ? "border border-green-500/30 bg-green-500/10 text-green-400" : "border border-red-500/30 bg-red-500/10 text-red-400"}`}>
+        <div className={`mb-6 rounded-xl px-4 py-3 text-sm ${message === t("admin.alert.saved") ? "border border-green-500/30 bg-green-500/10 text-green-400" : "border border-red-500/30 bg-red-500/10 text-red-400"}`}>
           {message}
         </div>
       )}

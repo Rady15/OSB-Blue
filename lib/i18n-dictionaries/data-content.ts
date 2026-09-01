@@ -100,6 +100,20 @@ export const en: Record<string, string> = {
   "form.phone.error.invalid": "Invalid Saudi mobile number",
   "form.email.error.invalid": "Invalid email address",
 
+  // ── Floating WhatsApp ────────────────────────────────────
+  "whatsapp.cta": "Free consultation",
+  "whatsapp.aria": "Free consultation via WhatsApp",
+
+  // ── Back to top ──────────────────────────────────────────
+  "backToTop.aria": "Back to top",
+
+  // ── Mobile menu ──────────────────────────────────────────
+  "mobileMenu.langToggle": "Switch language",
+  "mobileMenu.login": "Admin login",
+
+  // ── Common ───────────────────────────────────────────────
+  "common.notFound": "Not found",
+
   // ── Rich Text Editor ─────────────────────────────────────
   "rte.bold": "Bold",
   "rte.italic": "Italic",
@@ -218,6 +232,20 @@ export const ar: Record<string, string> = {
   "form.name.error.required": "الاسم مطلوب",
   "form.phone.error.invalid": "رقم جوال سعودي غير صحيح",
   "form.email.error.invalid": "بريد إلكتروني غير صحيح",
+
+  // ── Floating WhatsApp ────────────────────────────────────
+  "whatsapp.cta": "استشارة مجانية",
+  "whatsapp.aria": "استشارة مجانية عبر واتساب",
+
+  // ── Back to top ──────────────────────────────────────────
+  "backToTop.aria": "العودة للأعلى",
+
+  // ── Mobile menu ──────────────────────────────────────────
+  "mobileMenu.langToggle": "تبديل اللغة",
+  "mobileMenu.login": "تسجيل الدخول",
+
+  // ── Common ───────────────────────────────────────────────
+  "common.notFound": "غير موجود",
 
   // ── Rich Text Editor ─────────────────────────────────────
   "rte.bold": "عريض",

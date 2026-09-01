@@ -55,7 +55,7 @@ async function PUT(request: NextRequest, { params }: { params: { id: string } })
 
     return NextResponse.json(updated);
   } catch {
-    return NextResponse.json({ error: "خطأ في التحديث" }, { status: 500 });
+    return NextResponse.json({ error: "save-error" }, { status: 500 });
   }
 }
 

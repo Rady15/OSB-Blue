@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
 import { Tajawal } from "next/font/google";
 import { PageLoader } from "@/components/ui/PageLoader";
 import { ScrollProgressBar } from "@/components/ui/ScrollProgressBar";
 import { GlobalMotion } from "@/components/layout/GlobalMotion";
 import { SmoothScrollProvider } from "@/components/layout/SmoothScrollProvider";
+import { getT } from "@/lib/get-t";
 import RootLayoutClient from "./root-layout-client";
 import "./globals.css";
 
@@ -17,11 +17,12 @@ const tajawal = Tajawal({
 const siteUrl = "https://osb.com.sa";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const cookieStore = await cookies();
-  const lang: "en" | "ar" = cookieStore.get("osb-lang")?.value === "en" ? "en" : "ar";
+  const { lang, t } = getT();
+  const title = t("site.title");
+  const description = t("site.description");
   return {
     metadataBase: new URL(siteUrl),
-    title: "OSB | One Stop Business — حلول أعمال متكاملة لدعم نمو مشروعك في السعودية",
+    title,
     alternates: { canonical: "/" },
     robots: { index: true, follow: true },
     openGraph: {
@@ -29,19 +30,18 @@ export async function generateMetadata(): Promise<Metadata> {
       locale: lang === "en" ? "en_US" : "ar_SA",
       url: siteUrl,
       siteName: "OSB — One Stop Business",
-      title: "OSB | One Stop Business — حلول أعمال متكاملة",
-      description: "حلول أعمال متكاملة تساعد رواد الأعمال والشركات على التأسيس والنمو وإدارة أعمالهم في السعودية.",
+      title,
+      description,
       images: [{ url: "/images/hero.png", width: 1200, height: 630, alt: "OSB — One Stop Business" }],
     },
     ...(process.env.GOOGLE_SITE_VERIFICATION ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } } : {}),
     twitter: {
       card: "summary_large_image",
       title: "OSB | One Stop Business",
-      description: "حلول أعمال متكاملة لدعم نمو مشروعك في السعودية.",
+      description,
       images: ["/images/hero.png"],
     },
-    description:
-      "OSB شركة سعودية تساعد رواد الأعمال والمستثمرين والشركات على بناء أعمالهم وإدارتها وتطويرها داخل المملكة العربية السعودية. نجمع تحت سقف واحد الخدمات الأساسية التي تحتاجها المشاريع في مختلف مراحلها، بدءاً من التأسيس والتراخيص والاستشارات القانونية، وصولاً إلى المحاسبة، دراسات الجدوى، التسويق، الأنظمة الإدارية، وإدارة الإجراءات الحكومية.",
+    description,
   };
 }
 
@@ -50,9 +50,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = cookies();
-  const lang: "en" | "ar" = cookieStore.get("osb-lang")?.value === "en" ? "en" : "ar";
-  const dir: "ltr" | "rtl" = lang === "ar" ? "rtl" : "ltr";
+  const { lang, dir } = getT();
   return (
     <html lang={lang} dir={dir} className="h-full antialiased">
       <body className={`${tajawal.variable} flex min-h-full flex-col font-sans`}>
@@ -88,7 +86,7 @@ export default function RootLayout({
           <PageLoader />
           <ScrollProgressBar />
           <GlobalMotion />
-          <RootLayoutClient>
+          <RootLayoutClient initialLang={lang}>
             {children}
           </RootLayoutClient>
         </SmoothScrollProvider>

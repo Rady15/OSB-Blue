@@ -9,12 +9,12 @@ import { FloatingWhatsApp } from "@/components/ui/FloatingWhatsApp";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { GoogleAnalytics } from "@/components/ui/GoogleAnalytics";
 
-export default function RootLayoutClient({ children }: { children: React.ReactNode }) {
+export default function RootLayoutClient({ children, initialLang }: { children: React.ReactNode; initialLang?: "en" | "ar" }) {
   const pathname = usePathname();
   const isAdmin = pathname.startsWith("/admin");
 
   return (
-    <I18nProvider>
+    <I18nProvider initialLang={initialLang}>
       <GoogleAnalytics />
       {!isAdmin && <Header />}
       <main className="flex-1">{children}</main>

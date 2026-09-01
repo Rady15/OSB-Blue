@@ -2,20 +2,18 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckCircle2 } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { type Resolver, useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/Button";
-import { useT } from "@/lib/i18n";
+import { useT, useLang } from "@/lib/i18n";
 
-export const consultationSchema = z.object({
-  fullName: z.string().min(3, "الاسم مطلوب"),
-  phone: z.string().regex(/^05\d{8}$/, "رقم جوال سعودي غير صحيح"),
-  email: z.string().email("بريد إلكتروني غير صحيح"),
-  businessNature: z.string().optional(),
-});
-
-export type ConsultationFormData = z.infer<typeof consultationSchema>;
+export type ConsultationFormData = {
+  fullName: string;
+  phone: string;
+  email: string;
+  businessNature?: string;
+};
 
 type ConsultationFormProps = {
   light?: boolean;
@@ -23,6 +21,20 @@ type ConsultationFormProps = {
 
 export function ConsultationForm({ light = true }: ConsultationFormProps) {
   const t = useT();
+  const lang = useLang();
+
+  const consultationSchema = useMemo(
+    () =>
+      z.object({
+        fullName: z.string().min(3, t("form.name.error.required")),
+        phone: z.string().regex(/^05\d{8}$/, t("form.phone.error.invalid")),
+        email: z.string().email(t("form.email.error.invalid")),
+        businessNature: z.string().optional(),
+      }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [lang]
+  );
+
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const {
     register,
