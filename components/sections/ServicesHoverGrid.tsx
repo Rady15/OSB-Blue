@@ -134,7 +134,7 @@ export function ServicesHoverGrid() {
                       className="group/title relative z-10 inline-block text-3xl font-extrabold leading-[1.5] text-white md:text-5xl"
                     >
                       <span className="bg-gradient-to-r from-white via-white to-white bg-[length:0%_3px] bg-bottom bg-no-repeat transition-[background-size] duration-500 group-hover/title:from-[#2563eb] group-hover/title:via-[#2563eb] group-hover/title:to-[#60a5fa] group-hover/title:bg-[length:100%_3px]">
-                        {service.title}
+                        {t(`service.${service.slug}.title`)}
                       </span>
                     </Link>
                   </div>
@@ -144,7 +144,7 @@ export function ServicesHoverGrid() {
                 <div data-img-side className="opacity-0">
                   <GlassShatterImage
                     src={imgSrc}
-                    alt={service.title}
+                    alt={t(`service.${service.slug}.title`)}
                     width={960}
                     height={720}
                     className="rounded-[2rem]"

@@ -66,7 +66,7 @@ export function ServicesPreviewGrid({ limit }: { limit?: number }) {
                 <div data-image-reveal className="image-reveal overflow-hidden">
                   <Image
                     src={serviceImages[index % serviceImages.length]}
-                    alt={service.title}
+                    alt={t(`service.${service.slug}.title`)}
                     width={960}
                     height={720}
                     className="aspect-[16/10] w-full object-cover transition duration-700 group-hover:scale-105"
@@ -78,10 +78,10 @@ export function ServicesPreviewGrid({ limit }: { limit?: number }) {
                 </span>
                 <Icon className="relative z-10 h-10 w-10 text-white transition group-hover:scale-110 group-hover:text-[#2563eb]" />
                 <h3 className="relative z-10 mt-8 text-2xl font-extrabold leading-9 text-white transition group-hover:text-black">
-                  {service.title}
+                  {t(`service.${service.slug}.title`)}
                 </h3>
                 <p className="relative z-10 mt-4 line-clamp-3 leading-8 text-white/55 transition group-hover:text-black/60">
-                  {service.problemParagraphs[0]}
+                  {t(`service.${service.slug}.problemParagraphs`).split("|")[0]}
                 </p>
                 </div>
               </Link>

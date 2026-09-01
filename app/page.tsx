@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { ConsultationForm } from "@/components/forms/ConsultationForm";
 import { ScrollRevealText } from "@/components/ui/ScrollRevealText";
 import { ScatterImage } from "@/components/ui/ScatterImage";
@@ -13,7 +13,7 @@ import { PartnersMarquee } from "@/components/sections/PartnersMarquee";
 import { getT } from "@/lib/get-t";
 
 export default function Home() {
-  const { t } = getT();
+  const { t, dir } = getT();
 
   return (
     <div className="adsela-page min-h-screen overflow-hidden bg-black text-white">
@@ -32,7 +32,7 @@ export default function Home() {
           ))}
         </div>
         <div className="container-osb relative z-10 grid min-h-[78vh] items-center gap-16 lg:grid-cols-[0.95fr_1.05fr]">
-          <div data-parallax="34" className="order-2 lg:order-1">
+          <div data-parallax="34" className={`order-2 ${dir === "rtl" ? "lg:order-1" : "lg:order-2"}`}>
             <div className="relative mx-auto max-w-xs">
               <img
                 src="/images/hero.png"
@@ -42,7 +42,7 @@ export default function Home() {
               <div className="absolute -bottom-6 left-1/2 h-20 w-3/4 -translate-x-1/2 rounded-full bg-[#2563eb] opacity-30 blur-3xl" />
             </div>
           </div>
-          <div className="order-1 text-right lg:order-2">
+          <div className={`order-1 ${dir === "rtl" ? "lg:order-2 text-right" : "lg:order-1 text-left"}`}>
             <p className="mb-5 text-sm font-bold text-white/60">OSB — One Stop Business</p>
             <ScrollRevealText
               as="h1"
@@ -61,7 +61,7 @@ export default function Home() {
                 href="/free-consultation"
                 className="inline-flex items-center gap-3 rounded-none bg-[#2563eb] px-7 py-4 text-sm font-extrabold text-white shadow-[0_0_34px_rgba(37,99,235,0.42)] transition hover:-translate-y-1 hover:bg-white hover:text-black"
               >
-                {t("page.home.book")} <ArrowLeft className="h-5 w-5" />
+                {t("page.home.book")} {dir === "rtl" ? <ArrowLeft className="h-5 w-5" /> : <ArrowRight className="h-5 w-5" />}
               </Link>
               <Link
                 href="/contact"
