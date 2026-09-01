@@ -4,65 +4,51 @@ import { useEffect, useRef, useState } from "react";
 import { MessageSquare, Search, Rocket, TrendingUp, Sparkles, ChevronDown } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useT } from "@/lib/i18n";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const steps = [
-  {
-    num: "01",
-    title: "نفهم أعمالك",
-    icon: MessageSquare,
-    color: "#2563eb",
-    description: "نبدأ بالتعرّف على نشاطك، أهدافك، والتحديات التي تواجهها، حتى نفهم احتياجاتك قبل اقتراح أي حل.",
-    details: [
-      "نعقد جلسة استماع معمّقة لفهم نشاطك",
-      "نحدد أهدافك قصيرة وطويلة المدى",
-      "نحلل التحديات الحالية التي تواجهها",
-    ],
-  },
-  {
-    num: "02",
-    title: "نحلّل ونخطط",
-    icon: Search,
-    color: "#3b82f6",
-    description: "ندرس وضعك الحالي، ونحدد الأولويات، ونضع تصوراً واضحاً للحلول المناسبة، وخطة التنفيذ، والمدة الزمنية المتوقعة.",
-    details: [
-      "نقيّم وضعك الحالي ونحلل الفجوات",
-      "نحدد الأولويات وفقاً للتأثير والجدول الزمني",
-      "نضع خطة تنفيذ واضحة بمؤشرات قياس",
-    ],
-  },
-  {
-    num: "03",
-    title: "ننفذ",
-    icon: Rocket,
-    color: "#60a5fa",
-    description: "نتولى تنفيذ الحلول المتفق عليها، سواء كانت أنظمة، أو أتمتة، أو تحسيناً للعمليات، أو خدمات أعمال أخرى، مع متابعة في كل مرحلة.",
-    details: [
-      "ننفذ الحلول وفق الخطة الزمنية المتفق عليها",
-      "نتابع الجودة ونضمن التكامل مع بيئة عملك",
-      "نوفر تقارير مرحلية عن سير التنفيذ",
-    ],
-  },
-  {
-    num: "04",
-    title: "نتابع ونطوّر",
-    icon: TrendingUp,
-    color: "#93c5fd",
-    description: "لا تنتهي علاقتنا بانتهاء التنفيذ. نستمر في دعم أعمالك، وتحسين الأداء، ومواكبة احتياجاتك مع نمو أعمالك.",
-    details: [
-      "نوفر دعماً مستمراً بعد التنفيذ",
-      "نقيّم الأداء ونقترح تحسينات دورية",
-      "نواكب نمو أعمالك ونطور الحلول باستمرار",
-    ],
-  },
-];
-
 export default function HowWeWorkPage() {
+  const t = useT();
   const [activeStep, setActiveStep] = useState(0);
   const pageRef = useRef<HTMLDivElement>(null);
   const heroGlowRef = useRef<HTMLDivElement>(null);
   const journeyRef = useRef<HTMLElement>(null);
+
+  const steps = [
+    {
+      num: "01",
+      title: t("page.how.step1.title"),
+      icon: MessageSquare,
+      color: "#2563eb",
+      description: t("page.how.step1.description"),
+      details: t("page.how.step1.details").split("|"),
+    },
+    {
+      num: "02",
+      title: t("page.how.step2.title"),
+      icon: Search,
+      color: "#3b82f6",
+      description: t("page.how.step2.description"),
+      details: t("page.how.step2.details").split("|"),
+    },
+    {
+      num: "03",
+      title: t("page.how.step3.title"),
+      icon: Rocket,
+      color: "#60a5fa",
+      description: t("page.how.step3.description"),
+      details: t("page.how.step3.details").split("|"),
+    },
+    {
+      num: "04",
+      title: t("page.how.step4.title"),
+      icon: TrendingUp,
+      color: "#93c5fd",
+      description: t("page.how.step4.description"),
+      details: t("page.how.step4.details").split("|"),
+    },
+  ];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -113,15 +99,15 @@ export default function HowWeWorkPage() {
         <div className="container-osb relative z-10 flex min-h-[60vh] flex-col items-center justify-center text-center">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-[#2563eb] backdrop-blur-sm">
             <Sparkles className="h-4 w-4" />
-            كيف نعمل
+            {t("page.how.badge")}
           </div>
 
           <h1 className="text-5xl font-black leading-[1.5] tracking-tight md:text-7xl lg:text-8xl">
-            رحلتك <span className="bg-gradient-to-l from-[#2563eb] to-[#60a5fa] bg-clip-text text-transparent">معنا</span>
+            {t("page.how.title1")} <span className="bg-gradient-to-l from-[#2563eb] to-[#60a5fa] bg-clip-text text-transparent">{t("page.how.title2")}</span>
           </h1>
 
           <p className="mt-6 max-w-2xl text-xl text-white/50 md:text-2xl">
-            نرافقك من الفكرة إلى التنفيذ بطريقة واضحة ومنظمة تساعدك على فهم كل مرحلة من مشروعك.
+            {t("page.how.subtitle")}
           </p>
 
           {/* Scroll indicator */}
@@ -289,13 +275,13 @@ export default function HowWeWorkPage() {
       <section className="relative border-t border-white/5 bg-[#0a0a0a] py-24">
         <div className="absolute left-1/2 top-0 h-[300px] w-[300px] -translate-x-1/2 rounded-full bg-[#2563eb] opacity-[0.04] blur-[100px]" />
         <div className="container-osb relative z-10 text-center">
-          <h2 className="text-3xl font-black md:text-5xl">جاهز لبدء رحلتك؟</h2>
-          <p className="mt-4 text-xl text-white/50">تواصل معنا اليوم وسنساعدك في تحويل فكرتك إلى واقع.</p>
+          <h2 className="text-3xl font-black md:text-5xl">{t("page.how.ctaTitle")}</h2>
+          <p className="mt-4 text-xl text-white/50">{t("page.how.ctaDesc")}</p>
           <a
             href="/free-consultation"
             className="mt-8 inline-flex items-center gap-2 rounded-none bg-[#2563eb] px-8 py-4 text-lg font-bold text-white shadow-[0_0_34px_rgba(37,99,235,0.42)] transition-all duration-300 hover:bg-white hover:text-black"
           >
-            احجز استشارة مجانية
+            {t("page.how.ctaButton")}
             <Rocket className="h-5 w-5" />
           </a>
         </div>

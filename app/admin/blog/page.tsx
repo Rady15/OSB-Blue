@@ -4,8 +4,12 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Plus, Search, Edit, Trash2, Eye, EyeOff } from "lucide-react";
 import { BlogPost } from "@/data/store";
+import { useT, useDir, useLang } from "@/lib/i18n";
 
 export default function BlogListPage() {
+  const t = useT();
+  const dir = useDir();
+  const lang = useLang();
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
@@ -22,7 +26,7 @@ export default function BlogListPage() {
   }
 
   async function handleDelete(id: string) {
-    if (!confirm("هل أنت متأكد من حذف هذا المقال؟ لا يمكن التراجع عن هذا الإجراء.")) return;
+    if (!confirm(t("admin.blog.deleteConfirm"))) return;
     setDeletingId(id);
     try {
       const res = await fetch(`/admin/api/blog/${id}`, { method: "DELETE" });
@@ -30,25 +34,25 @@ export default function BlogListPage() {
         setPosts((prev) => prev.filter((p) => p.id !== id));
       }
     } catch {
-      alert("خطأ في حذف المقال");
+      alert(t("admin.blog.deleteError"));
     } finally {
       setDeletingId(null);
     }
   }
 
   return (
-    <div dir="rtl">
+    <div dir={dir}>
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">المدونة</h1>
-          <p className="mt-1 text-sm text-white/40">إدارة المقالات والمحتوى</p>
+          <h1 className="text-2xl font-bold text-white">{t("admin.blog.title")}</h1>
+          <p className="mt-1 text-sm text-white/40">{t("admin.blog.subtitle")}</p>
         </div>
         <Link
           href="/admin/blog/new"
           className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#2563eb] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#2563eb]/90"
         >
           <Plus className="h-5 w-5" />
-          مقال جديد
+          {t("admin.blog.newPost")}
         </Link>
       </div>
 
@@ -58,13 +62,13 @@ export default function BlogListPage() {
             <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/5">
               <Search className="h-8 w-8 text-white/20" />
             </div>
-            <p className="mt-4 text-sm text-white/40">لا توجد مقالات بعد</p>
+            <p className="mt-4 text-sm text-white/40">{t("admin.blog.empty")}</p>
             <Link
               href="/admin/blog/new"
               className="mt-4 inline-flex items-center gap-2 rounded-xl bg-[#2563eb] px-6 py-3 text-sm font-bold text-white"
             >
               <Plus className="h-5 w-5" />
-              اكتب أول مقال
+              {t("admin.blog.writeFirst")}
             </Link>
           </div>
         ) : (
@@ -72,11 +76,11 @@ export default function BlogListPage() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-white/10">
-                  <th className="px-6 py-4 text-right text-xs font-bold text-white/40">العنوان</th>
-                  <th className="px-6 py-4 text-right text-xs font-bold text-white/40">التصنيف</th>
-                  <th className="px-6 py-4 text-right text-xs font-bold text-white/40">الحالة</th>
-                  <th className="px-6 py-4 text-right text-xs font-bold text-white/40">تاريخ النشر</th>
-                  <th className="px-6 py-4 text-right text-xs font-bold text-white/40">إجراءات</th>
+                  <th className="px-6 py-4 text-right text-xs font-bold text-white/40">{t("admin.blog.column.title")}</th>
+                  <th className="px-6 py-4 text-right text-xs font-bold text-white/40">{t("admin.blog.column.category")}</th>
+                  <th className="px-6 py-4 text-right text-xs font-bold text-white/40">{t("admin.blog.column.status")}</th>
+                  <th className="px-6 py-4 text-right text-xs font-bold text-white/40">{t("admin.blog.column.date")}</th>
+                  <th className="px-6 py-4 text-right text-xs font-bold text-white/40">{t("admin.blog.column.actions")}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
@@ -90,7 +94,7 @@ export default function BlogListPage() {
                     </td>
                     <td className="px-6 py-4">
                       <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/60">
-                        {post.category || "عام"}
+                        {post.category || t("admin.blog.general")}
                       </span>
                     </td>
                     <td className="px-6 py-4">
@@ -104,18 +108,18 @@ export default function BlogListPage() {
                         {post.status === "published" ? (
                           <>
                             <Eye className="h-3 w-3" />
-                            منشور
+                            {t("admin.blog.published")}
                           </>
                         ) : (
                           <>
                             <EyeOff className="h-3 w-3" />
-                            مسودة
+                            {t("admin.blog.draft")}
                           </>
                         )}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-sm text-white/40">
-                      {post.publishedAt ? new Date(post.publishedAt).toLocaleDateString("ar-SA") : "—"}
+                      {post.publishedAt ? new Date(post.publishedAt).toLocaleDateString(lang === "en" ? "en-US" : "ar-SA") : "—"}
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">

@@ -4,8 +4,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Eye, EyeOff, ArrowLeft } from "lucide-react";
+import { useT, useDir } from "@/lib/i18n";
 
 export default function LoginPage() {
+  const t = useT();
+  const dir = useDir();
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
@@ -26,7 +29,7 @@ export default function LoginPage() {
 
       if (!res.ok) {
         const data = await res.json();
-        setError(data.error || "خطأ في تسجيل الدخول");
+        setError(data.error || t("admin.login.errorGeneric"));
         setLoading(false);
         return;
       }
@@ -34,25 +37,25 @@ export default function LoginPage() {
       router.push("/admin");
       router.refresh();
     } catch {
-      setError("خطأ في الاتصال");
+      setError(t("admin.login.errorConnection"));
       setLoading(false);
     }
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#071527] px-4" dir="rtl">
+    <div className="flex min-h-screen items-center justify-center bg-[#071527] px-4" dir={dir}>
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="mb-8 text-center">
           <Link href="/" className="text-3xl font-extrabold text-white">
             OSB<span className="text-[#2563eb]">.</span>
           </Link>
-          <p className="mt-2 text-sm text-white/40">لوحة تحكم الموقع</p>
+          <p className="mt-2 text-sm text-white/40">{t("admin.login.heading")}</p>
         </div>
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="rounded-2xl border border-white/10 bg-[#0B1F3A] p-8">
-          <h1 className="mb-6 text-xl font-bold text-white">تسجيل الدخول</h1>
+          <h1 className="mb-6 text-xl font-bold text-white">{t("admin.login.loginTitle")}</h1>
 
           {error && (
             <div className="mb-4 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
@@ -62,13 +65,13 @@ export default function LoginPage() {
 
           <div className="space-y-4">
             <div>
-              <label className="mb-2 block text-sm font-medium text-white/70">كلمة المرور</label>
+              <label className="mb-2 block text-sm font-medium text-white/70">{t("admin.login.password")}</label>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="أدخل كلمة المرور"
+                  placeholder={t("admin.login.passwordPlaceholder")}
                   className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/30 outline-none transition-colors focus:border-[#2563eb]"
                   required
                 />
@@ -87,7 +90,7 @@ export default function LoginPage() {
               disabled={loading || !password}
               className="w-full rounded-xl bg-[#2563eb] py-3 text-sm font-bold text-white transition hover:bg-[#2563eb]/90 disabled:opacity-50"
             >
-              {loading ? "جاري التحقق..." : "دخول"}
+              {loading ? t("admin.login.verifying") : t("admin.login.submit")}
             </button>
           </div>
         </form>
@@ -96,7 +99,7 @@ export default function LoginPage() {
         <div className="mt-6 text-center">
           <Link href="/" className="inline-flex items-center gap-2 text-sm text-white/40 hover:text-white">
             <ArrowLeft className="h-4 w-4" />
-            العودة للموقع
+            {t("admin.login.backToSite")}
           </Link>
         </div>
       </div>

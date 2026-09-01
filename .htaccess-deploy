@@ -1,0 +1,15 @@
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
+PassengerAppRoot "/home/osbccnnx/osb"
+PassengerBaseURI "/"
+PassengerNodejs "/home/osbccnnx/nodevenv/osb/24/bin/node"
+PassengerAppType node
+PassengerStartupFile server.js
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
+# DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION BEGIN
+<IfModule Litespeed>
+SetEnv NODE_ENV production
+SetEnv ADMIN_SESSION_SECRET v7qrYtWCw9md1lcROXy2IAEgSxLbfZks4PJhToeG
+SetEnv ADMIN_PASSWORD FhYqHSZxp2sMWQro
+SetEnv NEXT_PUBLIC_SITE_URL https://osb.com.sa
+</IfModule>
+# DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION END

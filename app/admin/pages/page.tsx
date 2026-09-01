@@ -3,8 +3,12 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Globe, ExternalLink, Plus } from "lucide-react";
+import { useT, useDir, useLang } from "@/lib/i18n";
 
 export default function PagesManagement() {
+  const t = useT();
+  const dir = useDir();
+  const lang = useLang();
   const [pages, setPages] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -25,11 +29,11 @@ export default function PagesManagement() {
   }
 
   return (
-    <div dir="rtl">
+    <div dir={dir}>
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">إدارة الصفحات</h1>
-          <p className="mt-1 text-sm text-white/40">عرض جميع صفحات الموقع وتعديل المحتوى</p>
+          <h1 className="text-2xl font-bold text-white">{t("admin.pages.title")}</h1>
+          <p className="mt-1 text-sm text-white/40">{t("admin.pages.subtitle")}</p>
         </div>
       </div>
 
@@ -38,11 +42,11 @@ export default function PagesManagement() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-white/10">
-                <th className="px-6 py-4 text-right text-xs font-bold text-white/40">الصفحة</th>
-                <th className="px-6 py-4 text-right text-xs font-bold text-white/40">المسار</th>
-                <th className="px-6 py-4 text-right text-xs font-bold text-white/40">الأقسام</th>
-                <th className="px-6 py-4 text-right text-xs font-bold text-white/40">آخر تحديث</th>
-                <th className="px-6 py-4 text-right text-xs font-bold text-white/40">إجراءات</th>
+                <th className="px-6 py-4 text-right text-xs font-bold text-white/40">{t("admin.pages.column.page")}</th>
+                <th className="px-6 py-4 text-right text-xs font-bold text-white/40">{t("admin.pages.column.path")}</th>
+                <th className="px-6 py-4 text-right text-xs font-bold text-white/40">{t("admin.pages.column.sections")}</th>
+                <th className="px-6 py-4 text-right text-xs font-bold text-white/40">{t("admin.pages.column.updated")}</th>
+                <th className="px-6 py-4 text-right text-xs font-bold text-white/40">{t("admin.pages.column.actions")}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5">
@@ -60,10 +64,10 @@ export default function PagesManagement() {
                     <code className="rounded-lg bg-white/5 px-3 py-1.5 text-xs text-[#2563eb]">{page.path}</code>
                   </td>
                   <td className="px-6 py-4">
-                    <span className="text-sm text-white/40">{page.sections?.length || 0} قسم</span>
+                    <span className="text-sm text-white/40">{t("admin.pages.sectionCount", { count: page.sections?.length || 0 })}</span>
                   </td>
                   <td className="px-6 py-4 text-sm text-white/40">
-                    {new Date(page.updatedAt).toLocaleDateString("ar-SA")}
+                    {new Date(page.updatedAt).toLocaleDateString(lang === "en" ? "en-US" : "ar-SA")}
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-2">

@@ -4,25 +4,18 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollRevealText } from "@/components/ui/ScrollRevealText";
+import { useT } from "@/lib/i18n";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const steps = [
-  {
-    label: "قبل",
-    text: "أي خدمة، أي عقد، أي تكلفة — نجلس معك، نفهم اعمالك، ندرس نشاطك، ونحلل السوق.",
-  },
-  {
-    label: "ثم",
-    text: "نقول لك بوضوح: هذه هي الأولويات/المتطلبات/الخطة. هذا هو الترتيب الصحيح للخطوات. هذا هو ما تحتاجه الآن — وما لا تحتاجه.",
-  },
-  {
-    label: "بعد ذلك فقط",
-    text: "ننفّذ.",
-  },
+const stepKeys = [
+  { labelKey: "whyUs.step1.label", textKey: "whyUs.step1.text" },
+  { labelKey: "whyUs.step2.label", textKey: "whyUs.step2.text" },
+  { labelKey: "whyUs.step3.label", textKey: "whyUs.step3.text" },
 ];
 
 export function WhyUsSection() {
+  const t = useT();
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const stepsRef = useRef<(HTMLDivElement | null)[]>([]);
@@ -104,11 +97,11 @@ export function WhyUsSection() {
         <div ref={titleRef} className="mb-24 text-center">
           <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#2563eb]/30 bg-[#2563eb]/10 px-4 py-1.5 text-sm font-bold text-[#2563eb]">
             <span className="h-1.5 w-1.5 rounded-full bg-[#2563eb] animate-pulse" />
-            ما يميزنا
+            {t("whyUs.badge")}
           </div>
           <ScrollRevealText
             as="h2"
-            text="نحن لا نبيع خدمات، نحن نلتزم معك كشريك نجاح"
+            text={t("whyUs.title")}
             wordsPerLine={5}
             className="text-3xl font-extrabold leading-[1.5] md:text-5xl lg:text-6xl"
           />
@@ -126,16 +119,16 @@ export function WhyUsSection() {
 
           {/* Steps */}
           <div className="space-y-16 md:space-y-20">
-            {steps.map((step, index) => (
+            {stepKeys.map((step, index) => (
               <div
-                key={step.label}
+                key={step.labelKey}
                 ref={(el) => { stepsRef.current[index] = el; }}
                 className="relative grid grid-cols-[auto_1fr] gap-6 md:gap-10"
               >
                 {/* Timeline dot */}
                 <div className="relative z-10 flex flex-col items-center">
                   <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-[#2563eb] bg-black text-xs font-black text-[#2563eb] shadow-[0_0_20px_rgba(37,99,235,0.3)] md:h-16 md:w-16 md:text-sm">
-                    {index === steps.length - 1 ? (
+                    {index === stepKeys.length - 1 ? (
                       <svg className="h-5 w-5 md:h-6 md:w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M5 12h14M12 5l7 7-7 7" />
                       </svg>
@@ -148,16 +141,16 @@ export function WhyUsSection() {
                 {/* Content */}
                 <div className="pb-4">
                   <span className="mb-3 inline-block rounded-full bg-[#2563eb]/10 px-3 py-1 text-xl font-bold text-[#2563eb] md:text-2xl">
-                    {step.label}
+                    {t(step.labelKey)}
                   </span>
                   <p
                     className={`leading-9 md:leading-10 ${
-                      index === steps.length - 1
+                      index === stepKeys.length - 1
                         ? "text-3xl font-black text-[#2563eb] md:text-4xl"
                         : "text-lg font-bold text-white/70 md:text-xl"
                     }`}
                   >
-                    {step.text}
+                    {t(step.textKey)}
                   </p>
                 </div>
               </div>

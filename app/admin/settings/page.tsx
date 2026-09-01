@@ -3,8 +3,11 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Save, Globe, Mail, MapPin, Clock, Link2 } from "lucide-react";
+import { useT, useDir } from "@/lib/i18n";
 
 export default function SettingsPage() {
+  const t = useT();
+  const dir = useDir();
   const router = useRouter();
   const [settings, setSettings] = useState({
     siteName: "",
@@ -72,15 +75,15 @@ export default function SettingsPage() {
       ]);
 
       if (!siteRes.ok || !seoRes.ok) {
-        setMessage("خطأ في الحفظ");
+        setMessage(t("admin.alert.error"));
         setSaving(false);
         return;
       }
 
-      setMessage("تم الحفظ بنجاح");
+      setMessage(t("admin.alert.saved"));
       setTimeout(() => setMessage(""), 3000);
     } catch {
-      setMessage("خطأ في الاتصال");
+      setMessage(t("admin.alert.connection"));
     } finally {
       setSaving(false);
     }
@@ -95,10 +98,10 @@ export default function SettingsPage() {
   }
 
   return (
-    <div dir="rtl">
+    <div dir={dir}>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white">إعدادات الموقع</h1>
-        <p className="mt-1 text-sm text-white/40">إدارة معلومات الموقع والتكاملات الخارجية</p>
+        <h1 className="text-2xl font-bold text-white">{t("admin.settings.title")}</h1>
+        <p className="mt-1 text-sm text-white/40">{t("admin.settings.subtitle")}</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -110,10 +113,10 @@ export default function SettingsPage() {
 
         {/* Site Info */}
         <div className="rounded-2xl border border-white/10 bg-[#0B1F3A] p-6">
-          <h2 className="mb-6 text-lg font-bold text-white">معلومات الموقع</h2>
+          <h2 className="mb-6 text-lg font-bold text-white">{t("admin.settings.siteInfo")}</h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <label className="mb-2 block text-sm font-medium text-white/70">اسم الموقع</label>
+              <label className="mb-2 block text-sm font-medium text-white/70">{t("admin.settings.siteName")}</label>
               <div className="relative">
                 <Globe className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-white/30" />
                 <input
@@ -125,7 +128,7 @@ export default function SettingsPage() {
               </div>
             </div>
             <div>
-              <label className="mb-2 block text-sm font-medium text-white/70">الشعار</label>
+              <label className="mb-2 block text-sm font-medium text-white/70">{t("admin.settings.tagline")}</label>
               <input
                 type="text"
                 value={settings.siteTagline}
@@ -134,7 +137,7 @@ export default function SettingsPage() {
               />
             </div>
             <div>
-              <label className="mb-2 block text-sm font-medium text-white/70">رقم الهاتف</label>
+              <label className="mb-2 block text-sm font-medium text-white/70">{t("admin.settings.phone")}</label>
               <div className="relative">
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-white/30">+966</span>
                 <input
@@ -147,7 +150,7 @@ export default function SettingsPage() {
               </div>
             </div>
             <div>
-              <label className="mb-2 block text-sm font-medium text-white/70">البريد الإلكتروني</label>
+              <label className="mb-2 block text-sm font-medium text-white/70">{t("admin.settings.email")}</label>
               <div className="relative">
                 <Mail className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-white/30" />
                 <input
@@ -159,7 +162,7 @@ export default function SettingsPage() {
               </div>
             </div>
             <div className="sm:col-span-2">
-              <label className="mb-2 block text-sm font-medium text-white/70">العنوان</label>
+              <label className="mb-2 block text-sm font-medium text-white/70">{t("admin.settings.address")}</label>
               <div className="relative">
                 <MapPin className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-white/30" />
                 <input
@@ -171,7 +174,7 @@ export default function SettingsPage() {
               </div>
             </div>
             <div>
-              <label className="mb-2 block text-sm font-medium text-white/70">ساعات العمل</label>
+              <label className="mb-2 block text-sm font-medium text-white/70">{t("admin.settings.workingHours")}</label>
               <div className="relative">
                 <Clock className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-white/30" />
                 <input
@@ -215,8 +218,8 @@ export default function SettingsPage() {
         <div className="rounded-2xl border border-white/10 bg-[#0B1F3A] p-6">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-bold text-white">وضع الصيانة</h2>
-              <p className="mt-1 text-sm text-white/40">عند تفعيله، سيتم عرض صفحة صيانة لجميع الزوار</p>
+              <h2 className="text-lg font-bold text-white">{t("admin.settings.maintenanceTitle")}</h2>
+              <p className="mt-1 text-sm text-white/40">{t("admin.settings.maintenanceDescription")}</p>
             </div>
             <label className="relative inline-flex cursor-pointer items-center">
               <input
@@ -232,10 +235,10 @@ export default function SettingsPage() {
 
         {/* Google Integrations */}
         <div className="rounded-2xl border border-white/10 bg-[#0B1F3A] p-6">
-          <h2 className="mb-6 text-lg font-bold text-white">تكامل Google</h2>
+          <h2 className="mb-6 text-lg font-bold text-white">{t("admin.settings.googleLatest")}</h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <label className="mb-2 block text-sm font-medium text-white/70">Google Analytics 4</label>
+              <label className="mb-2 block text-sm font-medium text-white/70">{t("admin.settings.ga4MeasurementId")}</label>
               <input
                 type="text"
                 value={seo.googleAnalyticsId}
@@ -243,10 +246,10 @@ export default function SettingsPage() {
                 placeholder="G-XXXXXXXXXX"
                 className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/30 outline-none focus:border-[#2563eb]"
               />
-              <p className="mt-1 text-xs text-white/30">معرف القياس من GA4</p>
+              <p className="mt-1 text-xs text-white/30">{t("admin.settings.ga4IdHint")}</p>
             </div>
             <div>
-              <label className="mb-2 block text-sm font-medium text-white/70">Google Search Console</label>
+              <label className="mb-2 block text-sm font-medium text-white/70">{t("admin.settings.gscVerification")}</label>
               <input
                 type="text"
                 value={seo.googleSearchConsoleId}
@@ -254,15 +257,15 @@ export default function SettingsPage() {
                 placeholder="google-site-verification"
                 className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/30 outline-none focus:border-[#2563eb]"
               />
-              <p className="mt-1 text-xs text-white/30">كود التحقق من ملكية الموقع</p>
+              <p className="mt-1 text-xs text-white/30">{t("admin.settings.gscHint")}</p>
             </div>
           </div>
 
           <div className="mt-6 rounded-xl border border-white/5 bg-white/5 p-4">
-            <h3 className="mb-2 text-sm font-bold text-white/60">تعليمات الربط</h3>
+            <h3 className="mb-2 text-sm font-bold text-white/60">{t("admin.settings.instructions")}</h3>
             <div className="space-y-2 text-xs text-white/40 leading-relaxed">
-              <p><strong className="text-white/60">Google Analytics 4:</strong> اذهب إلى Google Analytics → Admin → Data Streams → اختر الـ Stream → Measurement ID</p>
-              <p><strong className="text-white/60">Search Console:</strong> اذهب إلى Google Search Console → Settings → Verification → HTML tag → انسخ المحتوى</p>
+              <p><strong className="text-white/60">Google Analytics 4:</strong> {t("admin.settings.ga4Instructions")}</p>
+              <p><strong className="text-white/60">Search Console:</strong> {t("admin.settings.gscInstructions")}</p>
             </div>
           </div>
         </div>
@@ -275,7 +278,7 @@ export default function SettingsPage() {
             className="inline-flex items-center gap-2 rounded-xl bg-[#2563eb] px-8 py-3 text-sm font-bold text-white transition hover:bg-[#2563eb]/90 disabled:opacity-50"
           >
             <Save className="h-5 w-5" />
-            {saving ? "جاري الحفظ..." : "حفظ الإعدادات"}
+            {saving ? t("admin.alert.saving") : t("admin.settings.saveSettings")}
           </button>
           {message && (
             <span className={`text-sm ${message.includes("نجاح") ? "text-green-400" : "text-red-400"}`}>

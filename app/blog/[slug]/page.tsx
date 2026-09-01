@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, Calendar, User } from "lucide-react";
 import { store } from "@/lib/store";
 import { sanitizeHtml } from "@/lib/sanitize-html";
+import { getT } from "@/lib/get-t";
 
 export const dynamic = "force-dynamic";
 
@@ -13,8 +14,9 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const { t } = getT();
   const post = store.getBlogPostBySlug(params.slug);
-  if (!post) return { title: "المقال غير موجود" };
+  if (!post) return { title: t("page.blogSlug.notFound") };
   return {
     metadataBase: new URL("https://osb.com.sa"),
     title: post.seoTitle || post.title,
@@ -30,7 +32,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
+  const { t, lang, dir } = getT();
   const post = store.getBlogPostBySlug(params.slug);
+  const locale = lang === "ar" ? "ar-SA" : "en-US";
 
   if (!post || post.status !== "published") {
     notFound();
@@ -50,7 +54,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
   };
 
   return (
-    <div dir="rtl" className="min-h-screen bg-black">
+    <div dir={dir} className="min-h-screen bg-black">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <article className="min-h-screen">
         {/* Cover image */}
@@ -73,7 +77,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
               className="mb-6 inline-flex items-center gap-2 text-sm text-white/40 transition hover:text-white"
             >
               <ArrowLeft className="h-4 w-4" />
-              جميع المقالات
+              {t("page.blogSlug.allArticles")}
             </Link>
 
             {/* Meta */}
@@ -87,7 +91,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
               {post.publishedAt && (
                 <span className="flex items-center gap-1.5">
                   <Calendar className="h-4 w-4" />
-                  {new Date(post.publishedAt).toLocaleDateString("ar-SA", { year: "numeric", month: "long", day: "numeric" })}
+                  {new Date(post.publishedAt).toLocaleDateString(locale, { year: "numeric", month: "long", day: "numeric" })}
                 </span>
               )}
               {post.category && (

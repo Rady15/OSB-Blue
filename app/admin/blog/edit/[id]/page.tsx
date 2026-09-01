@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft, Save, EyeOff } from "lucide-react";
 import { generateSlug } from "@/lib/slug";
 import { RichTextEditor } from "@/components/admin/RichTextEditor";
+import { useT, useDir } from "@/lib/i18n";
 
 interface BlogPost {
   id: string;
@@ -25,6 +26,8 @@ interface BlogPost {
 }
 
 export default function EditBlogPost() {
+  const t = useT();
+  const dir = useDir();
   const params = useParams();
   const router = useRouter();
   const [formData, setFormData] = useState<Partial<BlogPost>>({});
@@ -78,7 +81,7 @@ export default function EditBlogPost() {
     setError("");
 
     if (!formData.title?.trim()) {
-      setError("العنوان مطلوب");
+      setError(t("admin.blog.edit.titleRequired"));
       return;
     }
 
@@ -101,7 +104,7 @@ export default function EditBlogPost() {
 
       if (!res.ok) {
         const data = await res.json();
-        setError(data.error || "خطأ في الحفظ");
+        setError(data.error || t("admin.alert.error"));
         setSaving(false);
         return;
       }
@@ -109,7 +112,7 @@ export default function EditBlogPost() {
       router.push("/admin/blog");
       router.refresh();
     } catch {
-      setError("خطأ في الاتصال");
+      setError(t("admin.alert.connection"));
       setSaving(false);
     }
   }
@@ -125,7 +128,7 @@ export default function EditBlogPost() {
   if (!formData.id) return null;
 
   return (
-    <div dir="rtl">
+    <div dir={dir}>
       <div className="mb-8 flex items-center gap-4">
         <button
           onClick={() => router.back()}
@@ -134,8 +137,8 @@ export default function EditBlogPost() {
           <ArrowLeft className="h-5 w-5" />
         </button>
         <div>
-          <h1 className="text-2xl font-bold text-white">تعديل المقال</h1>
-          <p className="mt-1 text-sm text-white/40">تعديل ونشر المقال</p>
+          <h1 className="text-2xl font-bold text-white">{t("admin.blog.edit.heading")}</h1>
+          <p className="mt-1 text-sm text-white/40">{t("admin.blog.edit.subtitle")}</p>
         </div>
       </div>
 
@@ -149,7 +152,7 @@ export default function EditBlogPost() {
             )}
 
             <div className="rounded-2xl border border-white/10 bg-[#0B1F3A] p-6">
-              <label className="mb-2 block text-sm font-medium text-white/70">عنوان المقال *</label>
+              <label className="mb-2 block text-sm font-medium text-white/70">{t("admin.blog.edit.title")}</label>
               <input
                 type="text"
                 value={formData.title || ""}
@@ -160,7 +163,7 @@ export default function EditBlogPost() {
             </div>
 
             <div className="rounded-2xl border border-white/10 bg-[#0B1F3A] p-6">
-              <label className="mb-2 block text-sm font-medium text-white/70">رابط المقال (slug)</label>
+              <label className="mb-2 block text-sm font-medium text-white/70">{t("admin.blog.edit.slug")}</label>
               <div className="flex items-center rounded-xl border border-white/10 bg-white/5 overflow-hidden">
                 <span className="px-4 py-3 text-sm text-white/30">/blog/</span>
                 <input
@@ -173,7 +176,7 @@ export default function EditBlogPost() {
             </div>
 
             <div className="rounded-2xl border border-white/10 bg-[#0B1F3A] p-6">
-              <label className="mb-2 block text-sm font-medium text-white/70">ملخص المقال</label>
+              <label className="mb-2 block text-sm font-medium text-white/70">{t("admin.blog.edit.excerpt")}</label>
               <textarea
                 value={formData.excerpt || ""}
                 onChange={(e) => updateField("excerpt", e.target.value)}
@@ -183,25 +186,25 @@ export default function EditBlogPost() {
             </div>
 
             <div className="rounded-2xl border border-white/10 bg-[#0B1F3A] p-6">
-              <label className="mb-2 block text-sm font-medium text-white/70">المحتوى *</label>
+              <label className="mb-2 block text-sm font-medium text-white/70">{t("admin.blog.edit.content")}</label>
               <RichTextEditor
                 value={formData.content || ""}
                 onChange={(html) => updateField("content", html)}
-                placeholder="ابدأ الكتابة هنا... استخدم شريط الأدوات لتنسيق النص"
+                placeholder={t("admin.blog.edit.contentPlaceholder")}
               />
             </div>
           </div>
 
           <div className="space-y-6">
             <div className="rounded-2xl border border-white/10 bg-[#0B1F3A] p-6">
-              <label className="mb-3 block text-sm font-medium text-white/70">النشر</label>
+              <label className="mb-3 block text-sm font-medium text-white/70">{t("admin.blog.edit.publish")}</label>
               <button
                 type="submit"
                 disabled={saving}
                 className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#2563eb] py-3 text-sm font-bold text-white transition hover:bg-[#2563eb]/90 disabled:opacity-50"
               >
                 <Save className="h-5 w-5" />
-                {saving ? "جاري الحفظ..." : "نشر المقال"}
+                {saving ? t("admin.alert.saving") : t("admin.blog.edit.publishPost")}
               </button>
               <button
                 type="button"
@@ -210,15 +213,15 @@ export default function EditBlogPost() {
                 className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-bold transition disabled:opacity-50 bg-yellow-400/10 text-yellow-400 border border-yellow-400/30"
               >
                 <EyeOff className="h-4 w-4" />
-                {saving ? "جاري الحفظ..." : "حفظ كمسودة"}
+                {saving ? t("admin.alert.saving") : t("admin.blog.edit.saveDraft")}
               </button>
             </div>
 
             <div className="rounded-2xl border border-white/10 bg-[#0B1F3A] p-6">
-              <label className="mb-3 block text-sm font-medium text-white/70">معلومات المقال</label>
+              <label className="mb-3 block text-sm font-medium text-white/70">{t("admin.blog.edit.meta")}</label>
               <div className="space-y-3">
                 <div>
-                  <label className="mb-1 block text-xs text-white/40">المؤلف</label>
+                  <label className="mb-1 block text-xs text-white/40">{t("admin.blog.edit.author")}</label>
                   <input
                     type="text"
                     value={formData.author || ""}
@@ -227,7 +230,7 @@ export default function EditBlogPost() {
                   />
                 </div>
                 <div>
-                  <label className="mb-1 block text-xs text-white/40">التصنيف</label>
+                  <label className="mb-1 block text-xs text-white/40">{t("admin.blog.edit.category")}</label>
                   <input
                     type="text"
                     value={formData.category || ""}
@@ -236,7 +239,7 @@ export default function EditBlogPost() {
                   />
                 </div>
                 <div>
-                  <label className="mb-1 block text-xs text-white/40">الوسوم (مفصولة بفاصلة)</label>
+                  <label className="mb-1 block text-xs text-white/40">{t("admin.blog.edit.tags")}</label>
                   <input
                     type="text"
                     value={Array.isArray(formData.tags) ? formData.tags.join(", ") : formData.tags || ""}
@@ -245,7 +248,7 @@ export default function EditBlogPost() {
                   />
                 </div>
                 <div>
-                  <label className="mb-1 block text-xs text-white/40">صورة الغلاف</label>
+                  <label className="mb-1 block text-xs text-white/40">{t("admin.blog.edit.coverImage")}</label>
                   <div className="flex items-center gap-2">
                     <input
                       type="text"
@@ -282,10 +285,10 @@ export default function EditBlogPost() {
             </div>
 
             <div className="rounded-2xl border border-white/10 bg-[#0B1F3A] p-6">
-              <label className="mb-3 block text-sm font-medium text-white/70">SEO</label>
+              <label className="mb-3 block text-sm font-medium text-white/70">{t("admin.blog.edit.seo")}</label>
               <div className="space-y-3">
                 <div>
-                  <label className="mb-1 block text-xs text-white/40">عنوان SEO</label>
+                  <label className="mb-1 block text-xs text-white/40">{t("admin.blog.edit.seoTitle")}</label>
                   <input
                     type="text"
                     value={formData.seoTitle || ""}
@@ -295,7 +298,7 @@ export default function EditBlogPost() {
                   />
                 </div>
                 <div>
-                  <label className="mb-1 block text-xs text-white/40">وصف SEO</label>
+                  <label className="mb-1 block text-xs text-white/40">{t("admin.blog.edit.seoDescription")}</label>
                   <textarea
                     value={formData.seoDescription || ""}
                     onChange={(e) => updateField("seoDescription", e.target.value)}

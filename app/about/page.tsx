@@ -5,37 +5,39 @@ import Image from "next/image";
 import { ArrowUpLeft, Sparkles, Eye, Shield, Puzzle, Clock, Zap } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useT } from "@/lib/i18n";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const storyLines = [
-  "OSB شركة سعودية متخصصة تقدم حلول الأعمال المتكاملة داخل المملكة العربية السعودية،",
-  "نساعد رواد الأعمال والمستثمرين والشركات الناشئة على بناء أعمالهم بطريقة صحيحة ومدروسة",
-  "من البداية وحتى التشغيل والتوسع.",
-  "",
-  "أسسنا OSB لتكون المحطة الأولى لكل صاحب فكرة أو مشروع في المملكة العربية السعودية.",
-  "",
-  "أطلقناها من فهم حقيقي للتحديات التي تواجه أصحاب المشاريع في السوق السعودي،",
-  "حيث يبدأ الكثير من رواد الأعمال بالتنفيذ قبل التخطيط الصحيح،",
-  "مما يؤدي إلى قرارات مكلفة وتشتت بين الجهات والخدمات المختلفة.",
-  "",
-  "خبرة في التعامل مع مختلف أنواع الشركات، من المحلية والخليجية إلى الدولية والشركات المختلطة.",
-];
-
-const values = [
-  { title: "الوضوح", desc: "نبني قراراتنا على المعلومات الدقيقة والحقائق الواضحة.", icon: Eye },
-  { title: "الموثوقية", desc: "نختار شركائنا بعناية، ونلتزم بمعايير مهنية تضمن جودة الخدمة.", icon: Shield },
-  { title: "التكامل", desc: "نوفر منظومة متكاملة تغطي احتياجات المشروع في مختلف مراحله.", icon: Puzzle },
-  { title: "المتابعة", desc: "لا نتوقف عند بدء الإجراء، بل نتابع حتى تحقيق النتيجة.", icon: Clock },
-  { title: "الكفاءة", desc: "نساعد عملائنا على اختصار الوقت والجهد والتكلفة.", icon: Zap },
-];
-
 export default function AboutPage() {
+  const t = useT();
   const pageRef = useRef<HTMLDivElement>(null);
   const heroGlowRef = useRef<HTMLDivElement>(null);
   const storyLinesRef = useRef<(HTMLParagraphElement | null)[]>([]);
   const vmCardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const valueCardsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  const storyLines = [
+    t("page.about.story.0"),
+    t("page.about.story.1"),
+    t("page.about.story.2"),
+    "",
+    t("page.about.story.4"),
+    "",
+    t("page.about.story.6"),
+    t("page.about.story.7"),
+    t("page.about.story.8"),
+    "",
+    t("page.about.story.10"),
+  ];
+
+  const values = [
+    { title: t("page.about.value.clarity.title"), desc: t("page.about.value.clarity.desc"), icon: Eye },
+    { title: t("page.about.value.reliability.title"), desc: t("page.about.value.reliability.desc"), icon: Shield },
+    { title: t("page.about.value.integration.title"), desc: t("page.about.value.integration.desc"), icon: Puzzle },
+    { title: t("page.about.value.followup.title"), desc: t("page.about.value.followup.desc"), icon: Clock },
+    { title: t("page.about.value.efficiency.title"), desc: t("page.about.value.efficiency.desc"), icon: Zap },
+  ];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -163,16 +165,16 @@ export default function AboutPage() {
           <div className="space-y-8">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-[#2563eb] backdrop-blur-sm">
               <Sparkles className="h-4 w-4" />
-              من نحن
+              {t("page.about.heroBadge")}
             </div>
 
 
 
             <p className="max-w-2xl text-lg leading-9 text-white/60 md:text-xl md:leading-10">
-              بدأت OSB من ملاحظة بسيطة.<br />
-              رأينا أن كثيراً من الشركات تقضي وقتاً وجهداً كبيرين في التنسيق بين جهات متعددة، بينما كان يمكن إنجاز كل ذلك من خلال شريك واحد يفهم احتياجاتها ويقدّم الحلول المناسبة.<br />
-              ومن هنا جاءت فكرة OSB.<br />
-              جمعنا خدمات الأعمال الأساسية تحت سقف واحد، لنساعد الشركات على العمل بكفاءة أكبر، واتخاذ قرارات أفضل، والتركيز على نمو أعمالها.
+              {t("page.about.intro1")}<br />
+              {t("page.about.intro2")}<br />
+              {t("page.about.intro3")}<br />
+              {t("page.about.intro4")}
             </p>
           </div>
 
@@ -206,12 +208,12 @@ export default function AboutPage() {
             <div className="lg:sticky lg:top-32 lg:self-start">
               <div className="mb-4 flex items-center gap-3">
                 <div className="h-px w-8 bg-[#2563eb]" />
-                <span className="text-sm font-bold text-[#2563eb]">قصتنا</span>
+                <span className="text-sm font-bold text-[#2563eb]">{t("page.about.storyLabel")}</span>
               </div>
               <h2 className="text-5xl font-black leading-[1.5] md:text-6xl">
-                لماذا
+                {t("page.about.storyTitle1")}
                 <br />
-                <span className="text-[#2563eb]">OSB؟</span>
+                <span className="text-[#2563eb]">OSB?</span>
               </h2>
             </div>
 
@@ -226,7 +228,7 @@ export default function AboutPage() {
                   }`}
                 >
                   {line && (
-                    <span className={line.includes("OSB") || line.includes("أسسنا") || line.includes("أطلقناها") ? "font-semibold text-white/80" : ""}>
+                    <span className={line.includes("OSB") || line.includes("We founded") || line.includes("We launched") || line.includes("أسسنا") || line.includes("أطلقناها") ? "font-semibold text-white/80" : ""}>
                       {line}
                     </span>
                   )}
@@ -242,9 +244,9 @@ export default function AboutPage() {
         <div className="container-osb relative z-10" style={{ perspective: "1400px" }}>
           <div className="mb-16 text-center">
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-[#2563eb] backdrop-blur-sm">
-              بوصلة OSB
+              {t("page.about.compass")}
             </div>
-            <h2 className="text-4xl font-black md:text-5xl">رؤيتنا ورسالتنا</h2>
+            <h2 className="text-4xl font-black md:text-5xl">{t("page.about.visionMission")}</h2>
           </div>
 
           <div className="grid gap-8 md:grid-cols-2">
@@ -263,10 +265,10 @@ export default function AboutPage() {
                 </svg>
               </div>
 
-              <h3 className="relative text-3xl font-black text-white">رؤيتنا</h3>
+              <h3 className="relative text-3xl font-black text-white">{t("page.about.vision")}</h3>
               <div className="relative mt-3 h-0.5 w-12 rounded-full bg-[#2563eb]/60" />
               <p className="relative mt-6 text-xl leading-10 text-white/50">
-                أن نكون الوجهة الأولى لحلول الأعمال المتكاملة في المملكة العربية السعودية.
+                {t("page.about.visionText")}
               </p>
             </div>
 
@@ -282,10 +284,10 @@ export default function AboutPage() {
                 <ArrowUpLeft className="h-8 w-8 text-[#2563eb]" />
               </div>
 
-              <h3 className="relative text-3xl font-black text-white">رسالتنا</h3>
+              <h3 className="relative text-3xl font-black text-white">{t("page.about.mission")}</h3>
               <div className="relative mt-3 h-0.5 w-12 rounded-full bg-[#2563eb]/60" />
               <p className="relative mt-6 text-xl leading-10 text-white/50">
-                تمكين أصحاب المشاريع والمستثمرين من اتخاذ قرارات صحيحة ومدروسة من خلال حلول متكاملة تجمع بين الخبرة والتنفيذ والمتابعة.
+                {t("page.about.missionText")}
               </p>
             </div>
           </div>
@@ -299,11 +301,11 @@ export default function AboutPage() {
         <div className="container-osb relative z-10" style={{ perspective: "1200px" }}>
           <div className="mb-16 text-center">
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-[#2563eb] backdrop-blur-sm">
-              ما نؤمن به
+              {t("page.about.believe")}
             </div>
-            <h2 className="text-4xl font-black md:text-5xl">قيمنا</h2>
+            <h2 className="text-4xl font-black md:text-5xl">{t("page.about.values")}</h2>
             <p className="mx-auto mt-4 max-w-xl text-lg text-white/40">
-              القيم التي تضبط طريقة تفكيرنا وتنفيذنا في كل خدمة.
+              {t("page.about.valuesDesc")}
             </p>
           </div>
 

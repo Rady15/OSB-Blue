@@ -1,28 +1,34 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { store } from "@/lib/store";
+import { getT } from "@/lib/get-t";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "المدونة | OSB",
-  metadataBase: new URL("https://osb.com.sa"),
-  description: "مقالات ونصائح في مجال الأعمال والاستشارات لمساعدة رواد الأعمال والشركات على النمو في السعودية.",
-  alternates: { canonical: "/blog" },
-  robots: { index: true, follow: true },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = getT();
+  return {
+    title: t("page.blog.metaTitle"),
+    metadataBase: new URL("https://osb.com.sa"),
+    description: t("page.blog.metaDescription"),
+    alternates: { canonical: "/blog" },
+    robots: { index: true, follow: true },
+  };
+}
 
 export default async function BlogPage() {
+  const { t, lang, dir } = getT();
   const posts = store.getBlogPosts().filter((p) => p.status === "published");
+  const locale = lang === "ar" ? "ar-SA" : "en-US";
 
   return (
-    <div dir="rtl" className="min-h-screen bg-black">
+    <div dir={dir} className="min-h-screen bg-black">
       <section className="relative overflow-hidden bg-black pt-24 pb-16">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(37,99,235,0.25),transparent_40%)]" />
         <div className="relative z-10 container-osb text-center">
-          <h1 className="text-4xl font-extrabold text-white md:text-6xl">المدونة</h1>
+          <h1 className="text-4xl font-extrabold text-white md:text-6xl">{t("page.blog.title")}</h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-white/50">
-            مقالات ونصائح في مجال الأعمال والاستشارات لمساعدتك على بناء مشروعك
+            {t("page.blog.description")}
           </p>
         </div>
       </section>
@@ -31,9 +37,9 @@ export default async function BlogPage() {
         <div className="container-osb">
           {posts.length === 0 ? (
             <div className="py-20 text-center">
-              <p className="text-white/40">لا توجد مقالات منشورة حالياً</p>
+              <p className="text-white/40">{t("page.blog.empty")}</p>
               <Link href="/" className="mt-4 inline-block text-[#2563eb] hover:underline">
-                العودة للرئيسية
+                {t("page.blog.backHome")}
               </Link>
             </div>
           ) : (
@@ -62,7 +68,7 @@ export default async function BlogPage() {
                       )}
                       {post.publishedAt && (
                         <span className="text-xs text-white/30">
-                          {new Date(post.publishedAt).toLocaleDateString("ar-SA")}
+                          {new Date(post.publishedAt).toLocaleDateString(locale)}
                         </span>
                       )}
                     </div>

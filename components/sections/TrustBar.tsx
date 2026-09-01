@@ -3,15 +3,17 @@
 import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ShieldCheck } from "lucide-react";
+import { useT } from "@/lib/i18n";
 
-const items = [
-  "نحدّد قبل أن ننفّذ",
-  "حلول أعمال متكاملة تحت سقف واحد",
-  "شركاء متخصصون ومعتمدون",
-  "خبرة بالسوق السعودي ومتطلباته",
+const itemKeys = [
+  "trustBar.item1",
+  "trustBar.item2",
+  "trustBar.item3",
+  "trustBar.item4",
 ];
 
 export function TrustBar() {
+  const t = useT();
   const setRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
 
@@ -46,20 +48,20 @@ export function TrustBar() {
         <div ref={trackRef} className="flex w-max">
           {/* Hidden measuring set */}
           <div ref={setRef} className="flex shrink-0 gap-10 opacity-0 absolute pointer-events-none" aria-hidden>
-            {items.map((item, index) => (
+            {itemKeys.map((key, index) => (
               <div key={`m-${index}`} className="flex shrink-0 items-center gap-3">
                 <ShieldCheck className="h-5 w-5 shrink-0 text-[#2563eb]" />
-                <span className="whitespace-nowrap text-lg font-bold text-white/70">{item}</span>
+                <span className="whitespace-nowrap text-lg font-bold text-white/70">{t(key)}</span>
               </div>
             ))}
           </div>
           {/* Visible sets — enough to cover viewport + 1 extra */}
           {[0, 1, 2, 3, 4].map((set) => (
             <div key={set} className="flex shrink-0 gap-10">
-              {items.map((item, index) => (
+              {itemKeys.map((key, index) => (
                 <div key={`${set}-${index}`} className="flex shrink-0 items-center gap-3">
                   <ShieldCheck className="h-5 w-5 shrink-0 text-[#2563eb]" />
-                  <span className="whitespace-nowrap text-lg font-bold text-white/70">{item}</span>
+                  <span className="whitespace-nowrap text-lg font-bold text-white/70">{t(key)}</span>
                 </div>
               ))}
             </div>

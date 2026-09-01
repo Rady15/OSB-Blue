@@ -10,15 +10,11 @@ import { TrustBar } from "@/components/sections/TrustBar";
 import { ChallengesSection } from "@/components/sections/ChallengesSection";
 import { WhyUsSection } from "@/components/sections/WhyUsSection";
 import { PartnersMarquee } from "@/components/sections/PartnersMarquee";
-
-const stats = [
-  ["+5,000", "إجراء مكتمل"],
-  ["+370", "ملف أعمال مدروس"],
-  ["+13K", "متابعة وإجراء"],
-  ["+385", "استشارة منجزة"],
-];
+import { getT } from "@/lib/get-t";
 
 export default function Home() {
+  const { t } = getT();
+
   return (
     <div className="adsela-page min-h-screen overflow-hidden bg-black text-white">
       <section className="relative min-h-screen overflow-hidden bg-[rgb(0,11,48)] pt-28">
@@ -50,13 +46,13 @@ export default function Home() {
             <p className="mb-5 text-sm font-bold text-white/60">OSB — One Stop Business</p>
             <ScrollRevealText
               as="h1"
-              text="كل ما يحتاجه مشروعك في مكان واحد"
+              text={t("page.home.heroTitle")}
               wordsPerLine={3}
               className="text-5xl font-extrabold leading-[1.5] text-white md:text-7xl"
             />
             <ScrollRevealText
               as="p"
-              text="نحوّل التحديات التشغيلية إلى حلول عملية تدعم كفاءة أعمالك ونموها"
+              text={t("page.home.heroSubtitle")}
               wordsPerLine={99}
               className="mt-7 max-w-2xl text-lg leading-9 text-white/75"
             />
@@ -65,13 +61,13 @@ export default function Home() {
                 href="/free-consultation"
                 className="inline-flex items-center gap-3 rounded-none bg-[#2563eb] px-7 py-4 text-sm font-extrabold text-white shadow-[0_0_34px_rgba(37,99,235,0.42)] transition hover:-translate-y-1 hover:bg-white hover:text-black"
               >
-                احجز استشارتك المجانية <ArrowLeft className="h-5 w-5" />
+                {t("page.home.book")} <ArrowLeft className="h-5 w-5" />
               </Link>
               <Link
                 href="/contact"
                 className="inline-flex items-center gap-3 rounded-none border border-white/30 px-7 py-4 text-sm font-extrabold text-white shadow-[0_0_34px_rgba(37,99,235,0.42)] transition hover:-translate-y-1 hover:bg-white hover:text-black"
               >
-                تواصل معنا
+                {t("page.home.contact")}
               </Link>
             </div>
           </div>
@@ -81,7 +77,7 @@ export default function Home() {
       <TrustBar />
 
       <section className="bg-black py-10">
-        <p className="mb-7 text-center text-sm font-bold text-white/50">نفتخر أيضاً بشركائنا</p>
+        <p className="mb-7 text-center text-sm font-bold text-white/50">{t("page.home.partnersLabel")}</p>
         <PartnersMarquee />
       </section>
 
@@ -95,22 +91,22 @@ export default function Home() {
           <div className="relative">
             <ScatterImage
               src="/images/about-us.png"
-              alt="عن OSB"
+              alt={t("page.home.aboutImageAlt")}
               width={960}
               height={720}
               className="rounded-[2rem]"
             />
           </div>
           <div>
-            <p className="mb-3 text-sm font-bold text-white/45">عن OSB</p>
+            <p className="mb-3 text-sm font-bold text-white/45">{t("page.home.aboutLabel")}</p>
             <ScrollRevealText
               as="h2"
-              text="نحوّل الفكرة إلى مسار عمل واضح"
+              text={t("page.home.aboutTitle")}
               wordsPerLine={4}
               className="text-4xl font-extrabold leading-[1.5] md:text-6xl"
             />
             <p className="mt-7 max-w-3xl text-lg leading-9 text-white/60">
-              OSB شركة سعودية متخصصة تقدم حلول الأعمال المتكاملة داخل المملكة العربية السعودية، نساعد رواد الأعمال والمستثمرين والشركات الناشئة على بناء أعمالهم بطريقة صحيحة ومدروسة من البداية وحتى التشغيل والتوسع.
+              {t("page.home.aboutText")}
             </p>
           </div>
         </div>
@@ -126,7 +122,7 @@ export default function Home() {
           <div className="relative">
             <AnimatedImage
               src="/images/consult-free.png"
-              alt="استشارة مجانية"
+              alt={t("page.home.consultImageAlt")}
               className="rounded-[2rem]"
             />
             {/* Glow under image */}
@@ -135,12 +131,12 @@ export default function Home() {
           <div>
             <ScrollRevealText
               as="h2"
-              text="ابدأ باستشارة مجانية قبل أي قرار"
+              text={t("page.home.consultTitle")}
               wordsPerLine={99}
               className="text-4xl font-extrabold leading-[1.5] md:text-5xl"
             />
             <p className="mt-6 text-lg leading-9 text-white/60">
-              نجلس معك، نفهم وضعك، ونخبرك بصدق ما الذي تحتاجه وما لا تحتاجه. بدون التزام. بدون ضغط. بدون تكلفة.
+              {t("page.home.consultText")}
             </p>
             <div className="mt-8 max-w-xl rounded-[2rem] border border-white/10 bg-white/[0.04] p-5">
               <ConsultationForm light />

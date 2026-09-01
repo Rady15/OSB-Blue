@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Save, Plus, Trash2 } from "lucide-react";
+import { useT, useDir } from "@/lib/i18n";
 
 interface Partner {
   name: string;
@@ -10,11 +11,14 @@ interface Partner {
 }
 
 export default function PartnersEditor() {
+  const t = useT();
+  const dir = useDir();
   const router = useRouter();
   const [partners, setPartners] = useState<Partner[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState<"success" | "error" | "">("");
 
   useEffect(() => {
     fetch("/admin/api/content/partners", { cache: "no-store" })
@@ -33,13 +37,14 @@ export default function PartnersEditor() {
   }
 
   function removePartner(index: number) {
-    if (!confirm("حذف هذا الشريك؟")) return;
+    if (!confirm(t("admin.partners.deleteConfirm"))) return;
     setPartners((prev) => prev.filter((_, i) => i !== index));
   }
 
   async function handleSave() {
     setSaving(true);
     setMessage("");
+    setMessageType("");
 
     try {
       const res = await fetch("/admin/api/content/partners", {
@@ -49,15 +54,18 @@ export default function PartnersEditor() {
       });
 
       if (!res.ok) {
-        setMessage("خطأ في الحفظ");
+        setMessage(t("admin.alert.error"));
+        setMessageType("error");
         setSaving(false);
         return;
       }
 
-      setMessage("تم الحفظ بنجاح");
+      setMessage(t("admin.alert.saved"));
+      setMessageType("success");
       setTimeout(() => setMessage(""), 3000);
     } catch {
-      setMessage("خطأ في الاتصال");
+      setMessage(t("admin.alert.connection"));
+      setMessageType("error");
     } finally {
       setSaving(false);
     }
@@ -72,7 +80,7 @@ export default function PartnersEditor() {
   }
 
   return (
-    <div dir="rtl">
+    <div dir={dir}>
       <div className="mb-8 flex items-center gap-4">
         <button
           onClick={() => router.back()}
@@ -81,8 +89,8 @@ export default function PartnersEditor() {
           <ArrowLeft className="h-5 w-5" />
         </button>
         <div>
-          <h1 className="text-2xl font-bold text-white">الشركاء</h1>
-          <p className="mt-1 text-sm text-white/40">تحرير قائمة الشركاء</p>
+          <h1 className="text-2xl font-bold text-white">{t("admin.partners.heading")}</h1>
+          <p className="mt-1 text-sm text-white/40">{t("admin.partners.subtitle")}</p>
         </div>
         <div className="mr-auto flex gap-2">
           <button
@@ -90,7 +98,7 @@ export default function PartnersEditor() {
             className="inline-flex items-center gap-2 rounded-xl bg-[#2563eb] px-4 py-2 text-sm font-bold text-white"
           >
             <Plus className="h-4 w-4" />
-            إضافة شريك
+            {t("admin.partners.addPartner")}
           </button>
           <button
             onClick={handleSave}
@@ -98,13 +106,13 @@ export default function PartnersEditor() {
             className="inline-flex items-center gap-2 rounded-xl bg-green-600 px-6 py-2 text-sm font-bold text-white transition hover:bg-green-500 disabled:opacity-50"
           >
             <Save className="h-4 w-4" />
-            {saving ? "جاري الحفظ..." : "حفظ الكل"}
+            {saving ? t("admin.alert.saving") : t("admin.partners.saveAll")}
           </button>
         </div>
       </div>
 
       {message && (
-        <div className={`mb-6 rounded-xl px-4 py-3 text-sm ${message.includes("نجاح") ? "border border-green-500/30 bg-green-500/10 text-green-400" : "border border-red-500/30 bg-red-500/10 text-red-400"}`}>
+        <div className={`mb-6 rounded-xl px-4 py-3 text-sm ${messageType === "success" ? "border border-green-500/30 bg-green-500/10 text-green-400" : "border border-red-500/30 bg-red-500/10 text-red-400"}`}>
           {message}
         </div>
       )}
@@ -114,9 +122,9 @@ export default function PartnersEditor() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-white/10">
-                <th className="px-6 py-4 text-right text-xs font-bold text-white/40">الاسم</th>
-                <th className="px-6 py-4 text-right text-xs font-bold text-white/40">الصورة</th>
-                <th className="px-6 py-4 text-right text-xs font-bold text-white/40">إجراءات</th>
+                <th className="px-6 py-4 text-right text-xs font-bold text-white/40">{t("admin.partners.name")}</th>
+                <th className="px-6 py-4 text-right text-xs font-bold text-white/40">{t("admin.partners.image")}</th>
+                <th className="px-6 py-4 text-right text-xs font-bold text-white/40">{t("admin.partners.actions")}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5">

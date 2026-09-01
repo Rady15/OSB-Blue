@@ -8,6 +8,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { services } from "@/data/services";
 import { ScrollRevealText } from "@/components/ui/ScrollRevealText";
 import { GlassShatterImage } from "@/components/ui/GlassShatterImage";
+import { useT } from "@/lib/i18n";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -22,6 +23,7 @@ const serviceImages: Record<string, string> = {
 const displayedServices = services.slice(0, 6);
 
 export function ServicesHoverGrid() {
+  const t = useT();
   const sectionRef = useRef<HTMLElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
@@ -94,16 +96,16 @@ export function ServicesHoverGrid() {
         <div className="mb-10 pt-16 text-center">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-[#2563eb] backdrop-blur-sm">
             <Sparkles className="h-4 w-4" />
-            الحلول التي نقدمها
+            {t("servicesHover.badge")}
           </div>
           <ScrollRevealText
             as="h2"
-            text="خدمات متكاملة تحت سقف واحد"
+            text={t("servicesHover.title")}
             wordsPerLine={5}
             className="text-4xl font-black md:text-6xl"
           />
           <p className="mt-4 text-sm text-white/40">
-            مرّر على أي خدمة لمعرفة المزيد
+            {t("servicesHover.hint")}
           </p>
         </div>
 

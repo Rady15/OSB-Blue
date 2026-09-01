@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { ArrowLeft, Save, Plus, Trash2, GripVertical, Image as ImageIcon, Type, Layout, Palette, Upload } from "lucide-react";
+import { useT, useDir } from "@/lib/i18n";
 
 interface Block {
   id: string;
@@ -35,12 +36,15 @@ function generateId(): string {
 }
 
 export default function PageEditor() {
+  const t = useT();
+  const dir = useDir();
   const params = useParams();
   const router = useRouter();
   const [page, setPage] = useState<Page | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState<"success" | "error" | "">("");
   const [activeSection, setActiveSection] = useState<string | null>(null);
 
   useEffect(() => {
@@ -99,9 +103,9 @@ export default function PageEditor() {
     const newSection: Section = {
       id: generateId(),
       type: "custom",
-      label: "قسم جديد",
+      label: t("admin.pages.edit.newSection"),
       blocks: [
-        { id: generateId(), type: "heading", content: "عنوان جديد", styles: { color: "#ffffff", fontSize: "2rem", fontWeight: "700" } },
+        { id: generateId(), type: "heading", content: t("admin.pages.edit.newHeading"), styles: { color: "#ffffff", fontSize: "2rem", fontWeight: "700" } },
       ],
     };
     setPage({ ...page, sections: [...page.sections, newSection] });
@@ -109,7 +113,7 @@ export default function PageEditor() {
   }
 
   function deleteSection(sectionId: string) {
-    if (!page || !confirm("هل أنت متأكد من حذف هذا القسم؟")) return;
+    if (!page || !confirm(t("admin.pages.edit.deleteSectionConfirm"))) return;
     setPage({ ...page, sections: page.sections.filter((s) => s.id !== sectionId) });
     if (activeSection === sectionId) {
       setActiveSection(page.sections.find((s) => s.id !== sectionId)?.id || null);
@@ -121,7 +125,7 @@ export default function PageEditor() {
     const newBlock: Block = {
       id: generateId(),
       type: "text",
-      content: "نص جديد",
+      content: t("admin.pages.edit.newText"),
       styles: { color: "#ffffff", fontSize: "1rem" },
     };
     updateSection(sectionId, {
@@ -130,7 +134,7 @@ export default function PageEditor() {
   }
 
   function deleteBlock(sectionId: string, blockId: string) {
-    if (!page || !confirm("حذف هذا العنصر؟")) return;
+    if (!page || !confirm(t("admin.pages.edit.deleteItemConfirm"))) return;
     updateSection(sectionId, {
       blocks: page.sections.find((s) => s.id === sectionId)!.blocks.filter((b) => b.id !== blockId),
     });
@@ -140,6 +144,7 @@ export default function PageEditor() {
     if (!page) return;
     setSaving(true);
     setMessage("");
+    setMessageType("");
 
     try {
       const res = await fetch("/admin/api/pages/edit", {
@@ -149,15 +154,18 @@ export default function PageEditor() {
       });
 
       if (!res.ok) {
-        setMessage("خطأ في الحفظ");
+        setMessage(t("admin.alert.error"));
+        setMessageType("error");
         setSaving(false);
         return;
       }
 
-      setMessage("تم الحفظ بنجاح");
+      setMessage(t("admin.alert.saved"));
+      setMessageType("success");
       setTimeout(() => setMessage(""), 3000);
     } catch {
-      setMessage("خطأ في الاتصال");
+      setMessage(t("admin.alert.connection"));
+      setMessageType("error");
     } finally {
       setSaving(false);
     }
@@ -174,14 +182,14 @@ export default function PageEditor() {
       });
 
       if (!res.ok) {
-        alert("خطأ في رفع الصورة");
+        alert(t("admin.pages.edit.imageUploadError"));
         return;
       }
 
       const data = await res.json();
       updateBlock(sectionId, blockId, { content: data.url });
     } catch {
-      alert("خطأ في الاتصال");
+      alert(t("admin.alert.connection"));
     }
   }
 
@@ -198,7 +206,7 @@ export default function PageEditor() {
   const activeSectionData = page.sections.find((s) => s.id === activeSection);
 
   return (
-    <div dir="rtl">
+    <div dir={dir}>
       <div className="mb-8 flex items-center gap-4">
         <button
           onClick={() => router.back()}
@@ -207,7 +215,7 @@ export default function PageEditor() {
           <ArrowLeft className="h-5 w-5" />
         </button>
         <div className="flex-1">
-          <h1 className="text-2xl font-bold text-white">تعديل الصفحة</h1>
+          <h1 className="text-2xl font-bold text-white">{t("admin.pages.edit.heading")}</h1>
           <p className="mt-1 text-sm text-white/40">{page.path}</p>
         </div>
         <button
@@ -216,12 +224,12 @@ export default function PageEditor() {
           className="inline-flex items-center gap-2 rounded-xl bg-[#2563eb] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#2563eb]/90 disabled:opacity-50"
         >
           <Save className="h-5 w-5" />
-          {saving ? "جاري الحفظ..." : "حفظ التغييرات"}
+          {saving ? t("admin.alert.saving") : t("admin.pages.edit.saveChanges")}
         </button>
       </div>
 
       {message && (
-        <div className={`mb-6 rounded-xl px-4 py-3 text-sm ${message.includes("نجاح") ? "border border-green-500/30 bg-green-500/10 text-green-400" : "border border-red-500/30 bg-red-500/10 text-red-400"}`}>
+        <div className={`mb-6 rounded-xl px-4 py-3 text-sm ${messageType === "success" ? "border border-green-500/30 bg-green-500/10 text-green-400" : "border border-red-500/30 bg-red-500/10 text-red-400"}`}>
           {message}
         </div>
       )}
@@ -231,7 +239,7 @@ export default function PageEditor() {
         <div className="lg:col-span-1 space-y-4">
           <div className="rounded-2xl border border-white/10 bg-[#0B1F3A] p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-white">الأقسام</h3>
+              <h3 className="text-lg font-bold text-white">{t("admin.pages.edit.sections")}</h3>
               <button
                 onClick={addSection}
                 className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#2563eb] text-white transition hover:bg-[#2563eb]/90"
@@ -251,7 +259,7 @@ export default function PageEditor() {
                   <GripVertical className="h-4 w-4 text-white/30" />
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-white truncate">{section.label}</p>
-                    <p className="text-xs text-white/40">{section.blocks.length} عنصر</p>
+                    <p className="text-xs text-white/40">{t("admin.pages.edit.sectionCount", { count: section.blocks.length })}</p>
                   </div>
                   <button
                     onClick={(e) => {
@@ -269,10 +277,10 @@ export default function PageEditor() {
 
           {/* Page SEO */}
           <div className="rounded-2xl border border-white/10 bg-[#0B1F3A] p-6">
-            <h3 className="mb-4 text-lg font-bold text-white">SEO</h3>
+            <h3 className="mb-4 text-lg font-bold text-white">{t("admin.pages.edit.seo")}</h3>
             <div className="space-y-3">
               <div>
-                <label className="mb-1 block text-xs text-white/40">عنوان SEO</label>
+                <label className="mb-1 block text-xs text-white/40">{t("admin.pages.edit.seoTitle")}</label>
                 <input
                   type="text"
                   value={page.seoTitle || ""}
@@ -281,7 +289,7 @@ export default function PageEditor() {
                 />
               </div>
               <div>
-                <label className="mb-1 block text-xs text-white/40">وصف SEO</label>
+                <label className="mb-1 block text-xs text-white/40">{t("admin.pages.edit.seoDescription")}</label>
                 <textarea
                   value={page.seoDescription || ""}
                   onChange={(e) => updateField("seoDescription", e.target.value)}
@@ -308,7 +316,7 @@ export default function PageEditor() {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="mb-1 block text-xs text-white/40">لون الخلفية</label>
+                    <label className="mb-1 block text-xs text-white/40">{t("admin.pages.edit.backgroundColor")}</label>
                     <div className="flex items-center gap-2">
                       <input
                         type="color"
@@ -325,7 +333,7 @@ export default function PageEditor() {
                     </div>
                   </div>
                   <div>
-                    <label className="mb-1 block text-xs text-white/40">صورة الخلفية</label>
+                    <label className="mb-1 block text-xs text-white/40">{t("admin.pages.edit.backgroundImage")}</label>
                     <input
                       type="text"
                       value={activeSectionData.backgroundImage || ""}
@@ -350,11 +358,11 @@ export default function PageEditor() {
                         onChange={(e) => updateBlock(activeSectionData.id, block.id, { type: e.target.value })}
                         className="flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white outline-none focus:border-[#2563eb]"
                       >
-                        <option value="heading">عنوان</option>
-                        <option value="text">نص</option>
-                        <option value="image">صورة</option>
-                        <option value="richtext">نص منسق</option>
-                        <option value="button">زر</option>
+                        <option value="heading">{t("admin.pages.edit.blockType.heading")}</option>
+                        <option value="text">{t("admin.pages.edit.blockType.text")}</option>
+                        <option value="image">{t("admin.pages.edit.blockType.image")}</option>
+                        <option value="richtext">{t("admin.pages.edit.blockType.richtext")}</option>
+                        <option value="button">{t("admin.pages.edit.blockType.button")}</option>
                       </select>
                       <button
                         onClick={() => deleteBlock(activeSectionData.id, block.id)}
@@ -374,7 +382,7 @@ export default function PageEditor() {
                             type="text"
                             value={block.content}
                             onChange={(e) => updateBlock(activeSectionData.id, block.id, { content: e.target.value })}
-                            placeholder="رابط الصورة أو ارفع صورة"
+                            placeholder={t("admin.pages.edit.imagePlaceholder")}
                             className="flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-white/30 outline-none focus:border-[#2563eb]"
                           />
                           <label className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl border border-white/10 bg-white/5 transition hover:bg-white/10">
@@ -397,14 +405,14 @@ export default function PageEditor() {
                         onChange={(e) => updateBlock(activeSectionData.id, block.id, { content: e.target.value })}
                         rows={block.type === "heading" ? 2 : 4}
                         className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/30 outline-none focus:border-[#2563eb]"
-                        placeholder={block.type === "heading" ? "عنوان القسم..." : "اكتب النص هنا..."}
+                        placeholder={block.type === "heading" ? t("admin.pages.edit.headingPlaceholder") : t("admin.pages.edit.textPlaceholder")}
                       />
                     )}
 
                     {/* Style controls */}
                     <div className="mt-3 grid grid-cols-2 gap-3">
                       <div>
-                        <label className="mb-1 block text-xs text-white/40">اللون</label>
+                        <label className="mb-1 block text-xs text-white/40">{t("admin.pages.edit.color")}</label>
                         <div className="flex items-center gap-2">
                           <input
                             type="color"
@@ -421,7 +429,7 @@ export default function PageEditor() {
                         </div>
                       </div>
                       <div>
-                        <label className="mb-1 block text-xs text-white/40">حجم الخط</label>
+                        <label className="mb-1 block text-xs text-white/40">{t("admin.pages.edit.fontSize")}</label>
                         <input
                           type="text"
                           value={block.styles?.fontSize || "1rem"}
@@ -438,7 +446,7 @@ export default function PageEditor() {
                   className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-white/10 py-4 text-sm text-white/40 transition hover:border-white/20 hover:text-white/60"
                 >
                   <Plus className="h-4 w-4" />
-                  إضافة عنصر
+                  {t("admin.pages.edit.addItem")}
                 </button>
               </div>
             </div>

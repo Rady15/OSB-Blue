@@ -10,6 +10,7 @@ import { icons } from "@/lib/icons";
 import { fadeUpOnScroll } from "@/lib/animations";
 import { LinkButton } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { useT } from "@/lib/i18n";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -21,6 +22,7 @@ const serviceImages = [
 ];
 
 export function ServicesPreviewGrid({ limit }: { limit?: number }) {
+  const t = useT();
   const shownServices = limit ? services.slice(0, limit) : services;
 
   useEffect(() => {
@@ -48,8 +50,8 @@ export function ServicesPreviewGrid({ limit }: { limit?: number }) {
       <div className="container-osb relative z-10">
         <SectionHeading
           light
-          title="خدماتنا"
-          description="ثمانية مسارات عملية تساعدك على تأسيس مشروعك وإدارته وتطويره داخل المملكة العربية السعودية."
+          title={t("servicesPreview.title")}
+          description={t("servicesPreview.description")}
         />
         <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {shownServices.map((service, index) => {

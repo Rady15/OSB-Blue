@@ -2,18 +2,23 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { partners } from "@/data/partners";
 import { PageHero } from "@/components/ui/PageHero";
+import { getT } from "@/lib/get-t";
 
-export const metadata: Metadata = {
-  title: "شركاء النجاح | OSB",
-  description: "شركاء النجاح في منظومة OSB.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = getT();
+  return {
+    title: t("page.partners.metaTitle"),
+    description: t("page.partners.metaDescription"),
+  };
+}
 
 export default function PartnersPage() {
+  const { t } = getT();
   return (
     <div className="min-h-screen overflow-hidden bg-black text-white">
       <PageHero
-        title="شركاء النجاح"
-        description="نختار شبكة الشركاء بعناية حتى يحصل صاحب المشروع على خبرة متخصصة وتنفيذ موثوق في كل خطوة."
+        title={t("page.partners.heroTitle")}
+        description={t("page.partners.heroDescription")}
       />
       <section className="bg-black py-24">
         <div className="container-osb grid gap-5 md:grid-cols-2 lg:grid-cols-3">

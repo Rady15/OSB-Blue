@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Save, Plus, Trash2, Globe } from "lucide-react";
+import { useT, useDir } from "@/lib/i18n";
 
 interface PageSEO {
   path: string;
@@ -13,6 +14,8 @@ interface PageSEO {
 }
 
 export default function SEOSettingsPage() {
+  const t = useT();
+  const dir = useDir();
   const router = useRouter();
   const [settings, setSettings] = useState({
     globalTitle: "",
@@ -27,6 +30,7 @@ export default function SEOSettingsPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState<"success" | "error" | "">("");
 
   useEffect(() => {
     fetch("/admin/api/seo", { cache: "no-store" })
@@ -67,6 +71,7 @@ export default function SEOSettingsPage() {
     e.preventDefault();
     setSaving(true);
     setMessage("");
+    setMessageType("");
 
     try {
       const res = await fetch("/admin/api/seo", {
@@ -76,15 +81,18 @@ export default function SEOSettingsPage() {
       });
 
       if (!res.ok) {
-        setMessage("خطأ في الحفظ");
+        setMessage(t("admin.alert.error"));
+        setMessageType("error");
         setSaving(false);
         return;
       }
 
-      setMessage("تم الحفظ بنجاح");
+      setMessage(t("admin.alert.saved"));
+      setMessageType("success");
       setTimeout(() => setMessage(""), 3000);
     } catch {
-      setMessage("خطأ في الاتصال");
+      setMessage(t("admin.alert.connection"));
+      setMessageType("error");
     } finally {
       setSaving(false);
     }
@@ -99,15 +107,15 @@ export default function SEOSettingsPage() {
   }
 
   return (
-    <div dir="rtl">
+    <div dir={dir}>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white">إعدادات SEO</h1>
-        <p className="mt-1 text-sm text-white/40">إدارة تحسين محركات البحث وعلامات Meta</p>
+        <h1 className="text-2xl font-bold text-white">{t("admin.seo.title")}</h1>
+        <p className="mt-1 text-sm text-white/40">{t("admin.seo.subtitle")}</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {message && (
-          <div className={`rounded-xl px-4 py-3 text-sm ${message.includes("نجاح") ? "border border-green-500/30 bg-green-500/10 text-green-400" : "border border-red-500/30 bg-red-500/10 text-red-400"}`}>
+          <div className={`rounded-xl px-4 py-3 text-sm ${messageType === "success" ? "border border-green-500/30 bg-green-500/10 text-green-400" : "border border-red-500/30 bg-red-500/10 text-red-400"}`}>
             {message}
           </div>
         )}
@@ -116,11 +124,11 @@ export default function SEOSettingsPage() {
         <div className="rounded-2xl border border-white/10 bg-[#0B1F3A] p-6">
           <h2 className="mb-6 text-lg font-bold text-white flex items-center gap-2">
             <Globe className="h-5 w-5 text-[#2563eb]" />
-            الإعدادات العامة
+            {t("admin.seo.globalTitle")}
           </h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="sm:col-span-2">
-              <label className="mb-2 block text-sm font-medium text-white/70">عنوان الموقع الافتراضي</label>
+              <label className="mb-2 block text-sm font-medium text-white/70">{t("admin.seo.defaultSiteTitle")}</label>
               <input
                 type="text"
                 value={settings.globalTitle}
@@ -128,10 +136,10 @@ export default function SEOSettingsPage() {
                 className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none focus:border-[#2563eb]"
                 maxLength={60}
               />
-              <p className="mt-1 text-xs text-white/30">يظهر في نتائج البحث (أفضل 60 حرف)</p>
+              <p className="mt-1 text-xs text-white/30">{t("admin.seo.titleHint")}</p>
             </div>
             <div className="sm:col-span-2">
-              <label className="mb-2 block text-sm font-medium text-white/70">وصف الموقع الافتراضي</label>
+              <label className="mb-2 block text-sm font-medium text-white/70">{t("admin.seo.defaultSiteDescription")}</label>
               <textarea
                 value={settings.globalDescription}
                 onChange={(e) => updateField("globalDescription", e.target.value)}
@@ -139,20 +147,20 @@ export default function SEOSettingsPage() {
                 className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none focus:border-[#2563eb]"
                 maxLength={160}
               />
-              <p className="mt-1 text-xs text-white/30">أفضل 160 حرف</p>
+              <p className="mt-1 text-xs text-white/30">{t("admin.seo.descriptionHint")}</p>
             </div>
             <div>
-              <label className="mb-2 block text-sm font-medium text-white/70">الكلمات المفتاحية</label>
+              <label className="mb-2 block text-sm font-medium text-white/70">{t("admin.seo.keywords")}</label>
               <input
                 type="text"
                 value={settings.globalKeywords}
                 onChange={(e) => updateField("globalKeywords", e.target.value)}
-                placeholder="أعمال، استشارات، تأسيس"
+                placeholder={t("admin.seo.keywordsPlaceholder")}
                 className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/30 outline-none focus:border-[#2563eb]"
               />
             </div>
             <div>
-              <label className="mb-2 block text-sm font-medium text-white/70">صورة OG الافتراضية</label>
+              <label className="mb-2 block text-sm font-medium text-white/70">{t("admin.seo.defaultOgImage")}</label>
               <input
                 type="text"
                 value={settings.ogImage}
@@ -176,7 +184,7 @@ export default function SEOSettingsPage() {
 
         {/* Google Integrations */}
         <div className="rounded-2xl border border-white/10 bg-[#0B1F3A] p-6">
-          <h2 className="mb-6 text-lg font-bold text-white">تكامل Google</h2>
+          <h2 className="mb-6 text-lg font-bold text-white">{t("admin.seo.googleIntegration")}</h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <label className="mb-2 block text-sm font-medium text-white/70">Google Analytics 4 (Measurement ID)</label>
@@ -187,7 +195,7 @@ export default function SEOSettingsPage() {
                 placeholder="G-XXXXXXXXXX"
                 className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/30 outline-none focus:border-[#2563eb]"
               />
-              <p className="mt-1 text-xs text-white/30">معرف GA4 من Google Analytics</p>
+              <p className="mt-1 text-xs text-white/30">{t("admin.seo.ga4IdHint")}</p>
             </div>
             <div>
               <label className="mb-2 block text-sm font-medium text-white/70">Google Search Console (Verification Code)</label>
@@ -198,7 +206,7 @@ export default function SEOSettingsPage() {
                 placeholder="google-site-verification code"
                 className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/30 outline-none focus:border-[#2563eb]"
               />
-              <p className="mt-1 text-xs text-white/30">كود التحقق من GSC</p>
+              <p className="mt-1 text-xs text-white/30">{t("admin.seo.gscIdHint")}</p>
             </div>
           </div>
         </div>
@@ -206,26 +214,26 @@ export default function SEOSettingsPage() {
         {/* Per-page SEO */}
         <div className="rounded-2xl border border-white/10 bg-[#0B1F3A]">
           <div className="flex items-center justify-between border-b border-white/10 px-6 py-4">
-            <h2 className="text-lg font-bold text-white">SEO حسب الصفحة</h2>
+            <h2 className="text-lg font-bold text-white">{t("admin.seo.perPage")}</h2>
             <button
               type="button"
               onClick={addPage}
               className="inline-flex items-center gap-2 rounded-xl bg-[#2563eb] px-4 py-2 text-xs font-bold text-white transition hover:bg-[#2563eb]/90"
             >
               <Plus className="h-4 w-4" />
-              إضافة صفحة
+              {t("admin.seo.addPage")}
             </button>
           </div>
           <div className="divide-y divide-white/5">
             {pages.length === 0 && (
               <div className="px-6 py-12 text-center text-sm text-white/40">
-                لا توجد إعدادات SEO مخصصة للصفحات. أضف إعدادات لكل صفحة لتحسين ظهورها في محركات البحث.
+                {t("admin.seo.empty")}
               </div>
             )}
             {pages.map((page, index) => (
               <div key={index} className="p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-sm font-medium text-white">صفحة #{index + 1}</span>
+                  <span className="text-sm font-medium text-white">{t("admin.seo.pageHeader", { index: index + 1 })}</span>
                   <button
                     type="button"
                     onClick={() => removePage(index)}
@@ -236,7 +244,7 @@ export default function SEOSettingsPage() {
                 </div>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div>
-                    <label className="mb-1 block text-xs text-white/40">مسار الصفحة</label>
+                    <label className="mb-1 block text-xs text-white/40">{t("admin.seo.pagePath")}</label>
                     <input
                       type="text"
                       value={page.path}
@@ -246,18 +254,18 @@ export default function SEOSettingsPage() {
                     />
                   </div>
                   <div>
-                    <label className="mb-1 block text-xs text-white/40">عنوان الصفحة</label>
+                    <label className="mb-1 block text-xs text-white/40">{t("admin.seo.pageTitle")}</label>
                     <input
                       type="text"
                       value={page.title}
                       onChange={(e) => updatePage(index, "title", e.target.value)}
-                      placeholder="عنوان الصفحة في البحث"
+                      placeholder={t("admin.seo.pageTitlePlaceholder")}
                       maxLength={60}
                       className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-white/30 outline-none focus:border-[#2563eb]"
                     />
                   </div>
                   <div className="sm:col-span-2">
-                    <label className="mb-1 block text-xs text-white/40">وصف الصفحة</label>
+                    <label className="mb-1 block text-xs text-white/40">{t("admin.seo.pageDescription")}</label>
                     <textarea
                       value={page.description}
                       onChange={(e) => updatePage(index, "description", e.target.value)}
@@ -267,12 +275,12 @@ export default function SEOSettingsPage() {
                     />
                   </div>
                   <div>
-                    <label className="mb-1 block text-xs text-white/40">الكلمات المفتاحية</label>
+                    <label className="mb-1 block text-xs text-white/40">{t("admin.seo.pageKeywords")}</label>
                     <input
                       type="text"
                       value={page.keywords}
                       onChange={(e) => updatePage(index, "keywords", e.target.value)}
-                      placeholder="كلمة، كلمة"
+                      placeholder={t("admin.seo.keywordsCommaPlaceholder")}
                       className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-white/30 outline-none focus:border-[#2563eb]"
                     />
                   </div>
@@ -301,10 +309,10 @@ export default function SEOSettingsPage() {
             className="inline-flex items-center gap-2 rounded-xl bg-[#2563eb] px-8 py-3 text-sm font-bold text-white transition hover:bg-[#2563eb]/90 disabled:opacity-50"
           >
             <Save className="h-5 w-5" />
-            {saving ? "جاري الحفظ..." : "حفظ جميع الإعدادات"}
+            {saving ? t("admin.alert.saving") : t("admin.seo.saveAll")}
           </button>
           {message && (
-            <span className={`text-sm ${message.includes("نجاح") ? "text-green-400" : "text-red-400"}`}>
+            <span className={`text-sm ${messageType === "success" ? "text-green-400" : "text-red-400"}`}>
               {message}
             </span>
           )}

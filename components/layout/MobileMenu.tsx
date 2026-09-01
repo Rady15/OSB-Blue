@@ -5,16 +5,18 @@ import Image from "next/image";
 import { X } from "lucide-react";
 import Link from "next/link";
 import { services } from "@/data/services";
+import { useT } from "@/lib/i18n";
 
-const links = [
-  { href: "/", label: "الرئيسية" },
-  { href: "/about", label: "من نحن" },
-  { href: "/how-we-work", label: "كيف نعمل" },
-  { href: "/faq", label: "الأسئلة الشائعة" },
-  { href: "/contact", label: "تواصل معنا" },
+const linkKeys = [
+  { href: "/", key: "mobileMenu.links.home" },
+  { href: "/about", key: "mobileMenu.links.about" },
+  { href: "/how-we-work", key: "mobileMenu.links.howWeWork" },
+  { href: "/faq", key: "mobileMenu.links.faq" },
+  { href: "/contact", key: "mobileMenu.links.contact" },
 ];
 
 export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const t = useT();
   return (
     <AnimatePresence>
       {open ? (
@@ -29,13 +31,13 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
           <Link href="/" onClick={onClose} className="absolute right-6 top-6">
             <Image src="/images/logo.png" alt="OSB" width={140} height={56} className="h-14 w-auto brightness-0 invert" />
           </Link>
-          <button aria-label="إغلاق القائمة" onClick={onClose} className="absolute left-6 top-6 text-white">
+          <button aria-label={t("mobileMenu.closeLabel")} onClick={onClose} className="absolute left-6 top-6 text-white">
             <X className="h-8 w-8" />
           </button>
           <nav className="relative z-10 flex h-full flex-col justify-center gap-6 px-8 text-2xl font-bold">
-            {links.map((link) => (
+            {linkKeys.map((link) => (
               <Link key={link.href} href={link.href} onClick={onClose}>
-                {link.label}
+                {t(link.key)}
               </Link>
             ))}
             <div className="grid gap-3 pt-4 text-base text-white/55">

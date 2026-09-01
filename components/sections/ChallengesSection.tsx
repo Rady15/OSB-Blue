@@ -5,17 +5,19 @@ import { ArrowUpLeft } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollRevealText } from "@/components/ui/ScrollRevealText";
+import { useT } from "@/lib/i18n";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const challenges = [
-  "تشعر أن بعض إجراءاتك تستغرق وقتاً وجهداً أكثر مما ينبغي؟",
-  "تتعامل مع عدة جهات وخدمات وتشعر أن الصورة غير واضحة؟",
-  "أنفقت وقتاً أو ميزانية على إجراءات لم تكن ضرورية؟",
-  "تمتلك شركة قائمة وتشعر أن بعض الجوانب التشغيلية أو الإدارية تحتاج إلى تنظيم أفضل؟",
+const challengeKeys = [
+  "challenges.challenge1",
+  "challenges.challenge2",
+  "challenges.challenge3",
+  "challenges.challenge4",
 ];
 
 export function ChallengesSection() {
+  const t = useT();
   const sectionRef = useRef<HTMLElement>(null);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
@@ -64,7 +66,7 @@ export function ChallengesSection() {
       <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
         <div className="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#2563eb] opacity-20 blur-[100px]" />
         <div className="relative select-none text-[22rem] font-black leading-none text-white/[0.02]">
-          ؟
+          {t("challenges.questionMark")}
         </div>
       </div>
 
@@ -77,11 +79,11 @@ export function ChallengesSection() {
           <div>
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#2563eb]/30 bg-[#2563eb]/10 px-4 py-1.5 text-sm font-bold text-[#2563eb]">
               <span className="h-1.5 w-1.5 rounded-full bg-[#2563eb] animate-pulse" />
-              قبل أن تبدأ
+              {t("challenges.badge")}
             </div>
             <ScrollRevealText
               as="h2"
-              text="هل تواجه إحدى هذه التحديات؟"
+              text={t("challenges.title")}
               wordsPerLine={4}
               className="text-4xl font-extrabold leading-[1.5] md:text-6xl lg:text-7xl"
             />
@@ -91,9 +93,9 @@ export function ChallengesSection() {
 
         {/* Challenge rows */}
         <div className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
-          {challenges.map((challenge, index) => (
+          {challengeKeys.map((challengeKey, index) => (
             <div
-              key={challenge}
+              key={challengeKey}
               ref={(el) => { itemsRef.current[index] = el; }}
               onMouseEnter={() => setActiveIndex(index)}
               onMouseLeave={() => setActiveIndex(null)}
@@ -121,7 +123,7 @@ export function ChallengesSection() {
                   activeIndex === index ? "text-white" : "text-white/50"
                 }`}
               >
-                {challenge}
+                {t(challengeKey)}
               </p>
 
               {/* Arrow icon */}
@@ -143,12 +145,12 @@ export function ChallengesSection() {
           {/* Left: big statement */}
           <div>
             <p className="text-3xl font-extrabold leading-[1.5] text-white md:text-4xl">
-              إذا كانت إجابتك{" "}
+              {t("challenges.yesPrefix")}{" "}
               <span className="relative inline-block text-[#2563eb]">
-                نعم
+                {t("challenges.yesLabel")}
                 <span className="absolute -bottom-1 left-0 h-[3px] w-full rounded-full bg-[#2563eb]" />
               </span>
-              {" "}على أي من هذه الأسئلة، فأنت لست وحدك.
+              {" "}{t("challenges.yesSuffix")}
             </p>
           </div>
 
@@ -158,7 +160,7 @@ export function ChallengesSection() {
             <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#2563eb]/10 blur-2xl" />
 
             <p className="relative text-lg leading-9 text-white/60">
-              كثير من المشاريع لا تواجه مشكلة في الفكرة نفسها، بل في القرارات التي تُتخذ في البداية.
+              {t("challenges.explanation")}
             </p>
 
             <div className="relative mt-8 flex items-center gap-4">
@@ -166,13 +168,13 @@ export function ChallengesSection() {
                 <img src="/images/logo.png" alt="OSB" className="h-14 w-14 object-contain brightness-0 invert" />
               </div>
               <div>
-                <p className="text-lg font-extrabold text-white">وهنا يأتي دورنا</p>
-                <p className="text-sm text-white/50">نبدأ بفهم مشروعك قبل أي خطوة</p>
+                <p className="text-lg font-extrabold text-white">{t("challenges.ourRole")}</p>
+                <p className="text-sm text-white/50">{t("challenges.ourRoleSub")}</p>
               </div>
             </div>
 
             <p className="relative mt-6 text-lg leading-9 text-white/60">
-              نحدّد احتياجاتك، ثم نرشدك إلى الخطوات الصحيحة قبل البدء بالتنفيذ.
+              {t("challenges.action")}
             </p>
           </div>
         </div>

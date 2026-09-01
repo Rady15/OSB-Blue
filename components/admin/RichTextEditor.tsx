@@ -16,6 +16,7 @@ import {
   RemoveFormatting,
   Type,
 } from "lucide-react";
+import { useT } from "@/lib/i18n";
 
 interface RichTextEditorProps {
   value: string;
@@ -28,6 +29,7 @@ const TOOLBAR_BTN =
   "flex h-8 w-8 items-center justify-center rounded-lg text-white/60 transition hover:bg-white/10 hover:text-white";
 
 export function RichTextEditor({ value, onChange, placeholder, minHeight = 320 }: RichTextEditorProps) {
+  const t = useT();
   const editorRef = useRef<HTMLDivElement>(null);
   const lastValueRef = useRef(value);
 
@@ -51,7 +53,7 @@ export function RichTextEditor({ value, onChange, placeholder, minHeight = 320 }
   }
 
   function addLink() {
-    const url = window.prompt("رابط الرابط:");
+    const url = window.prompt(t("rte.linkPrompt"));
     if (url) exec("createLink", url);
   }
 
@@ -78,22 +80,22 @@ export function RichTextEditor({ value, onChange, placeholder, minHeight = 320 }
     | { divider?: never; icon: typeof Bold; title: string; onClick: () => void };
 
   const buttons: ToolbarItem[] = [
-    { icon: Bold, title: "عريض", onClick: () => exec("bold") },
-    { icon: Italic, title: "مائل", onClick: () => exec("italic") },
-    { icon: Underline, title: "تسطير", onClick: () => exec("underline") },
+    { icon: Bold, title: t("rte.bold"), onClick: () => exec("bold") },
+    { icon: Italic, title: t("rte.italic"), onClick: () => exec("italic") },
+    { icon: Underline, title: t("rte.underline"), onClick: () => exec("underline") },
     { divider: true },
-    { icon: Heading2, title: "عنوان", onClick: () => exec("formatBlock", "<h2>") },
-    { icon: Heading3, title: "عنوان فرعي", onClick: () => exec("formatBlock", "<h3>") },
-    { icon: Type, title: "نص عادي", onClick: () => exec("formatBlock", "<p>") },
+    { icon: Heading2, title: t("rte.heading"), onClick: () => exec("formatBlock", "<h2>") },
+    { icon: Heading3, title: t("rte.subheading"), onClick: () => exec("formatBlock", "<h3>") },
+    { icon: Type, title: t("rte.normalText"), onClick: () => exec("formatBlock", "<p>") },
     { divider: true },
-    { icon: List, title: "قائمة نقطية", onClick: () => exec("insertUnorderedList") },
-    { icon: ListOrdered, title: "قائمة مرقمة", onClick: () => exec("insertOrderedList") },
-    { icon: Quote, title: "اقتباس", onClick: () => exec("formatBlock", "<blockquote>") },
+    { icon: List, title: t("rte.bulletList"), onClick: () => exec("insertUnorderedList") },
+    { icon: ListOrdered, title: t("rte.numberedList"), onClick: () => exec("insertOrderedList") },
+    { icon: Quote, title: t("rte.quote"), onClick: () => exec("formatBlock", "<blockquote>") },
     { divider: true },
-    { icon: Link2, title: "إضافة رابط", onClick: addLink },
-    { icon: Unlink, title: "إزالة الرابط", onClick: () => exec("unlink") },
-    { icon: ImageIcon, title: "إدراج صورة", onClick: addImage },
-    { icon: RemoveFormatting, title: "مسح التنسيق", onClick: () => exec("removeFormat") },
+    { icon: Link2, title: t("rte.addLink"), onClick: addLink },
+    { icon: Unlink, title: t("rte.removeLink"), onClick: () => exec("unlink") },
+    { icon: ImageIcon, title: t("rte.insertImage"), onClick: addImage },
+    { icon: RemoveFormatting, title: t("rte.clearFormatting"), onClick: () => exec("removeFormat") },
   ];
 
   return (

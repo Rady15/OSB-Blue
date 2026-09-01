@@ -2,10 +2,16 @@ import Image from "next/image";
 import { CheckCircle2 } from "lucide-react";
 import { LinkButton } from "@/components/ui/Button";
 import { ScrollRevealText } from "@/components/ui/ScrollRevealText";
+import { getT } from "@/lib/get-t";
 
-const points = ["تحليل وضع المشروع قبل التنفيذ", "تحديد الأولويات والتكلفة والمدة", "ربطك بالشركاء والمتخصصين المناسبين"];
+const pointKeys = [
+  "featured.point1",
+  "featured.point2",
+  "featured.point3",
+];
 
 export function FeaturedPartnership() {
+  const { t } = getT();
   return (
     <section className="relative overflow-hidden bg-black py-24 text-white">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_28%,rgba(37,99,235,0.24),transparent_28%)]" />
@@ -15,7 +21,7 @@ export function FeaturedPartnership() {
         <div data-image-reveal className="image-reveal glow-panel overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] p-3">
           <Image
             src="/images/business-strategy.svg"
-            alt="تحليل استراتيجية الأعمال"
+            alt={t("featured.imageAlt")}
             width={960}
             height={720}
             className="h-auto w-full rounded-[1.6rem]"
@@ -23,29 +29,29 @@ export function FeaturedPartnership() {
           />
         </div>
         <div>
-          <p className="mb-3 font-bold text-white/70">شراكة تشغيلية متكاملة</p>
+          <p className="mb-3 font-bold text-white/70">{t("featured.partnershipLabel")}</p>
           <ScrollRevealText
             as="h2"
-            text="نفس إحساس المواقع التفاعلية: حركة، عمق، ووضوح في كل خطوة"
+            text={t("featured.title")}
             wordsPerLine={5}
             className="text-3xl font-extrabold leading-[1.5] md:text-5xl"
           />
           <ScrollRevealText
             as="p"
-            text="نضع مشروعك داخل مسار واضح، ثم نستخدم التصميم والحركة لتوصيل هذه الفكرة بصرياً: تشخيص، توجيه، تنفيذ، ثم متابعة مستمرة."
+            text={t("featured.description")}
             wordsPerLine={9}
             className="mt-6 text-lg leading-9 text-white/60"
           />
           <div className="mt-8 grid gap-4">
-            {points.map((point) => (
-              <div key={point} data-tilt className="tilt-card glow-panel flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-4 backdrop-blur">
+            {pointKeys.map((key) => (
+              <div key={key} data-tilt className="tilt-card glow-panel flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-4 backdrop-blur">
                 <CheckCircle2 className="h-6 w-6 text-white" />
-                <span className="font-bold">{point}</span>
+                <span className="font-bold">{t(key)}</span>
               </div>
             ))}
           </div>
           <div className="mt-8">
-            <LinkButton href="/free-consultation">احصل على جلسة مجانية</LinkButton>
+            <LinkButton href="/free-consultation">{t("featured.cta")}</LinkButton>
           </div>
         </div>
       </div>

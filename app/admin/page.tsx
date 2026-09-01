@@ -3,6 +3,7 @@ import Link from "next/link";
 import { FileText, Plus, Eye, EyeOff, Globe, Settings, TrendingUp, Palette } from "lucide-react";
 import { store } from "@/lib/store";
 import { contentStore } from "@/lib/content-store";
+import { getT } from "@/lib/get-t";
 
 export const metadata: Metadata = {
   title: "لوحة التحكم | OSB Admin",
@@ -10,6 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default async function AdminDashboard() {
+  const { lang, dir, t } = getT();
   const blogPosts = store.getBlogPosts();
   const publishedPosts = blogPosts.filter((p) => p.status === "published");
   const draftPosts = blogPosts.filter((p) => p.status === "draft");
@@ -19,7 +21,7 @@ export default async function AdminDashboard() {
 
   const stats = [
     {
-      label: "مقالات منشورة",
+      label: t("admin.dashboard.publishedPosts"),
       value: publishedPosts.length,
       icon: FileText,
       color: "text-green-400",
@@ -27,7 +29,7 @@ export default async function AdminDashboard() {
       href: "/admin/blog",
     },
     {
-      label: "مسودات",
+      label: t("admin.dashboard.draftPosts"),
       value: draftPosts.length,
       icon: FileText,
       color: "text-yellow-400",
@@ -35,16 +37,16 @@ export default async function AdminDashboard() {
       href: "/admin/blog",
     },
     {
-      label: "الصفحات",
-      value: `${pages.length} صفحة`,
+      label: t("admin.dashboard.pages"),
+      value: t("admin.dashboard.pagesCount", { count: pages.length }),
       icon: Globe,
       color: "text-[#2563eb]",
       bg: "bg-[#2563eb]/10",
       href: "/admin/pages",
     },
     {
-      label: "إعدادات SEO",
-      value: seo.pages.length > 0 ? `${seo.pages.length} صفحة` : "غير مهيأ",
+      label: t("admin.dashboard.seoSettings"),
+      value: seo.pages.length > 0 ? t("admin.dashboard.pagesCount", { count: seo.pages.length }) : t("admin.dashboard.notConfigured"),
       icon: Globe,
       color: "text-[#2563eb]",
       bg: "bg-[#2563eb]/10",
@@ -57,18 +59,18 @@ export default async function AdminDashboard() {
     .slice(0, 5);
 
   return (
-    <div dir="rtl">
+    <div dir={dir}>
       {/* Blog Hero Section */}
       <div className="mb-8 rounded-2xl border border-white/10 bg-gradient-to-br from-[#0B1F3A] to-[#071527] p-6 md:p-8">
         <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div>
             <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#2563eb]/30 bg-[#2563eb]/10 px-4 py-1.5 text-xs font-bold text-[#2563eb]">
               <TrendingUp className="h-3.5 w-3.5" />
-              إدارة المحتوى
+              {t("admin.dashboard.badge")}
             </div>
-            <h1 className="text-2xl font-extrabold text-white md:text-3xl">المدونة والمحتوى</h1>
+            <h1 className="text-2xl font-extrabold text-white md:text-3xl">{t("admin.dashboard.heading")}</h1>
             <p className="mt-2 max-w-xl text-sm text-white/50">
-              أنشئ وأدر مقالات المدونة. المقالات المنشورة تظهر تلقائياً في صفحة المدونة وتساعد في تحسين SEO.
+              {t("admin.dashboard.subtitle")}
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
               <Link
@@ -76,14 +78,14 @@ export default async function AdminDashboard() {
                 className="inline-flex items-center gap-2 rounded-xl bg-[#2563eb] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#2563eb]/90"
               >
                 <Plus className="h-5 w-5" />
-                كتابة مقال جديد
+                {t("admin.dashboard.writePost")}
               </Link>
               <Link
                 href="/admin/blog"
                 className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-6 py-3 text-sm font-bold text-white/70 transition hover:bg-white/5 hover:text-white"
               >
                 <FileText className="h-5 w-5" />
-                جميع المقالات
+                {t("admin.dashboard.allPosts")}
               </Link>
               <Link
                 href="/blog"
@@ -91,24 +93,24 @@ export default async function AdminDashboard() {
                 className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-6 py-3 text-sm font-bold text-white/70 transition hover:bg-white/5 hover:text-white"
               >
                 <Eye className="h-5 w-5" />
-                معاينة المدونة
+                {t("admin.dashboard.previewBlog")}
               </Link>
             </div>
           </div>
           <div className="flex gap-4 md:gap-6">
             <div className="text-center">
               <p className="text-3xl font-extrabold text-white">{blogPosts.length}</p>
-              <p className="mt-1 text-xs text-white/40">إجمالي المقالات</p>
+              <p className="mt-1 text-xs text-white/40">{t("admin.dashboard.totalPosts")}</p>
             </div>
             <div className="h-12 w-px bg-white/10" />
             <div className="text-center">
               <p className="text-3xl font-extrabold text-green-400">{publishedPosts.length}</p>
-              <p className="mt-1 text-xs text-white/40">منشور</p>
+              <p className="mt-1 text-xs text-white/40">{t("admin.dashboard.published")}</p>
             </div>
             <div className="h-12 w-px bg-white/10" />
             <div className="text-center">
               <p className="text-3xl font-extrabold text-yellow-400">{draftPosts.length}</p>
-              <p className="mt-1 text-xs text-white/40">مسودات</p>
+              <p className="mt-1 text-xs text-white/40">{t("admin.dashboard.drafts")}</p>
             </div>
           </div>
         </div>
@@ -140,26 +142,26 @@ export default async function AdminDashboard() {
         {/* Recent posts */}
         <div className="lg:col-span-2 rounded-2xl border border-white/10 bg-[#0B1F3A]">
           <div className="flex items-center justify-between border-b border-white/10 px-6 py-4">
-            <h2 className="text-lg font-bold text-white">آخر المقالات</h2>
+            <h2 className="text-lg font-bold text-white">{t("admin.dashboard.recentPosts")}</h2>
             <Link
               href="/admin/blog/new"
               className="inline-flex items-center gap-2 rounded-xl bg-[#2563eb] px-4 py-2 text-xs font-bold text-white transition hover:bg-[#2563eb]/90"
             >
               <Plus className="h-4 w-4" />
-              مقال جديد
+              {t("admin.dashboard.newPost")}
             </Link>
           </div>
           <div className="divide-y divide-white/5">
             {recentPosts.length === 0 ? (
               <div className="px-6 py-12 text-center">
                 <FileText className="mx-auto h-12 w-12 text-white/20" />
-                <p className="mt-3 text-sm text-white/40">لا توجد مقالات بعد</p>
+                <p className="mt-3 text-sm text-white/40">{t("admin.dashboard.noPostsYet")}</p>
                 <Link
                   href="/admin/blog/new"
                   className="mt-4 inline-flex items-center gap-2 text-sm text-[#2563eb] hover:underline"
                 >
                   <Plus className="h-4 w-4" />
-                  اكتب أول مقال
+                  {t("admin.dashboard.writeFirstPost")}
                 </Link>
               </div>
             ) : (
@@ -172,7 +174,7 @@ export default async function AdminDashboard() {
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-medium text-white">{post.title}</p>
                     <p className="mt-1 text-xs text-white/40">
-                      {post.status === "published" ? "منشور" : "مسودة"} •{" "}
+                      {post.status === "published" ? t("admin.dashboard.published") : t("admin.dashboard.drafts")} •{" "}
                       {new Date(post.updatedAt).toLocaleDateString("ar-SA")}
                     </p>
                   </div>
@@ -183,7 +185,7 @@ export default async function AdminDashboard() {
                         : "bg-yellow-400/10 text-yellow-400"
                     }`}
                   >
-                    {post.status === "published" ? "منشور" : "مسودة"}
+                    {post.status === "published" ? t("admin.dashboard.published") : t("admin.dashboard.drafts")}
                   </span>
                 </Link>
               ))
@@ -194,14 +196,14 @@ export default async function AdminDashboard() {
         {/* Quick links */}
         <div className="space-y-4">
           <div className="rounded-2xl border border-white/10 bg-[#0B1F3A] p-6">
-            <h3 className="mb-4 text-sm font-bold text-white/60">روابط سريعة</h3>
+            <h3 className="mb-4 text-sm font-bold text-white/60">{t("admin.dashboard.quickLinks")}</h3>
             <div className="space-y-3">
               {[
-                { href: "/admin/blog/new", label: "كتابة مقال جديد", icon: Plus },
-                { href: "/admin/seo", label: "إعدادات SEO", icon: Globe },
-                { href: "/admin/settings", label: "إعدادات الموقع", icon: Settings },
-                { href: "/admin/settings/branding", label: "هوية الموقع", icon: Palette },
-                { href: "/admin/pages", label: "إدارة الصفحات", icon: Eye },
+                { href: "/admin/blog/new", label: t("admin.dashboard.writeNewPost"), icon: Plus },
+                { href: "/admin/seo", label: t("admin.dashboard.seoSettings"), icon: Globe },
+                { href: "/admin/settings", label: t("admin.dashboard.siteSettings"), icon: Settings },
+                { href: "/admin/settings/branding", label: t("admin.dashboard.branding"), icon: Palette },
+                { href: "/admin/pages", label: t("admin.dashboard.managePages"), icon: Eye },
               ].map((link) => (
                 <Link
                   key={link.href}
@@ -217,7 +219,7 @@ export default async function AdminDashboard() {
 
           {/* SEO Status */}
           <div className="rounded-2xl border border-white/10 bg-[#0B1F3A] p-6">
-            <h3 className="mb-4 text-sm font-bold text-white/60">حالة SEO</h3>
+            <h3 className="mb-4 text-sm font-bold text-white/60">{t("admin.dashboard.seoStatus")}</h3>
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-sm text-white/60">Google Analytics</span>
@@ -226,7 +228,7 @@ export default async function AdminDashboard() {
                     seo.googleAnalyticsId ? "bg-green-400/10 text-green-400" : "bg-red-400/10 text-red-400"
                   }`}
                 >
-                  {seo.googleAnalyticsId ? "مفعّل" : "معطّل"}
+                  {seo.googleAnalyticsId ? t("admin.dashboard.enabled") : t("admin.dashboard.disabled")}
                 </span>
               </div>
               <div className="flex items-center justify-between">
@@ -236,17 +238,17 @@ export default async function AdminDashboard() {
                     seo.googleSearchConsoleId ? "bg-green-400/10 text-green-400" : "bg-red-400/10 text-red-400"
                   }`}
                 >
-                  {seo.googleSearchConsoleId ? "مفعّل" : "معطّل"}
+                  {seo.googleSearchConsoleId ? t("admin.dashboard.enabled") : t("admin.dashboard.disabled")}
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-white/60">صفحات SEO</span>
+                <span className="text-sm text-white/60">{t("admin.dashboard.seoPages")}</span>
                 <span
                   className={`rounded-full px-3 py-1 text-xs font-bold ${
                     seo.pages.length > 0 ? "bg-green-400/10 text-green-400" : "bg-yellow-400/10 text-yellow-400"
                   }`}
                 >
-                  {seo.pages.length > 0 ? `${seo.pages.length} صفحة` : "غير مهيأ"}
+                  {seo.pages.length > 0 ? t("admin.dashboard.pagesCount", { count: seo.pages.length }) : t("admin.dashboard.notConfigured")}
                 </span>
               </div>
             </div>

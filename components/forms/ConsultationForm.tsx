@@ -6,6 +6,7 @@ import { useState } from "react";
 import { type Resolver, useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/Button";
+import { useT } from "@/lib/i18n";
 
 export const consultationSchema = z.object({
   fullName: z.string().min(3, "الاسم مطلوب"),
@@ -21,6 +22,7 @@ type ConsultationFormProps = {
 };
 
 export function ConsultationForm({ light = true }: ConsultationFormProps) {
+  const t = useT();
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const {
     register,
@@ -63,30 +65,30 @@ export function ConsultationForm({ light = true }: ConsultationFormProps) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4">
       <div>
-        <input className={inputClass} placeholder="الاسم الكامل" {...register("fullName")} />
+        <input className={inputClass} placeholder={t("form.name.placeholder")} {...register("fullName")} />
         {errors.fullName ? <p className="mt-2 text-sm text-red-500">{errors.fullName.message}</p> : null}
       </div>
       <div>
-        <input className={inputClass} placeholder="رقم الجوال / واتساب" {...register("phone")} />
+        <input className={inputClass} placeholder={t("form.phone.placeholder")} {...register("phone")} />
         {errors.phone ? <p className="mt-2 text-sm text-red-500">{errors.phone.message}</p> : null}
       </div>
       <div>
-        <input className={inputClass} placeholder="البريد الإلكتروني" {...register("email")} />
+        <input className={inputClass} placeholder={t("form.email.placeholder")} {...register("email")} />
         {errors.email ? <p className="mt-2 text-sm text-red-500">{errors.email.message}</p> : null}
       </div>
       <div>
-        <textarea className={`${inputClass} min-h-36 resize-none`} placeholder="طبيعة نشاطك أو فكرتك" {...register("businessNature")} />
+        <textarea className={`${inputClass} min-h-36 resize-none`} placeholder={t("form.business.placeholder")} {...register("businessNature")} />
       </div>
       <Button type="submit" className="w-full" disabled={isSubmitting}>
-        {isSubmitting ? "جارٍ الإرسال..." : "احجز الاستشارة"}
+        {isSubmitting ? t("form.submitting") : t("form.submit")}
       </Button>
       {status === "success" ? (
         <p className="flex items-center gap-2 rounded-2xl border border-white/20 bg-white/10 p-4 text-sm font-bold text-white">
           <CheckCircle2 className="h-5 w-5" />
-          تم استلام طلبك بنجاح، سيتواصل معك فريقنا قريباً.
+          {t("form.success")}
         </p>
       ) : null}
-      {status === "error" ? <p className="text-sm font-bold text-red-500">تعذر إرسال الطلب حالياً. حاول مرة أخرى.</p> : null}
+      {status === "error" ? <p className="text-sm font-bold text-red-500">{t("form.error")}</p> : null}
     </form>
   );
 }

@@ -7,10 +7,12 @@ import { journeySteps } from "@/data/journey";
 import { fadeUpOnScroll } from "@/lib/animations";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ScrollRevealText } from "@/components/ui/ScrollRevealText";
+import { useT } from "@/lib/i18n";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export function JourneyTimeline({ variant = "preview" }: { variant?: "preview" | "full" }) {
+  const t = useT();
   const rootRef = useRef<HTMLElement | null>(null);
   const [active, setActive] = useState(0);
 
@@ -55,8 +57,8 @@ export function JourneyTimeline({ variant = "preview" }: { variant?: "preview" |
         <div className="container-osb">
           <SectionHeading
             light
-            title="رحلتك معنا"
-            description="نرافقك من الفكرة إلى التنفيذ بطريقة واضحة ومنظمة تساعدك على فهم كل مرحلة من مشروعك."
+            title={t("journey.title")}
+            description={t("journey.description")}
           />
           <div className="mt-12 grid gap-6 md:grid-cols-4">
             {journeySteps.map((step, index) => (

@@ -5,8 +5,10 @@ import { ArrowLeft, CheckCircle2, Instagram, Linkedin, MousePointer2, Phone } fr
 import { LinkButton } from "@/components/ui/Button";
 import { ConsultationForm } from "@/components/forms/ConsultationForm";
 import { ScrollRevealText } from "@/components/ui/ScrollRevealText";
+import { useT } from "@/lib/i18n";
 
 export function HeroSection() {
+  const t = useT();
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const patternX = useTransform(mouseX, [-400, 400], [-20, 20]);
@@ -47,13 +49,13 @@ export function HeroSection() {
           </motion.p>
           <ScrollRevealText
             as="h1"
-            text="كل ما يحتاجه مشروعك في مكان واحد"
+            text={t("hero.title")}
             wordsPerLine={4}
             className="max-w-4xl text-4xl font-extrabold leading-[1.5] md:text-7xl"
           />
           <ScrollRevealText
             as="p"
-            text="نساعدك على اتخاذ القرارات الصحيحة قبل أن تستثمر وقتك وميزانيتك."
+            text={t("hero.subtitle")}
             wordsPerLine={99}
             startIndex={2}
             className="mt-7 max-w-3xl text-lg leading-9 text-white/60 md:text-2xl md:leading-10"
@@ -65,7 +67,7 @@ export function HeroSection() {
             className="mt-9 flex flex-wrap items-center gap-4"
           >
             <LinkButton href="/free-consultation">
-              احجز استشارتك المجانية <ArrowLeft className="h-5 w-5" />
+              {t("hero.cta")} <ArrowLeft className="h-5 w-5" />
             </LinkButton>
             <div className="flex gap-3 text-white/80">
               <span className="grid h-11 w-11 place-items-center rounded-full border border-white/20"><Linkedin className="h-5 w-5" /></span>
@@ -83,15 +85,15 @@ export function HeroSection() {
           <div className="reveal-mask rounded-[2rem] border border-white/15 bg-white/10 p-5 shadow-2xl backdrop-blur-xl md:p-7">
             <div className="mb-6 flex items-center justify-between gap-4">
               <div>
-                <p className="text-sm font-bold text-white/70">انا مهتم بـ</p>
-                <ScrollRevealText as="h2" text="جلسة تشخيص مجانية" className="mt-1 text-2xl font-extrabold text-white" />
+                <p className="text-sm font-bold text-white/70">{t("hero.formInterest")}</p>
+                <ScrollRevealText as="h2" text={t("hero.formTitle")} className="mt-1 text-2xl font-extrabold text-white" />
               </div>
               <div className="grid h-14 w-14 place-items-center rounded-full bg-white text-[#2563eb]">
                 <CheckCircle2 className="h-7 w-7" />
               </div>
             </div>
             <div className="mb-5 grid grid-cols-2 gap-2 text-xs font-bold text-white/80">
-              {["تأسيس", "محاسبة", "قانوني", "نمو"].map((item) => (
+              {[t("hero.formTag.founding"), t("hero.formTag.accounting"), t("hero.formTag.legal"), t("hero.formTag.growth")].map((item) => (
                 <span key={item} className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-center">
                   {item}
                 </span>
@@ -101,11 +103,11 @@ export function HeroSection() {
           </div>
           <div className="absolute -bottom-8 -right-6 hidden animate-float-y rounded-3xl border border-white/15 bg-white p-5 text-black shadow-2xl md:block">
             <p className="text-4xl font-extrabold">+120</p>
-            <p className="mt-1 text-sm font-bold">عميل واثق بنا</p>
+            <p className="mt-1 text-sm font-bold">{t("hero.clientsLabel")}</p>
           </div>
           <div className="absolute -left-7 top-12 hidden animate-float-x rounded-3xl border border-white/15 bg-white/[0.08] p-5 text-white shadow-2xl backdrop-blur md:block">
-            <p className="text-sm text-white/70">نظام العمل</p>
-            <p className="mt-1 text-xl font-extrabold">نحدّد. نوجّه. ننفّذ.</p>
+            <p className="text-sm text-white/70">{t("hero.systemLabel")}</p>
+            <p className="mt-1 text-xl font-extrabold">{t("hero.systemTitle")}</p>
           </div>
         </motion.div>
       </div>

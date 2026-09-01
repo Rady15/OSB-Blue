@@ -3,8 +3,11 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Save, Upload } from "lucide-react";
+import { useT, useDir } from "@/lib/i18n";
 
 export default function BrandingEditor() {
+  const t = useT();
+  const dir = useDir();
   const router = useRouter();
   const [branding, setBranding] = useState({
     logo: "",
@@ -46,14 +49,14 @@ export default function BrandingEditor() {
       });
 
       if (!res.ok) {
-        alert("خطأ في رفع الصورة");
+        alert(t("admin.branding.errors.upload"));
         return;
       }
 
       const data = await res.json();
       updateField(field, data.url);
     } catch {
-      alert("خطأ في الاتصال");
+      alert(t("admin.alert.connection"));
     }
   }
 
@@ -69,15 +72,15 @@ export default function BrandingEditor() {
       });
 
       if (!res.ok) {
-        setMessage("خطأ في الحفظ");
+        setMessage(t("admin.alert.error"));
         setSaving(false);
         return;
       }
 
-      setMessage("تم الحفظ بنجاح");
+      setMessage(t("admin.alert.saved"));
       setTimeout(() => setMessage(""), 3000);
     } catch {
-      setMessage("خطأ في الاتصال");
+      setMessage(t("admin.alert.connection"));
     } finally {
       setSaving(false);
     }
@@ -92,7 +95,7 @@ export default function BrandingEditor() {
   }
 
   return (
-    <div dir="rtl">
+    <div dir={dir}>
       <div className="mb-8 flex items-center gap-4">
         <button
           onClick={() => router.back()}
@@ -101,8 +104,8 @@ export default function BrandingEditor() {
           <ArrowLeft className="h-5 w-5" />
         </button>
         <div>
-          <h1 className="text-2xl font-bold text-white">هوية الموقع</h1>
-          <p className="mt-1 text-sm text-white/40">تحكم في الشعار والألوان والخطوط</p>
+          <h1 className="text-2xl font-bold text-white">{t("admin.branding.heading")}</h1>
+          <p className="mt-1 text-sm text-white/40">{t("admin.branding.subtitle")}</p>
         </div>
         <button
           onClick={handleSave}
@@ -110,7 +113,7 @@ export default function BrandingEditor() {
           className="mr-auto inline-flex items-center gap-2 rounded-xl bg-[#2563eb] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#2563eb]/90 disabled:opacity-50"
         >
           <Save className="h-5 w-5" />
-          {saving ? "جاري الحفظ..." : "حفظ الإعدادات"}
+          {saving ? t("admin.alert.saving") : t("admin.branding.saveSettings")}
         </button>
       </div>
 
@@ -123,10 +126,10 @@ export default function BrandingEditor() {
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Logo & Identity */}
         <div className="rounded-2xl border border-white/10 bg-[#0B1F3A] p-6">
-          <h3 className="mb-6 text-lg font-bold text-white">الشعار والهوية</h3>
+          <h3 className="mb-6 text-lg font-bold text-white">{t("admin.branding.logoIdentity")}</h3>
           <div className="space-y-4">
             <div>
-              <label className="mb-2 block text-sm font-medium text-white/70">اسم الموقع</label>
+              <label className="mb-2 block text-sm font-medium text-white/70">{t("admin.branding.siteName")}</label>
               <input
                 type="text"
                 value={branding.siteName}
@@ -135,7 +138,7 @@ export default function BrandingEditor() {
               />
             </div>
             <div>
-              <label className="mb-2 block text-sm font-medium text-white/70">الشعار (Tagline)</label>
+              <label className="mb-2 block text-sm font-medium text-white/70">{t("admin.branding.tagline")}</label>
               <input
                 type="text"
                 value={branding.siteTagline}
@@ -144,14 +147,14 @@ export default function BrandingEditor() {
               />
             </div>
             <div>
-              <label className="mb-2 block text-sm font-medium text-white/70">الشعار (Logo) - فاتح</label>
+              <label className="mb-2 block text-sm font-medium text-white/70">{t("admin.branding.logoLight")}</label>
               <div className="flex items-center gap-3">
                 {branding.logo && (
                   <img src={branding.logo} alt="Logo" className="h-12 w-auto rounded-lg border border-white/10 bg-white/5 p-2" />
                 )}
                 <label className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl border border-dashed border-white/10 py-3 text-sm text-white/40 transition hover:border-white/20 hover:text-white/60">
                   <Upload className="h-4 w-4" />
-                  رفع صورة
+                  {t("admin.branding.uploadImage")}
                   <input
                     type="file"
                     accept="image/*"
@@ -165,7 +168,7 @@ export default function BrandingEditor() {
               </div>
             </div>
             <div>
-              <label className="mb-2 block text-sm font-medium text-white/70">رابط الشعار</label>
+              <label className="mb-2 block text-sm font-medium text-white/70">{t("admin.branding.logoUrl")}</label>
               <input
                 type="text"
                 value={branding.logo}
@@ -175,10 +178,10 @@ export default function BrandingEditor() {
               />
             </div>
             <div>
-              <label className="mb-2 block text-sm font-medium text-white/70">Favicon</label>
+              <label className="mb-2 block text-sm font-medium text-white/70">{t("admin.branding.favicon")}</label>
               <label className="flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-dashed border-white/10 py-3 text-sm text-white/40 transition hover:border-white/20 hover:text-white/60">
                 <Upload className="h-4 w-4" />
-                رفع Favicon
+                {t("admin.branding.uploadFavicon")}
                 <input
                   type="file"
                   accept="image/*"
@@ -198,14 +201,14 @@ export default function BrandingEditor() {
 
         {/* Colors */}
         <div className="rounded-2xl border border-white/10 bg-[#0B1F3A] p-6">
-          <h3 className="mb-6 text-lg font-bold text-white">الألوان</h3>
+          <h3 className="mb-6 text-lg font-bold text-white">{t("admin.branding.colors")}</h3>
           <div className="space-y-4">
             {[
-              { key: "primaryColor", label: "اللون الأساسي", description: "لون الهيدر والخلفيات الداكنة" },
-              { key: "secondaryColor", label: "اللون الثانوي", description: "لون الأزرار والروابط" },
-              { key: "accentColor", label: "لون التمييز", description: "لون النصوص المميزة" },
-              { key: "backgroundColor", label: "لون الخلفية", description: "لون خلفية الموقع" },
-              { key: "textColor", label: "لون النص", description: "اللون الافتراضي للنصوص" },
+              { key: "primaryColor", label: t("admin.branding.primaryColor"), description: t("admin.branding.primaryColorDesc") },
+              { key: "secondaryColor", label: t("admin.branding.secondaryColor"), description: t("admin.branding.secondaryColorDesc") },
+              { key: "accentColor", label: t("admin.branding.accentColor"), description: t("admin.branding.accentColorDesc") },
+              { key: "backgroundColor", label: t("admin.branding.backgroundColor"), description: t("admin.branding.backgroundColorDesc") },
+              { key: "textColor", label: t("admin.branding.textColor"), description: t("admin.branding.textColorDesc") },
             ].map((color) => (
               <div key={color.key}>
                 <label className="mb-2 block text-sm font-medium text-white/70">{color.label}</label>
@@ -231,10 +234,10 @@ export default function BrandingEditor() {
 
         {/* Typography */}
         <div className="rounded-2xl border border-white/10 bg-[#0B1F3A] p-6">
-          <h3 className="mb-6 text-lg font-bold text-white">الخطوط</h3>
+          <h3 className="mb-6 text-lg font-bold text-white">{t("admin.branding.typography")}</h3>
           <div className="space-y-4">
             <div>
-              <label className="mb-2 block text-sm font-medium text-white/70">الخط الافتراضي</label>
+              <label className="mb-2 block text-sm font-medium text-white/70">{t("admin.branding.defaultFont")}</label>
               <select
                 value={branding.fontFamily}
                 onChange={(e) => updateField("fontFamily", e.target.value)}
@@ -247,9 +250,9 @@ export default function BrandingEditor() {
               </select>
             </div>
             <div className="rounded-xl border border-white/5 bg-white/5 p-4">
-              <p className="text-xs text-white/40">معاينة الخط</p>
+              <p className="text-xs text-white/40">{t("admin.branding.fontPreview")}</p>
               <p className="mt-2 text-2xl font-bold" style={{ fontFamily: branding.fontFamily }}>
-                نموذج النص
+                {t("admin.branding.sampleText")}
               </p>
             </div>
           </div>
@@ -257,26 +260,26 @@ export default function BrandingEditor() {
 
         {/* Preview */}
         <div className="rounded-2xl border border-white/10 bg-[#0B1F3A] p-6">
-          <h3 className="mb-6 text-lg font-bold text-white">معاينة الألوان</h3>
+          <h3 className="mb-6 text-lg font-bold text-white">{t("admin.branding.preview")}</h3>
           <div className="space-y-3">
             <div className="flex items-center gap-3">
               <div className="h-12 w-12 rounded-xl" style={{ backgroundColor: branding.primaryColor }} />
               <div>
-                <p className="text-sm font-medium text-white">اللون الأساسي</p>
+                <p className="text-sm font-medium text-white">{t("admin.branding.primaryColor")}</p>
                 <p className="text-xs text-white/40">{branding.primaryColor}</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
               <div className="h-12 w-12 rounded-xl" style={{ backgroundColor: branding.secondaryColor }} />
               <div>
-                <p className="text-sm font-medium text-white">اللون الثانوي</p>
+                <p className="text-sm font-medium text-white">{t("admin.branding.secondaryColor")}</p>
                 <p className="text-xs text-white/40">{branding.secondaryColor}</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
               <div className="h-12 w-12 rounded-xl border border-white/10" style={{ backgroundColor: branding.backgroundColor }} />
               <div>
-                <p className="text-sm font-medium text-white">الخلفية</p>
+                <p className="text-sm font-medium text-white">{t("admin.branding.background")}</p>
                 <p className="text-xs text-white/40">{branding.backgroundColor}</p>
               </div>
             </div>

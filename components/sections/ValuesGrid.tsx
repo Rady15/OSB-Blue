@@ -4,20 +4,22 @@ import { useEffect, useRef } from "react";
 import { Eye, Target, Lightbulb, Shield, Puzzle, Clock, Zap } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useT } from "@/lib/i18n";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const icons = { Eye, Target, Lightbulb, Shield, Puzzle, Clock, Zap };
 
-const values = [
-  { title: "الوضوح", desc: "نبني قراراتنا على المعلومات الدقيقة والحقائق الواضحة.", icon: "Eye" },
-  { title: "الموثوقية", desc: "نختار شركائنا بعناية، ونلتزم بمعايير مهنية تضمن جودة الخدمة.", icon: "Shield" },
-  { title: "التكامل", desc: "نوفر منظومة متكاملة تغطي احتياجات المشروع في مختلف مراحله.", icon: "Puzzle" },
-  { title: "المتابعة", desc: "لا نتوقف عند بدء الإجراء، بل نتابع حتى تحقيق النتيجة.", icon: "Clock" },
-  { title: "الكفاءة", desc: "نساعد عملائنا على اختصار الوقت والجهد والتكلفة.", icon: "Zap" },
+const valueKeys = [
+  { titleKey: "values.clarity.title", descKey: "values.clarity.desc", icon: "Eye" },
+  { titleKey: "values.reliability.title", descKey: "values.reliability.desc", icon: "Shield" },
+  { titleKey: "values.integration.title", descKey: "values.integration.desc", icon: "Puzzle" },
+  { titleKey: "values.followup.title", descKey: "values.followup.desc", icon: "Clock" },
+  { titleKey: "values.efficiency.title", descKey: "values.efficiency.desc", icon: "Zap" },
 ];
 
 export function ValuesGrid() {
+  const t = useT();
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
@@ -65,11 +67,11 @@ export function ValuesGrid() {
 
   return (
     <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3" style={{ perspective: "1200px" }}>
-      {values.map((value, index) => {
+      {valueKeys.map((value, index) => {
         const Icon = icons[value.icon as keyof typeof icons] ?? Lightbulb;
         return (
           <div
-            key={value.title}
+            key={value.titleKey}
             ref={(el) => { cardsRef.current[index] = el; }}
             className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03] p-8 shadow-[0_0_45px_rgba(37,99,235,0.06)] backdrop-blur transition-colors duration-500 hover:border-[#2563eb]/30 hover:bg-white/[0.06]"
             style={{ transformStyle: "preserve-3d" }}
@@ -88,10 +90,10 @@ export function ValuesGrid() {
             </span>
 
             <h3 className="relative text-xl font-extrabold text-white transition-colors duration-500 group-hover:text-white">
-              {value.title}
+              {t(value.titleKey)}
             </h3>
             <p className="relative mt-3 leading-8 text-white/50 transition-colors duration-500 group-hover:text-white/70">
-              {value.desc}
+              {t(value.descKey)}
             </p>
           </div>
         );

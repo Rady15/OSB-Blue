@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Save, Plus, Trash2 } from "lucide-react";
+import { useT, useDir } from "@/lib/i18n";
 
 interface FAQ {
   question: string;
@@ -10,11 +11,14 @@ interface FAQ {
 }
 
 export default function FAQEditor() {
+  const t = useT();
+  const dir = useDir();
   const router = useRouter();
   const [faqs, setFaqs] = useState<FAQ[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState<"success" | "error" | "">("");
 
   useEffect(() => {
     fetch("/admin/api/content/faq", { cache: "no-store" })
@@ -33,13 +37,14 @@ export default function FAQEditor() {
   }
 
   function removeFAQ(index: number) {
-    if (!confirm("حذف هذا السؤال؟")) return;
+    if (!confirm(t("admin.faq.deleteConfirm"))) return;
     setFaqs((prev) => prev.filter((_, i) => i !== index));
   }
 
   async function handleSave() {
     setSaving(true);
     setMessage("");
+    setMessageType("");
 
     try {
       const res = await fetch("/admin/api/content/faq", {
@@ -49,15 +54,18 @@ export default function FAQEditor() {
       });
 
       if (!res.ok) {
-        setMessage("خطأ في الحفظ");
+        setMessage(t("admin.alert.error"));
+        setMessageType("error");
         setSaving(false);
         return;
       }
 
-      setMessage("تم الحفظ بنجاح");
+      setMessage(t("admin.alert.saved"));
+      setMessageType("success");
       setTimeout(() => setMessage(""), 3000);
     } catch {
-      setMessage("خطأ في الاتصال");
+      setMessage(t("admin.alert.connection"));
+      setMessageType("error");
     } finally {
       setSaving(false);
     }
@@ -72,7 +80,7 @@ export default function FAQEditor() {
   }
 
   return (
-    <div dir="rtl">
+    <div dir={dir}>
       <div className="mb-8 flex items-center gap-4">
         <button
           onClick={() => router.back()}
@@ -81,8 +89,8 @@ export default function FAQEditor() {
           <ArrowLeft className="h-5 w-5" />
         </button>
         <div>
-          <h1 className="text-2xl font-bold text-white">الأسئلة الشائعة</h1>
-          <p className="mt-1 text-sm text-white/40">تحرير الأسئلة والأجوبة</p>
+          <h1 className="text-2xl font-bold text-white">{t("admin.faq.heading")}</h1>
+          <p className="mt-1 text-sm text-white/40">{t("admin.faq.subtitle")}</p>
         </div>
         <div className="mr-auto flex gap-2">
           <button
@@ -90,7 +98,7 @@ export default function FAQEditor() {
             className="inline-flex items-center gap-2 rounded-xl bg-[#2563eb] px-4 py-2 text-sm font-bold text-white"
           >
             <Plus className="h-4 w-4" />
-            إضافة سؤال
+            {t("admin.faq.addQuestion")}
           </button>
           <button
             onClick={handleSave}
@@ -98,13 +106,13 @@ export default function FAQEditor() {
             className="inline-flex items-center gap-2 rounded-xl bg-green-600 px-6 py-2 text-sm font-bold text-white transition hover:bg-green-500 disabled:opacity-50"
           >
             <Save className="h-4 w-4" />
-            {saving ? "جاري الحفظ..." : "حفظ الكل"}
+            {saving ? t("admin.alert.saving") : t("admin.faq.saveAll")}
           </button>
         </div>
       </div>
 
       {message && (
-        <div className={`mb-6 rounded-xl px-4 py-3 text-sm ${message.includes("نجاح") ? "border border-green-500/30 bg-green-500/10 text-green-400" : "border border-red-500/30 bg-red-500/10 text-red-400"}`}>
+        <div className={`mb-6 rounded-xl px-4 py-3 text-sm ${messageType === "success" ? "border border-green-500/30 bg-green-500/10 text-green-400" : "border border-red-500/30 bg-red-500/10 text-red-400"}`}>
           {message}
         </div>
       )}
@@ -113,7 +121,7 @@ export default function FAQEditor() {
         {faqs.map((faq, index) => (
           <div key={index} className="rounded-2xl border border-white/10 bg-[#0B1F3A] p-6">
             <div className="flex items-center justify-between mb-4">
-              <span className="text-sm font-medium text-white/60">سؤال #{index + 1}</span>
+              <span className="text-sm font-medium text-white/60">{t("admin.faq.questionHeader", { index: index + 1 })}</span>
               <button
                 onClick={() => removeFAQ(index)}
                 className="flex h-8 w-8 items-center justify-center rounded-lg text-white/40 hover:text-red-400"
@@ -123,7 +131,7 @@ export default function FAQEditor() {
             </div>
             <div className="space-y-3">
               <div>
-                <label className="mb-1 block text-xs text-white/40">السؤال</label>
+                <label className="mb-1 block text-xs text-white/40">{t("admin.faq.question")}</label>
                 <input
                   type="text"
                   value={faq.question}
@@ -132,7 +140,7 @@ export default function FAQEditor() {
                 />
               </div>
               <div>
-                <label className="mb-1 block text-xs text-white/40">الإجابة</label>
+                <label className="mb-1 block text-xs text-white/40">{t("admin.faq.answer")}</label>
                 <textarea
                   value={faq.answer}
                   onChange={(e) => updateFAQ(index, "answer", e.target.value)}

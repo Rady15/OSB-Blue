@@ -1,18 +1,23 @@
 import type { Metadata } from "next";
 import { FaqAccordion } from "@/components/sections/FaqAccordion";
 import { PageHero } from "@/components/ui/PageHero";
+import { getT } from "@/lib/get-t";
 
-export const metadata: Metadata = {
-  title: "الأسئلة الشائعة | OSB",
-  description: "إجابات مختصرة على الأسئلة الشائعة حول خدمات OSB.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = getT();
+  return {
+    title: t("page.faq.metaTitle"),
+    description: t("page.faq.metaDescription"),
+  };
+}
 
 export default function FaqPage() {
+  const { t } = getT();
   return (
     <div className="min-h-screen overflow-hidden bg-black text-white">
       <PageHero
-        title="الأسئلة الشائعة"
-        description="إجابات مختصرة تساعدك على فهم طريقة عمل OSB والخطوة الأنسب قبل البدء."
+        title={t("page.faq.heroTitle")}
+        description={t("page.faq.heroDescription")}
       />
       <section className="bg-black py-24">
         <div className="container-osb max-w-4xl">

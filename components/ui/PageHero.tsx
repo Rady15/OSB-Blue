@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { ScrollRevealText } from "@/components/ui/ScrollRevealText";
+import { getT } from "@/lib/get-t";
 
 type PageHeroProps = {
   eyebrow?: string;
@@ -9,6 +10,8 @@ type PageHeroProps = {
 };
 
 export function PageHero({ eyebrow = "OSB — One Stop Business", title, description, children }: PageHeroProps) {
+  const { t } = getT();
+  const chips = [t("pageHero.chip1"), t("pageHero.chip2"), t("pageHero.chip3")];
   return (
     <section className="relative overflow-hidden bg-black pb-20 pt-36 text-white">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_26%,rgba(37,99,235,0.28),transparent_30%),radial-gradient(circle_at_84%_18%,rgba(255,255,255,0.09),transparent_24%)]" />
@@ -36,7 +39,7 @@ export function PageHero({ eyebrow = "OSB — One Stop Business", title, descrip
           <div className="rounded-[1.5rem] border border-white/10 bg-black p-5">
             {children ?? (
               <div className="grid gap-3 text-sm font-bold text-white/75">
-                {["نحدّد قبل التنفيذ", "نرتّب الخطوات", "نربطك بالمتخصصين"].map((item) => (
+                {chips.map((item) => (
                   <span key={item} className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-3">
                     {item}
                   </span>

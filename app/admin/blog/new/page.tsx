@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, Save, EyeOff, Wand2 } from "lucide-react";
 import { generateSlug } from "@/lib/slug";
 import { RichTextEditor } from "@/components/admin/RichTextEditor";
+import { useT, useDir } from "@/lib/i18n";
 
 const EMPTY_POST = {
   title: "",
@@ -21,6 +22,8 @@ const EMPTY_POST = {
 };
 
 export default function NewBlogPost() {
+  const t = useT();
+  const dir = useDir();
   const router = useRouter();
   const [formData, setFormData] = useState({
     title: "",
@@ -54,11 +57,11 @@ export default function NewBlogPost() {
     setError("");
 
     if (!formData.title.trim()) {
-      setError("العنوان مطلوب");
+      setError(t("admin.blog.new.titleRequired"));
       return;
     }
     if (!formData.content.trim()) {
-      setError("المحتوى مطلوب");
+      setError(t("admin.blog.new.contentRequired"));
       return;
     }
 
@@ -68,7 +71,7 @@ export default function NewBlogPost() {
   async function saveDraft() {
     setError("");
     if (!formData.title.trim()) {
-      setError("العنوان مطلوب");
+      setError(t("admin.blog.new.titleRequired"));
       return;
     }
     await savePost({ ...formData, status: "draft" });
@@ -93,7 +96,7 @@ export default function NewBlogPost() {
 
       if (!res.ok) {
         const resData = await res.json();
-        setError(resData.error || "خطأ في الحفظ");
+        setError(resData.error || t("admin.alert.error"));
         setLoading(false);
         return;
       }
@@ -101,13 +104,13 @@ export default function NewBlogPost() {
       router.push("/admin/blog");
       router.refresh();
     } catch {
-      setError("خطأ في الاتصال");
+      setError(t("admin.alert.connection"));
       setLoading(false);
     }
   }
 
   return (
-    <div dir="rtl">
+    <div dir={dir}>
       <div className="mb-8 flex items-center gap-4">
         <button
           onClick={() => router.back()}
@@ -116,8 +119,8 @@ export default function NewBlogPost() {
           <ArrowLeft className="h-5 w-5" />
         </button>
         <div>
-          <h1 className="text-2xl font-bold text-white">مقال جديد</h1>
-          <p className="mt-1 text-sm text-white/40">كتابة ونشر مقال جديد في المدونة</p>
+          <h1 className="text-2xl font-bold text-white">{t("admin.blog.new.heading")}</h1>
+          <p className="mt-1 text-sm text-white/40">{t("admin.blog.new.subtitle")}</p>
         </div>
       </div>
 
@@ -133,12 +136,12 @@ export default function NewBlogPost() {
 
             {/* Title */}
             <div className="rounded-2xl border border-white/10 bg-[#0B1F3A] p-6">
-              <label className="mb-2 block text-sm font-medium text-white/70">عنوان المقال *</label>
+              <label className="mb-2 block text-sm font-medium text-white/70">{t("admin.blog.new.title")}</label>
               <input
                 type="text"
                 value={formData.title}
                 onChange={(e) => updateField("title", e.target.value)}
-                placeholder="عنوان المقال..."
+                placeholder={t("admin.blog.new.titlePlaceholder")}
                 className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/30 outline-none transition-colors focus:border-[#2563eb]"
                 required
               />
@@ -147,7 +150,7 @@ export default function NewBlogPost() {
             {/* Slug */}
             <div className="rounded-2xl border border-white/10 bg-[#0B1F3A] p-6">
               <div className="mb-2 flex items-center justify-between">
-                <label className="block text-sm font-medium text-white/70">رابط المقال (slug)</label>
+                <label className="block text-sm font-medium text-white/70">{t("admin.blog.new.slug")}</label>
                 <button
                   type="button"
                   onClick={() => {
@@ -157,7 +160,7 @@ export default function NewBlogPost() {
                   className="inline-flex items-center gap-1 text-xs text-[#2563eb] transition hover:text-white"
                 >
                   <Wand2 className="h-3.5 w-3.5" />
-                  توليد تلقائي من العنوان
+                  {t("admin.blog.new.slugAuto")}
                 </button>
               </div>
               <div className="flex items-center rounded-xl border border-white/10 bg-white/5 overflow-hidden">
@@ -173,16 +176,16 @@ export default function NewBlogPost() {
                   className="flex-1 bg-transparent px-2 py-3 text-sm text-white placeholder-white/30 outline-none"
                 />
               </div>
-              <p className="mt-2 text-xs text-white/30">يُملأ تلقائياً من العنوان — اتركه كما هو</p>
+              <p className="mt-2 text-xs text-white/30">{t("admin.blog.new.slugHint")}</p>
             </div>
 
             {/* Excerpt */}
             <div className="rounded-2xl border border-white/10 bg-[#0B1F3A] p-6">
-              <label className="mb-2 block text-sm font-medium text-white/70">ملخص المقال</label>
+              <label className="mb-2 block text-sm font-medium text-white/70">{t("admin.blog.new.excerpt")}</label>
               <textarea
                 value={formData.excerpt}
                 onChange={(e) => updateField("excerpt", e.target.value)}
-                placeholder="ملخص قصير يظهر في قائمة المقالات..."
+                placeholder={t("admin.blog.new.excerptPlaceholder")}
                 rows={3}
                 className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/30 outline-none transition-colors focus:border-[#2563eb]"
               />
@@ -190,14 +193,14 @@ export default function NewBlogPost() {
 
             {/* Content */}
             <div className="rounded-2xl border border-white/10 bg-[#0B1F3A] p-6">
-              <label className="mb-2 block text-sm font-medium text-white/70">المحتوى *</label>
+              <label className="mb-2 block text-sm font-medium text-white/70">{t("admin.blog.new.content")}</label>
               <RichTextEditor
                 value={formData.content}
                 onChange={(html) => updateField("content", html)}
-                placeholder="ابدأ الكتابة هنا... استخدم شريط الأدوات لتنسيق النص"
+                placeholder={t("admin.blog.new.contentPlaceholder")}
               />
               <p className="mt-2 text-xs text-white/30">
-                يمكنك تنسيق النص بسهولة: عناوين، قوائم، اقتباسات، روابط، وصور
+                {t("admin.blog.new.contentHint")}
               </p>
             </div>
           </div>
@@ -206,14 +209,14 @@ export default function NewBlogPost() {
           <div className="space-y-6">
             {/* Publish box */}
             <div className="rounded-2xl border border-white/10 bg-[#0B1F3A] p-6">
-              <label className="mb-3 block text-sm font-medium text-white/70">النشر</label>
+              <label className="mb-3 block text-sm font-medium text-white/70">{t("admin.blog.new.publish")}</label>
               <button
                 type="submit"
                 disabled={loading}
                 className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#2563eb] py-3 text-sm font-bold text-white transition hover:bg-[#2563eb]/90 disabled:opacity-50"
               >
                 <Save className="h-5 w-5" />
-                {loading ? "جاري الحفظ..." : "نشر المقال"}
+                {loading ? t("admin.alert.saving") : t("admin.blog.new.publishPost")}
               </button>
               <button
                 type="button"
@@ -222,46 +225,46 @@ export default function NewBlogPost() {
                 className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-bold transition disabled:opacity-50 bg-yellow-400/10 text-yellow-400 border border-yellow-400/30"
               >
                 <EyeOff className="h-4 w-4" />
-                {loading ? "جاري الحفظ..." : "حفظ كمسودة"}
+                {loading ? t("admin.alert.saving") : t("admin.blog.new.saveDraft")}
               </button>
             </div>
 
             {/* Meta */}
             <div className="rounded-2xl border border-white/10 bg-[#0B1F3A] p-6">
-              <label className="mb-3 block text-sm font-medium text-white/70">معلومات المقال</label>
+              <label className="mb-3 block text-sm font-medium text-white/70">{t("admin.blog.new.meta")}</label>
               <div className="space-y-3">
                 <div>
-                  <label className="mb-1 block text-xs text-white/40">المؤلف</label>
+                  <label className="mb-1 block text-xs text-white/40">{t("admin.blog.new.author")}</label>
                   <input
                     type="text"
                     value={formData.author}
                     onChange={(e) => updateField("author", e.target.value)}
-                    placeholder="اسم المؤلف"
+                    placeholder={t("admin.blog.new.authorPlaceholder")}
                     className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-white/30 outline-none focus:border-[#2563eb]"
                   />
                 </div>
                 <div>
-                  <label className="mb-1 block text-xs text-white/40">التصنيف</label>
+                  <label className="mb-1 block text-xs text-white/40">{t("admin.blog.new.category")}</label>
                   <input
                     type="text"
                     value={formData.category}
                     onChange={(e) => updateField("category", e.target.value)}
-                    placeholder="مثال: تأسيس، محاسبة"
+                    placeholder={t("admin.blog.new.categoryPlaceholder")}
                     className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-white/30 outline-none focus:border-[#2563eb]"
                   />
                 </div>
                 <div>
-                  <label className="mb-1 block text-xs text-white/40">الوسوم (مفصولة بفاصلة)</label>
+                  <label className="mb-1 block text-xs text-white/40">{t("admin.blog.new.tags")}</label>
                   <input
                     type="text"
                     value={formData.tags}
                     onChange={(e) => updateField("tags", e.target.value)}
-                    placeholder="تأسيس، أعمال، نصائح"
+                    placeholder={t("admin.blog.new.tagsPlaceholder")}
                     className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-white/30 outline-none focus:border-[#2563eb]"
                   />
                 </div>
                 <div>
-                  <label className="mb-1 block text-xs text-white/40">صورة الغلاف</label>
+                  <label className="mb-1 block text-xs text-white/40">{t("admin.blog.new.coverImage")}</label>
                   <div className="flex items-center gap-2">
                     <input
                       type="text"
@@ -299,25 +302,25 @@ export default function NewBlogPost() {
 
             {/* SEO */}
             <div className="rounded-2xl border border-white/10 bg-[#0B1F3A] p-6">
-              <label className="mb-3 block text-sm font-medium text-white/70">SEO</label>
+              <label className="mb-3 block text-sm font-medium text-white/70">{t("admin.blog.new.seo")}</label>
               <div className="space-y-3">
                 <div>
-                  <label className="mb-1 block text-xs text-white/40">عنوان SEO</label>
+                  <label className="mb-1 block text-xs text-white/40">{t("admin.blog.new.seoTitle")}</label>
                   <input
                     type="text"
                     value={formData.seoTitle}
                     onChange={(e) => updateField("seoTitle", e.target.value)}
-                    placeholder={formData.title || "عنوان المقال"}
+                    placeholder={formData.title || t("admin.blog.new.titlePlaceholder")}
                     maxLength={60}
                     className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-white/30 outline-none focus:border-[#2563eb]"
                   />
                 </div>
                 <div>
-                  <label className="mb-1 block text-xs text-white/40">وصف SEO</label>
+                  <label className="mb-1 block text-xs text-white/40">{t("admin.blog.new.seoDescription")}</label>
                   <textarea
                     value={formData.seoDescription}
                     onChange={(e) => updateField("seoDescription", e.target.value)}
-                    placeholder={formData.excerpt || "وصف المقال لمحركات البحث..."}
+                    placeholder={formData.excerpt || t("admin.blog.new.seoDescriptionPlaceholder")}
                     rows={3}
                     maxLength={160}
                     className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-white/30 outline-none focus:border-[#2563eb]"
